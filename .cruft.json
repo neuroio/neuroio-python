@@ -1,0 +1,15 @@
+{
+    "template": "https://github.com/timothycrosley/cookiecutter-python/",
+    "commit": "5f2c774c99969c8483d7f329e38db5b1a7fc5050",
+    "context": {
+        "cookiecutter": {
+            "full_name": "Lev Rubel",
+            "email": "l@datacorp.ee",
+            "github_username": "levchik",
+            "project_name": "neuroio-python",
+            "description": "A Python package for interacting with the NeuroIO API",
+            "version": "0.0.1",
+            "_template": "https://github.com/timothycrosley/cookiecutter-python/"
+        }
+    }
+}
