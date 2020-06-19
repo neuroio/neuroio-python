@@ -1,23 +1,27 @@
-name: Run Tests
-on: push
+name: Python package
+
+on: [push]
 
 jobs:
-  pytest:
-    name: pytest
+  build:
+
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+
     steps:
-    - uses: actions/checkout@master
-    - name: Install
-      uses: abatilo/actions-poetry@v1.5.0
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
       with:
-        python_version: 3.8.2
-        poetry_version: 1.0.9
-        working_directory: ./working_dir # Optional, defaults to '.'
-        args: install
-    - name: Run pytest
-      uses: abatilo/actions-poetry@v1.5.0
-      with:
-        python_version: 3.8.2
-        poetry_version: 1.0.9
-        working_directory: ./working_dir
-        args: run ./scripts/test.sh
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+    - name: Lint & Test
+      run: |
+        bash scripts/test.sh
