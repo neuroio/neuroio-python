@@ -1,4 +1,3 @@
-from functools import cached_property
 from typing import Optional, Type, Union
 
 import httpx
@@ -6,7 +5,7 @@ import httpx
 from neuroio import constants
 from neuroio.api.base import APIBase
 from neuroio.auth import AuthorizationTokenAuth
-from neuroio.utils import dynamic_import, get_package_version
+from neuroio.utils import cached_property, dynamic_import, get_package_version
 
 
 class Client:

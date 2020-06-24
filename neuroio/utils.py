@@ -1,5 +1,6 @@
+import functools
 from importlib import import_module
-from typing import Any
+from typing import Any, Callable, TypeVar
 
 
 def get_package_version() -> str:
@@ -19,3 +20,10 @@ def dynamic_import(abs_path: str, attribute: str) -> Any:
     """
     module_object = import_module(abs_path)
     return getattr(module_object, attribute)
+
+
+F = TypeVar("F", bound=Callable[..., Any])
+
+
+def cached_property(f: F) -> property:
+    return property(functools.lru_cache()(f))
