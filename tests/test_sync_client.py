@@ -1,22 +1,38 @@
-import pytest
+from neuroio import Client
+from neuroio.utils import get_package_version
 
-from neuroio import AsyncClient, Client
+
+def test_client_default_api_version():
+    neuroio = Client()
+    assert neuroio.api_version == 1
 
 
-def test_client_instance():
-    neuroio = Client(api_token="helloworld", api_version=2)
+def test_client_api_version():
+    neuroio = Client(api_version=2)
     assert neuroio.api_version == 2
 
 
-def test_not_able_to_instantiate_client_without_api_key():
-    with pytest.raises(Exception):
-        Client(api_token="")
+def test_client_no_api_token_client_without_auth():
+    neuroio = Client()
+    assert not neuroio.api_token
+    assert neuroio.client.auth is None
 
 
-def test_async_client_different_user_agent_from_sync_client():
+def test_client_api_token_sets_auth():
+    rnd_str = "helloworld"
+    neuroio = Client(api_token=rnd_str)
+    assert neuroio.api_token == rnd_str
+    assert neuroio.client.auth is not None
+
+
+def test_client_set_api_token_after_instance_is_created():
+    rnd_str = "helloworld"
+    neuroio = Client()
+    neuroio.inject_api_token(rnd_str)
+    assert neuroio.api_token == rnd_str
+    assert neuroio.client.auth is not None
+
+
+def test_client_has_version_in_user_agent_header():
     neuroio = Client(api_token="helloworld")
-    neuroio_async = AsyncClient(api_token="helloworld")
-    assert (
-        neuroio.client.headers["User-Agent"]
-        != neuroio_async.client.headers["User-Agent"]
-    )
+    assert get_package_version() in neuroio.client.headers["User-Agent"]

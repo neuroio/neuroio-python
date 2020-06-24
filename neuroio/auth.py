@@ -12,8 +12,6 @@ class AuthorizationTokenAuth(Auth):
         :param header_name: Name of the header field.
         """
         self.api_token = api_token
-        if not api_token:
-            raise Exception("API Token is mandatory.")
         self.header_name = header_name or "Authorization"
 
     def auth_flow(
