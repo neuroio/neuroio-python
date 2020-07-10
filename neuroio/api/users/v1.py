@@ -36,6 +36,14 @@ class Users(APIBase):
         finally:
             self.client.close()
 
+    def token_delete(self, token_id_or_key: Union[int, str]) -> Response:
+        try:
+            return self.client.delete(
+                url=f"/v1/users/tokens/{token_id_or_key}/"
+            )
+        finally:
+            self.client.close()
+
 
 class UsersAsync(APIBaseAsync):
     async def tokens(self, permanent: bool = None) -> Response:
@@ -67,5 +75,13 @@ class UsersAsync(APIBaseAsync):
     async def tokens_delete(self) -> Response:
         try:
             return await self.client.delete(url="/v1/users/tokens/")
+        finally:
+            await self.client.aclose()
+
+    async def token_delete(self, token_id_or_key: Union[int, str]) -> Response:
+        try:
+            return await self.client.delete(
+                url=f"/v1/users/tokens/{token_id_or_key}/"
+            )
         finally:
             await self.client.aclose()
