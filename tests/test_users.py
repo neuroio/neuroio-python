@@ -290,3 +290,30 @@ async def test_async_password_change_200(async_client):
     assert request.called
     assert response.status_code == 200
     assert response.json()["success"] is True
+
+
+@respx.mock
+def test_me_username_200(client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/users/me/",
+        status_code=200,
+        content={"username": "name"},
+    )
+    response = client.users.me()
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["username"] == "name"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_me_username_200(async_client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/users/me/",
+        status_code=200,
+        content={"username": "name"},
+    )
+    response = await async_client.users.me()
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["username"] == "name"
