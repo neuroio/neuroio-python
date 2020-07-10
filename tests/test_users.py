@@ -138,3 +138,65 @@ async def test_async_token_info_by_key_200(async_client):
     assert request.called
     assert tokens.status_code == 200
     assert tokens.json()["key"] == "token"
+
+
+@respx.mock
+def test_token_update_by_key_200(client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/users/tokens/token/",
+        status_code=200,
+        content={"key": "token", "is_active": True},
+    )
+    tokens = client.users.token_update(token_id_or_key="token", is_active=True)
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
+    assert tokens.json()["is_active"]
+
+
+@respx.mock
+def test_token_update_by_id_deactivate_200(client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/users/tokens/1/",
+        status_code=200,
+        content={"key": "token", "is_active": False},
+    )
+    tokens = client.users.token_update(token_id_or_key=1, is_active=False)
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
+    assert tokens.json()["is_active"] is False
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_token_update_by_key_200(async_client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/users/tokens/token/",
+        status_code=200,
+        content={"key": "token", "is_active": True},
+    )
+    tokens = await async_client.users.token_update(
+        token_id_or_key="token", is_active=True
+    )
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
+    assert tokens.json()["is_active"]
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_token_update_by_id_deactivate_200(async_client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/users/tokens/1/",
+        status_code=200,
+        content={"key": "token", "is_active": False},
+    )
+    tokens = await async_client.users.token_update(
+        token_id_or_key=1, is_active=False
+    )
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
+    assert tokens.json()["is_active"] is False

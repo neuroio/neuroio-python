@@ -19,6 +19,17 @@ class Users(APIBase):
         finally:
             self.client.close()
 
+    def token_update(
+        self, token_id_or_key: Union[int, str], is_active: bool
+    ) -> Response:
+        try:
+            return self.client.patch(
+                url=f"/v1/users/tokens/{token_id_or_key}/",
+                data={"is_active": is_active},
+            )
+        finally:
+            self.client.close()
+
 
 class UsersAsync(APIBaseAsync):
     async def tokens(self, permanent: bool = None) -> Response:
@@ -32,6 +43,17 @@ class UsersAsync(APIBaseAsync):
         try:
             return await self.client.get(
                 url=f"/v1/users/tokens/{token_id_or_key}/"
+            )
+        finally:
+            await self.client.aclose()
+
+    async def token_update(
+        self, token_id_or_key: Union[int, str], is_active: bool
+    ) -> Response:
+        try:
+            return await self.client.patch(
+                url=f"/v1/users/tokens/{token_id_or_key}/",
+                data={"is_active": is_active},
             )
         finally:
             await self.client.aclose()
