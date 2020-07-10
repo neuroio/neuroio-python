@@ -46,7 +46,8 @@ async def test_async_login_200(async_client):
 def test_login_permanent_200(client):
     request = respx.post(
         f"{API_BASE_URL}/v1/login/permanent/",
-        status_code=200, content={"token": "key"}
+        status_code=200,
+        content={"token": "key"},
     )
     login_response = client.auth.login_permanent(
         username="helloworld", password="superpwd"
@@ -61,7 +62,8 @@ def test_login_permanent_200(client):
 async def test_async_login_permanent_200(async_client):
     request = respx.post(
         f"{API_BASE_URL}/v1/login/permanent/",
-        status_code=200, content={"token": "key"}
+        status_code=200,
+        content={"token": "key"},
     )
     login_response = await async_client.auth.login_permanent(
         username="helloworld", password="superpwd"

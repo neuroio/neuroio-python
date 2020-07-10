@@ -30,6 +30,8 @@ class AuthAsync(APIBaseAsync):
     async def login_permanent(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
         try:
-            return await self.client.post(url="/v1/login/permanent/", data=data)
+            return await self.client.post(
+                url="/v1/login/permanent/", data=data
+            )
         finally:
             await self.client.aclose()
