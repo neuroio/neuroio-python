@@ -259,3 +259,34 @@ async def test_async_token_delete_by_id(async_client):
     response = await async_client.users.token_delete(token_id_or_key=1)
     assert request.called
     assert response.status_code == 204
+
+
+@respx.mock
+def test_password_change_200(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/users/password/change/",
+        status_code=200,
+        content={"success": True},
+    )
+    response = client.users.password_change(
+        old_password="old_password", new_password="new_password"
+    )
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_password_change_200(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/users/password/change/",
+        status_code=200,
+        content={"success": True},
+    )
+    response = await async_client.users.password_change(
+        old_password="old_password", new_password="new_password"
+    )
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["success"] is True
