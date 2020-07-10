@@ -30,6 +30,12 @@ class Users(APIBase):
         finally:
             self.client.close()
 
+    def tokens_delete(self) -> Response:
+        try:
+            return self.client.delete(url="/v1/users/tokens/")
+        finally:
+            self.client.close()
+
 
 class UsersAsync(APIBaseAsync):
     async def tokens(self, permanent: bool = None) -> Response:
@@ -55,5 +61,11 @@ class UsersAsync(APIBaseAsync):
                 url=f"/v1/users/tokens/{token_id_or_key}/",
                 data={"is_active": is_active},
             )
+        finally:
+            await self.client.aclose()
+
+    async def tokens_delete(self) -> Response:
+        try:
+            return await self.client.delete(url="/v1/users/tokens/")
         finally:
             await self.client.aclose()

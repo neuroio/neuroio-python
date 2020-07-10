@@ -200,3 +200,24 @@ async def test_async_token_update_by_id_deactivate_200(async_client):
     assert tokens.status_code == 200
     assert tokens.json()["key"] == "token"
     assert tokens.json()["is_active"] is False
+
+
+@respx.mock
+def test_tokens_delete(client):
+    request = respx.delete(
+        f"{API_BASE_URL}/v1/users/tokens/", status_code=204, content=None
+    )
+    response = client.users.tokens_delete()
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_tokens_delete(async_client):
+    request = respx.delete(
+        f"{API_BASE_URL}/v1/users/tokens/", status_code=204, content=None
+    )
+    response = await async_client.users.tokens_delete()
+    assert request.called
+    assert response.status_code == 204
