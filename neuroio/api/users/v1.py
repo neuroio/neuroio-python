@@ -30,9 +30,10 @@ class Users(APIBase):
         finally:
             self.client.close()
 
-    def tokens_delete(self) -> Response:
+    def tokens_delete(self, permanent: bool = None) -> Response:
+        data = {"permanent": permanent} if permanent is not None else None
         try:
-            return self.client.delete(url="/v1/users/tokens/")
+            return self.client.delete(url="/v1/users/tokens/", params=data)
         finally:
             self.client.close()
 
@@ -94,9 +95,12 @@ class UsersAsync(APIBaseAsync):
         finally:
             await self.client.aclose()
 
-    async def tokens_delete(self) -> Response:
+    async def tokens_delete(self, permanent: bool = None) -> Response:
+        data = {"permanent": permanent} if permanent is not None else None
         try:
-            return await self.client.delete(url="/v1/users/tokens/")
+            return await self.client.delete(
+                url="/v1/users/tokens/", params=data
+            )
         finally:
             await self.client.aclose()
 

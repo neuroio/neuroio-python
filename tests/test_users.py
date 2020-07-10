@@ -211,10 +211,31 @@ def test_tokens_delete(client):
 
 
 @respx.mock
+def test_tokens_delete_permanent(client):
+    request = respx.delete(
+        f"{API_BASE_URL}/v1/users/tokens/?permanent=true", status_code=204
+    )
+    response = client.users.tokens_delete(permanent=True)
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
 @pytest.mark.asyncio
 async def test_async_tokens_delete(async_client):
     request = respx.delete(f"{API_BASE_URL}/v1/users/tokens/", status_code=204)
     response = await async_client.users.tokens_delete()
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_tokens_delete_permanent(async_client):
+    request = respx.delete(
+        f"{API_BASE_URL}/v1/users/tokens/?permanent=true", status_code=204
+    )
+    response = await async_client.users.tokens_delete(permanent=True)
     assert request.called
     assert response.status_code == 204
 
