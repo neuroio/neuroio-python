@@ -1,18 +1,7 @@
 import pytest
 import respx
 
-from neuroio import AsyncClient, Client
 from neuroio.constants import API_BASE_URL
-
-
-@pytest.fixture
-def client():
-    return Client()
-
-
-@pytest.fixture
-async def async_client():
-    return AsyncClient(api_token="anotherone")
 
 
 @respx.mock
