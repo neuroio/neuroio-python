@@ -84,3 +84,57 @@ async def test_async_tokens_not_permanent_list_200(async_client):
     assert request.called
     assert tokens.status_code == 200
     assert tokens.json()[0]["token"] == "key"
+
+
+@respx.mock
+def test_token_info_by_id_200(client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/users/tokens/1/",
+        status_code=200,
+        content={"key": "token", "is_active": True},
+    )
+    tokens = client.users.token_info(token_id_or_key=1)
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
+
+
+@respx.mock
+def test_token_info_by_key_200(client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/users/tokens/token/",
+        status_code=200,
+        content={"key": "token", "is_active": True},
+    )
+    tokens = client.users.token_info(token_id_or_key="token")
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_token_info_by_id_200(async_client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/users/tokens/1/",
+        status_code=200,
+        content={"key": "token", "is_active": True},
+    )
+    tokens = await async_client.users.token_info(token_id_or_key=1)
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_token_info_by_key_200(async_client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/users/tokens/token/",
+        status_code=200,
+        content={"key": "token", "is_active": True},
+    )
+    tokens = await async_client.users.token_info(token_id_or_key="token")
+    assert request.called
+    assert tokens.status_code == 200
+    assert tokens.json()["key"] == "token"
