@@ -206,3 +206,20 @@ async def test_async_update_200(async_client):
     )
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"
+
+
+@respx.mock
+def test_delete_202(client):
+    request = respx.delete(f"{API_BASE_URL}/v1/sources/1/", status_code=202)
+    response = client.sources.delete(id=1)
+    assert request.called
+    assert response.status_code == 202
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_delete_202(async_client):
+    request = respx.delete(f"{API_BASE_URL}/v1/sources/1/", status_code=202)
+    response = await async_client.sources.delete(id=1)
+    assert request.called
+    assert response.status_code == 202

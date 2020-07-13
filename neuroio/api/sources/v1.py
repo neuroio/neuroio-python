@@ -143,6 +143,12 @@ class Sources(APIBase):
         finally:
             self.client.close()
 
+    def delete(self, id: int) -> Response:
+        try:
+            return self.client.delete(url=f"/v1/sources/{id}/")
+        finally:
+            self.client.close()
+
 
 class SourcesAsync(APIBaseAsync):
     async def create(
@@ -259,5 +265,11 @@ class SourcesAsync(APIBaseAsync):
 
         try:
             return await self.client.patch(url=f"/v1/sources/{id}/", json=data)
+        finally:
+            await self.client.aclose()
+
+    async def delete(self, id: int) -> Response:
+        try:
+            return await self.client.delete(url=f"/v1/sources/{id}/")
         finally:
             await self.client.aclose()
