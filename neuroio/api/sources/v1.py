@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import List, Optional
 
 from httpx import Response
@@ -46,17 +45,6 @@ class Sources(APIBase):
         auto_identify_asm: bool = True,
         store_images_for_results: Optional[List[str]] = None,
     ) -> Response:
-        if store_images_for_results is None:
-            store_images_for_results = [
-                EntryResult.NEW,
-                EntryResult.REINIT,
-                EntryResult.EXACT,
-                EntryResult.HA,
-                EntryResult.JUNK,
-                EntryResult.NM,
-                EntryResult.DET,
-            ]
-
         data = dict(
             name=name,
             license_type=license_type,
@@ -76,8 +64,9 @@ class Sources(APIBase):
             auto_check_liveness=auto_check_liveness,
             auto_create_liveness_only=auto_create_liveness_only,
             auto_identify_asm=auto_identify_asm,
-            store_images_for_results=store_images_for_results,
         )
+        if store_images_for_results is not None:
+            data["store_images_for_results"] = store_images_for_results
         try:
             return self.client.post(url="/v1/sources/", data=data)
         finally:
@@ -92,7 +81,7 @@ class Sources(APIBase):
         finally:
             self.client.close()
 
-    def retrieve(self, id: int) -> Response:
+    def get(self, id: int) -> Response:
         try:
             return self.client.get(url=f"/v1/sources/{id}/")
         finally:
@@ -122,18 +111,6 @@ class SourcesAsync(APIBaseAsync):
         auto_identify_asm: bool = True,
         store_images_for_results: Optional[List[str]] = None,
     ) -> Response:
-        # TODO
-        if store_images_for_results is None:
-            store_images_for_results = [
-                EntryResult.NEW,
-                EntryResult.REINIT,
-                EntryResult.EXACT,
-                EntryResult.HA,
-                EntryResult.JUNK,
-                EntryResult.NM,
-                EntryResult.DET,
-            ]
-
         data = dict(
             name=name,
             license_type=license_type,
@@ -153,8 +130,9 @@ class SourcesAsync(APIBaseAsync):
             auto_check_liveness=auto_check_liveness,
             auto_create_liveness_only=auto_create_liveness_only,
             auto_identify_asm=auto_identify_asm,
-            store_images_for_results=store_images_for_results,
         )
+        if store_images_for_results is not None:
+            data["store_images_for_results"] = store_images_for_results
         try:
             return await self.client.post(url="/v1/sources/", data=data)
         finally:
@@ -169,7 +147,7 @@ class SourcesAsync(APIBaseAsync):
         finally:
             await self.client.aclose()
 
-    async def retrieve(self, id: int) -> Response:
+    async def get(self, id: int) -> Response:
         try:
             return await self.client.get(url=f"/v1/sources/{id}/")
         finally:

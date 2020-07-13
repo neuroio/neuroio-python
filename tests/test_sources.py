@@ -1,7 +1,66 @@
 import pytest
 import respx
 
+from neuroio.api.sources.v1 import EntryResult
 from neuroio.constants import API_BASE_URL
+
+
+@respx.mock
+def test_create_201(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/sources/",
+        status_code=201,
+        content={"id": 1, "name": "test_name"},
+    )
+    response = client.sources.create(name="test_name")
+    assert request.called
+    assert response.status_code == 201
+    assert response.json()["name"] == "test_name"
+
+
+@respx.mock
+def test_create_store_images_results_201(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/sources/",
+        status_code=201,
+        content={"id": 1, "name": "test_name"},
+    )
+    response = client.sources.create(
+        name="test_name", store_images_for_results=[EntryResult.DET]
+    )
+    assert request.called
+    assert response.status_code == 201
+    assert response.json()["name"] == "test_name"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_create_201(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/sources/",
+        status_code=201,
+        content={"id": 1, "name": "test_name"},
+    )
+    response = await async_client.sources.create(name="test_name")
+    assert request.called
+    assert response.status_code == 201
+    assert response.json()["name"] == "test_name"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_create_store_images_results_201(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/sources/",
+        status_code=201,
+        content={"id": 1, "name": "test_name"},
+    )
+    response = await async_client.sources.create(
+        name="test_name", store_images_for_results=[EntryResult.DET]
+    )
+    assert request.called
+    assert response.status_code == 201
+    assert response.json()["name"] == "test_name"
 
 
 @respx.mock
@@ -65,7 +124,7 @@ def test_retrieve_200(client):
         status_code=200,
         content={"id": 1, "name": "source_name"},
     )
-    response = client.sources.retrieve(id=1)
+    response = client.sources.get(id=1)
     assert request.called
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"
@@ -74,7 +133,7 @@ def test_retrieve_200(client):
 @respx.mock
 def test_retrieve_404(client):
     request = respx.get(f"{API_BASE_URL}/v1/sources/1/", status_code=404)
-    response = client.sources.retrieve(id=1)
+    response = client.sources.get(id=1)
     assert request.called
     assert response.status_code == 404
 
@@ -87,7 +146,7 @@ async def test_async_retrieve_200(async_client):
         status_code=200,
         content={"id": 1, "name": "source_name"},
     )
-    response = await async_client.sources.retrieve(id=1)
+    response = await async_client.sources.get(id=1)
     assert request.called
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"
@@ -97,6 +156,6 @@ async def test_async_retrieve_200(async_client):
 @pytest.mark.asyncio
 async def test_async_retrieve_404(async_client):
     request = respx.get(f"{API_BASE_URL}/v1/sources/1/", status_code=404)
-    response = await async_client.sources.retrieve(id=1)
+    response = await async_client.sources.get(id=1)
     assert request.called
     assert response.status_code == 404
