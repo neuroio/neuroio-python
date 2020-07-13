@@ -1,7 +1,7 @@
 import pytest
 import respx
 
-from neuroio.api.sources.v1 import EntryResult
+from neuroio.api.sources.v1 import EntryResult, SourceLicense
 from neuroio.constants import API_BASE_URL
 
 
@@ -159,3 +159,50 @@ async def test_async_retrieve_404(async_client):
     response = await async_client.sources.get(id=1)
     assert request.called
     assert response.status_code == 404
+
+
+@respx.mock
+def test_update_200(client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/sources/1/",
+        status_code=200,
+        content={"id": 1, "name": "source_name"},
+    )
+    response = client.sources.update(
+        id=1, name="source_name", license_type=[SourceLicense.ADVANCED]
+    )
+
+    request_content = request.calls[0][0]
+    request_content.read()
+
+    assert request.called
+    assert (
+        request_content.content
+        == b'{"name": "source_name", "license_type": ["advanced"]}'
+    )
+    assert response.status_code == 200
+    assert response.json()["name"] == "source_name"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_update_200(async_client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/sources/1/",
+        status_code=200,
+        content={"id": 1, "name": "source_name"},
+    )
+    response = await async_client.sources.update(
+        id=1, name="source_name", license_type=[SourceLicense.ADVANCED]
+    )
+
+    request_content = request.calls[0][0]
+    request_content.read()
+
+    assert request.called
+    assert (
+        request_content.content
+        == b'{"name": "source_name", "license_type": ["advanced"]}'
+    )
+    assert response.status_code == 200
+    assert response.json()["name"] == "source_name"

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from httpx import Response
 
@@ -20,6 +20,9 @@ class EntryResult:
     JUNK: str = "advanced"
     NM: str = "nm"
     DET: str = "dev"
+
+
+sentinel = object()
 
 
 class Sources(APIBase):
@@ -68,7 +71,7 @@ class Sources(APIBase):
         if store_images_for_results is not None:
             data["store_images_for_results"] = store_images_for_results
         try:
-            return self.client.post(url="/v1/sources/", data=data)
+            return self.client.post(url="/v1/sources/", json=data)
         finally:
             self.client.close()
 
@@ -84,6 +87,59 @@ class Sources(APIBase):
     def get(self, id: int) -> Response:
         try:
             return self.client.get(url=f"/v1/sources/{id}/")
+        finally:
+            self.client.close()
+
+    def update(
+        self,
+        id: int,
+        name: str,
+        license_type: Union[str, object] = sentinel,
+        identify_facesize_threshold: Union[int, object] = sentinel,
+        use_pps_time: Union[bool, object] = sentinel,
+        manual_create_facesize_threshold: Union[int, object] = sentinel,
+        manual_create_on_ha: Union[bool, object] = sentinel,
+        manual_create_on_junk: Union[bool, object] = sentinel,
+        manual_identify_asm: Union[bool, object] = sentinel,
+        auto_create_persons: Union[bool, object] = sentinel,
+        auto_create_facesize_threshold: Union[int, object] = sentinel,
+        auto_create_check_blur: Union[bool, object] = sentinel,
+        auto_create_check_exposure: Union[bool, object] = sentinel,
+        auto_create_on_ha: Union[bool, object] = sentinel,
+        auto_create_on_junk: Union[bool, object] = sentinel,
+        auto_check_face_angle: Union[bool, object] = sentinel,
+        auto_check_liveness: Union[bool, object] = sentinel,
+        auto_create_liveness_only: Union[bool, object] = sentinel,
+        auto_identify_asm: Union[bool, object] = sentinel,
+        store_images_for_results: Union[List[str], object] = sentinel,
+    ) -> Response:
+        data = dict(
+            name=name,
+            license_type=license_type,
+            identify_facesize_threshold=identify_facesize_threshold,
+            use_pps_time=use_pps_time,
+            manual_create_facesize_threshold=manual_create_facesize_threshold,
+            manual_create_on_ha=manual_create_on_ha,
+            manual_create_on_junk=manual_create_on_junk,
+            manual_identify_asm=manual_identify_asm,
+            auto_create_persons=auto_create_persons,
+            auto_create_facesize_threshold=auto_create_facesize_threshold,
+            auto_create_check_blur=auto_create_check_blur,
+            auto_create_check_exposure=auto_create_check_exposure,
+            auto_create_on_ha=auto_create_on_ha,
+            auto_create_on_junk=auto_create_on_junk,
+            auto_check_face_angle=auto_check_face_angle,
+            auto_check_liveness=auto_check_liveness,
+            auto_create_liveness_only=auto_create_liveness_only,
+            auto_identify_asm=auto_identify_asm,
+            store_images_for_results=store_images_for_results,
+        )
+        data = dict(
+            filter(lambda kwarg: kwarg[1] is not sentinel, data.items())
+        )
+
+        try:
+            return self.client.patch(url=f"/v1/sources/{id}/", json=data)
         finally:
             self.client.close()
 
@@ -134,7 +190,7 @@ class SourcesAsync(APIBaseAsync):
         if store_images_for_results is not None:
             data["store_images_for_results"] = store_images_for_results
         try:
-            return await self.client.post(url="/v1/sources/", data=data)
+            return await self.client.post(url="/v1/sources/", json=data)
         finally:
             await self.client.aclose()
 
@@ -150,5 +206,58 @@ class SourcesAsync(APIBaseAsync):
     async def get(self, id: int) -> Response:
         try:
             return await self.client.get(url=f"/v1/sources/{id}/")
+        finally:
+            await self.client.aclose()
+
+    async def update(
+        self,
+        id: int,
+        name: str,
+        license_type: Union[str, object] = sentinel,
+        identify_facesize_threshold: Union[int, object] = sentinel,
+        use_pps_time: Union[bool, object] = sentinel,
+        manual_create_facesize_threshold: Union[int, object] = sentinel,
+        manual_create_on_ha: Union[bool, object] = sentinel,
+        manual_create_on_junk: Union[bool, object] = sentinel,
+        manual_identify_asm: Union[bool, object] = sentinel,
+        auto_create_persons: Union[bool, object] = sentinel,
+        auto_create_facesize_threshold: Union[int, object] = sentinel,
+        auto_create_check_blur: Union[bool, object] = sentinel,
+        auto_create_check_exposure: Union[bool, object] = sentinel,
+        auto_create_on_ha: Union[bool, object] = sentinel,
+        auto_create_on_junk: Union[bool, object] = sentinel,
+        auto_check_face_angle: Union[bool, object] = sentinel,
+        auto_check_liveness: Union[bool, object] = sentinel,
+        auto_create_liveness_only: Union[bool, object] = sentinel,
+        auto_identify_asm: Union[bool, object] = sentinel,
+        store_images_for_results: Union[List[str], object] = sentinel,
+    ) -> Response:
+        data = dict(
+            name=name,
+            license_type=license_type,
+            identify_facesize_threshold=identify_facesize_threshold,
+            use_pps_time=use_pps_time,
+            manual_create_facesize_threshold=manual_create_facesize_threshold,
+            manual_create_on_ha=manual_create_on_ha,
+            manual_create_on_junk=manual_create_on_junk,
+            manual_identify_asm=manual_identify_asm,
+            auto_create_persons=auto_create_persons,
+            auto_create_facesize_threshold=auto_create_facesize_threshold,
+            auto_create_check_blur=auto_create_check_blur,
+            auto_create_check_exposure=auto_create_check_exposure,
+            auto_create_on_ha=auto_create_on_ha,
+            auto_create_on_junk=auto_create_on_junk,
+            auto_check_face_angle=auto_check_face_angle,
+            auto_check_liveness=auto_check_liveness,
+            auto_create_liveness_only=auto_create_liveness_only,
+            auto_identify_asm=auto_identify_asm,
+            store_images_for_results=store_images_for_results,
+        )
+        data = dict(
+            filter(lambda kwarg: kwarg[1] is not sentinel, data.items())
+        )
+
+        try:
+            return await self.client.patch(url=f"/v1/sources/{id}/", json=data)
         finally:
             await self.client.aclose()
