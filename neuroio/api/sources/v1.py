@@ -92,6 +92,12 @@ class Sources(APIBase):
         finally:
             self.client.close()
 
+    def retrieve(self, id: int) -> Response:
+        try:
+            return self.client.get(url=f"/v1/sources/{id}/")
+        finally:
+            self.client.close()
+
 
 class SourcesAsync(APIBaseAsync):
     async def create(
@@ -160,5 +166,11 @@ class SourcesAsync(APIBaseAsync):
         data = {"q": query, "limit": limit, "offset": offset}
         try:
             return await self.client.get(url="/v1/sources/", params=data)
+        finally:
+            await self.client.aclose()
+
+    async def retrieve(self, id: int) -> Response:
+        try:
+            return await self.client.get(url=f"/v1/sources/{id}/")
         finally:
             await self.client.aclose()
