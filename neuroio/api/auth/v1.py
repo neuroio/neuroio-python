@@ -7,14 +7,14 @@ class Auth(APIBase):
     def login(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
         try:
-            return self.client.post(url="/v1/login/", data=data)
+            return self.client.post(url="/v1/login/", json=data)
         finally:
             self.client.close()
 
     def login_permanent(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
         try:
-            return self.client.post(url="/v1/login/permanent/", data=data)
+            return self.client.post(url="/v1/login/permanent/", json=data)
         finally:
             self.client.close()
 
@@ -23,7 +23,7 @@ class AuthAsync(APIBaseAsync):
     async def login(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
         try:
-            return await self.client.post(url="/v1/login/", data=data)
+            return await self.client.post(url="/v1/login/", json=data)
         finally:
             await self.client.aclose()
 
@@ -31,7 +31,7 @@ class AuthAsync(APIBaseAsync):
         data = {"username": username, "password": password}
         try:
             return await self.client.post(
-                url="/v1/login/permanent/", data=data
+                url="/v1/login/permanent/", json=data
             )
         finally:
             await self.client.aclose()
