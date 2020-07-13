@@ -1,8 +1,7 @@
 import pytest
 import respx
 
-from neuroio.api.sources.v1 import EntryResult, SourceLicense
-from neuroio.constants import API_BASE_URL
+from neuroio.constants import API_BASE_URL, EntryResult, SourceLicense
 
 
 @respx.mock

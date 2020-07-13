@@ -3,26 +3,7 @@ from typing import List, Optional, Union
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
-
-
-class SourceLicense:
-    BASIC: str = "basic"
-    STANDARD: str = "standard"
-    STANDARD_PLUS: str = "standard+"
-    ADVANCED: str = "advanced"
-
-
-class EntryResult:
-    NEW: str = "new"
-    REINIT: str = "reinit"
-    EXACT: str = "exact"
-    HA: str = "ha"
-    JUNK: str = "advanced"
-    NM: str = "nm"
-    DET: str = "dev"
-
-
-sentinel = object()
+from neuroio.constants import SourceLicense, sentinel
 
 
 class Sources(APIBase):
