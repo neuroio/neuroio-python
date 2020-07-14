@@ -38,6 +38,12 @@ class Entries(APIBase):
         finally:
             self.client.close()
 
+    def get(self, pid: str) -> Response:
+        try:
+            return self.client.get(url=f"/v1/entries/stats/pid/{pid}/")
+        finally:
+            self.client.close()
+
 
 class EntriesAsync(APIBaseAsync):
     async def list(
@@ -66,5 +72,11 @@ class EntriesAsync(APIBaseAsync):
         )
         try:
             return await self.client.get(url="/v1/entries/", params=data)
+        finally:
+            await self.client.aclose()
+
+    async def get(self, pid: str) -> Response:
+        try:
+            return await self.client.get(url=f"/v1/entries/stats/pid/{pid}/")
         finally:
             await self.client.aclose()

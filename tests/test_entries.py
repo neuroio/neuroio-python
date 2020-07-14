@@ -69,3 +69,55 @@ async def test_async_list_with_params_200(async_client):
     assert request.called
     assert response.status_code == 200
     assert response.json()["results"][0]["id"] == 1
+
+
+@respx.mock
+def test_retrieve_200(client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/entries/stats/pid/pid/",
+        status_code=200,
+        content={"id": 1, "pid": "pid", "age": 27},
+    )
+    response = client.entries.get(pid="pid")
+
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["id"] == 1
+    assert response.json()["age"] == 27
+
+
+@respx.mock
+def test_retrieve_404(client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/entries/stats/pid/pid/", status_code=404
+    )
+    response = client.entries.get(pid="pid")
+
+    assert request.called
+    assert response.status_code == 404
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_retrieve_200(async_client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/entries/stats/pid/pid/",
+        status_code=200,
+        content={"id": 1, "pid": "pid", "age": 27},
+    )
+    response = await async_client.entries.get(pid="pid")
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["id"] == 1
+    assert response.json()["age"] == 27
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_retrieve_404(async_client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/entries/stats/pid/pid/", status_code=404
+    )
+    response = await async_client.entries.get(pid="pid")
+    assert request.called
+    assert response.status_code == 404
