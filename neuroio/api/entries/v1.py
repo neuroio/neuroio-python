@@ -44,6 +44,12 @@ class Entries(APIBase):
         finally:
             self.client.close()
 
+    def delete(self, pid: str) -> Response:
+        try:
+            return self.client.delete(url=f"/v1/entries/{pid}/")
+        finally:
+            self.client.close()
+
 
 class EntriesAsync(APIBaseAsync):
     async def list(
@@ -78,5 +84,11 @@ class EntriesAsync(APIBaseAsync):
     async def get(self, pid: str) -> Response:
         try:
             return await self.client.get(url=f"/v1/entries/stats/pid/{pid}/")
+        finally:
+            await self.client.aclose()
+
+    async def delete(self, pid: str) -> Response:
+        try:
+            return await self.client.delete(url=f"/v1/entries/{pid}/")
         finally:
             await self.client.aclose()

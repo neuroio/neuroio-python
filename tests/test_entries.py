@@ -121,3 +121,37 @@ async def test_async_retrieve_404(async_client):
     response = await async_client.entries.get(pid="pid")
     assert request.called
     assert response.status_code == 404
+
+
+@respx.mock
+def test_delete_204(client):
+    request = respx.delete(f"{API_BASE_URL}/v1/entries/pid/", status_code=204)
+    response = client.entries.delete(pid="pid")
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+def test_delete_400(client):
+    request = respx.delete(f"{API_BASE_URL}/v1/entries/pid/", status_code=400)
+    response = client.entries.delete(pid="pid")
+    assert request.called
+    assert response.status_code == 400
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_delete_204(async_client):
+    request = respx.delete(f"{API_BASE_URL}/v1/entries/pid/", status_code=204)
+    response = await async_client.entries.delete(pid="pid")
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_delete_400(async_client):
+    request = respx.delete(f"{API_BASE_URL}/v1/entries/pid/", status_code=400)
+    response = await async_client.entries.delete(pid="pid")
+    assert request.called
+    assert response.status_code == 400
