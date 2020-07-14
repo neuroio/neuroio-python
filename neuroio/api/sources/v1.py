@@ -10,7 +10,7 @@ class Sources(APIBase):
     def create(
         self,
         name: str,
-        license_type: str = SourceLicense.BASIC,
+        license_type: SourceLicense = SourceLicense.BASIC,
         identify_facesize_threshold: int = 7000,
         use_pps_time: bool = False,
         manual_create_facesize_threshold: int = 25000,
@@ -57,9 +57,9 @@ class Sources(APIBase):
             self.client.close()
 
     def list(
-        self, query: str = None, limit: int = 20, offset: int = 0
+        self, q: str = None, limit: int = 20, offset: int = 0
     ) -> Response:
-        data = {"q": query, "limit": limit, "offset": offset}
+        data = {"q": q, "limit": limit, "offset": offset}
         try:
             return self.client.get(url="/v1/sources/", params=data)
         finally:
@@ -75,7 +75,7 @@ class Sources(APIBase):
         self,
         id: int,
         name: str,
-        license_type: Union[str, object] = sentinel,
+        license_type: Union[SourceLicense, object] = sentinel,
         identify_facesize_threshold: Union[int, object] = sentinel,
         use_pps_time: Union[bool, object] = sentinel,
         manual_create_facesize_threshold: Union[int, object] = sentinel,
@@ -95,28 +95,11 @@ class Sources(APIBase):
         store_images_for_results: Union[List[str], object] = sentinel,
     ) -> Response:
         data = dict(
-            name=name,
-            license_type=license_type,
-            identify_facesize_threshold=identify_facesize_threshold,
-            use_pps_time=use_pps_time,
-            manual_create_facesize_threshold=manual_create_facesize_threshold,
-            manual_create_on_ha=manual_create_on_ha,
-            manual_create_on_junk=manual_create_on_junk,
-            manual_identify_asm=manual_identify_asm,
-            auto_create_persons=auto_create_persons,
-            auto_create_facesize_threshold=auto_create_facesize_threshold,
-            auto_create_check_blur=auto_create_check_blur,
-            auto_create_check_exposure=auto_create_check_exposure,
-            auto_create_on_ha=auto_create_on_ha,
-            auto_create_on_junk=auto_create_on_junk,
-            auto_check_face_angle=auto_check_face_angle,
-            auto_check_liveness=auto_check_liveness,
-            auto_create_liveness_only=auto_create_liveness_only,
-            auto_identify_asm=auto_identify_asm,
-            store_images_for_results=store_images_for_results,
-        )
-        data = dict(
-            filter(lambda kwarg: kwarg[1] is not sentinel, data.items())
+            filter(
+                lambda kwarg: kwarg[1] is not sentinel
+                and kwarg[0] not in ["id", "self"],
+                locals().items(),
+            )
         )
 
         try:
@@ -135,7 +118,7 @@ class SourcesAsync(APIBaseAsync):
     async def create(
         self,
         name: str,
-        license_type: str = SourceLicense.BASIC,
+        license_type: SourceLicense = SourceLicense.BASIC,
         identify_facesize_threshold: int = 7000,
         use_pps_time: bool = False,
         manual_create_facesize_threshold: int = 25000,
@@ -182,9 +165,9 @@ class SourcesAsync(APIBaseAsync):
             await self.client.aclose()
 
     async def list(
-        self, query: str = None, limit: int = 20, offset: int = 0
+        self, q: str = None, limit: int = 20, offset: int = 0
     ) -> Response:
-        data = {"q": query, "limit": limit, "offset": offset}
+        data = {"q": q, "limit": limit, "offset": offset}
         try:
             return await self.client.get(url="/v1/sources/", params=data)
         finally:
@@ -200,7 +183,7 @@ class SourcesAsync(APIBaseAsync):
         self,
         id: int,
         name: str,
-        license_type: Union[str, object] = sentinel,
+        license_type: Union[SourceLicense, object] = sentinel,
         identify_facesize_threshold: Union[int, object] = sentinel,
         use_pps_time: Union[bool, object] = sentinel,
         manual_create_facesize_threshold: Union[int, object] = sentinel,
@@ -220,28 +203,11 @@ class SourcesAsync(APIBaseAsync):
         store_images_for_results: Union[List[str], object] = sentinel,
     ) -> Response:
         data = dict(
-            name=name,
-            license_type=license_type,
-            identify_facesize_threshold=identify_facesize_threshold,
-            use_pps_time=use_pps_time,
-            manual_create_facesize_threshold=manual_create_facesize_threshold,
-            manual_create_on_ha=manual_create_on_ha,
-            manual_create_on_junk=manual_create_on_junk,
-            manual_identify_asm=manual_identify_asm,
-            auto_create_persons=auto_create_persons,
-            auto_create_facesize_threshold=auto_create_facesize_threshold,
-            auto_create_check_blur=auto_create_check_blur,
-            auto_create_check_exposure=auto_create_check_exposure,
-            auto_create_on_ha=auto_create_on_ha,
-            auto_create_on_junk=auto_create_on_junk,
-            auto_check_face_angle=auto_check_face_angle,
-            auto_check_liveness=auto_check_liveness,
-            auto_create_liveness_only=auto_create_liveness_only,
-            auto_identify_asm=auto_identify_asm,
-            store_images_for_results=store_images_for_results,
-        )
-        data = dict(
-            filter(lambda kwarg: kwarg[1] is not sentinel, data.items())
+            filter(
+                lambda kwarg: kwarg[1] is not sentinel
+                and kwarg[0] not in ["id", "self"],
+                locals().items(),
+            )
         )
 
         try:

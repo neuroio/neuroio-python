@@ -82,7 +82,7 @@ def test_sources_list_with_params_200(client):
         status_code=200,
         content={"results": [{"id": 1, "name": "source_name"}]},
     )
-    response = client.sources.list(query="test", offset=20)
+    response = client.sources.list(q="test", offset=20)
     assert request.called
     assert response.status_code == 200
     assert response.json()["results"][0]["name"] == "source_name"
@@ -110,7 +110,7 @@ async def test_async_list_with_params_200(async_client):
         status_code=200,
         content={"results": [{"id": 1, "name": "source_name"}]},
     )
-    response = await async_client.sources.list(query="test", offset=20)
+    response = await async_client.sources.list(q="test", offset=20)
     assert request.called
     assert response.status_code == 200
     assert response.json()["results"][0]["name"] == "source_name"
