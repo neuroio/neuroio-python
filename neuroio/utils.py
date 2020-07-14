@@ -27,3 +27,10 @@ F = TypeVar("F", bound=Callable[..., Any])
 
 def cached_property(f: F) -> property:
     return property(functools.lru_cache()(f))
+
+
+def process_query_params(params: dict) -> dict:
+    for key, item in params.items():
+        if isinstance(item, list):
+            params[key] = ",".join(map(str, item))
+    return params
