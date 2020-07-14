@@ -1,3 +1,5 @@
+import json
+
 import pytest
 import respx
 
@@ -175,9 +177,8 @@ def test_update_200(client):
     request_content.read()
 
     assert request.called
-    assert (
-        request_content.content
-        == b'{"name": "source_name", "license_type": ["advanced"]}'
+    assert json.loads(request_content.content) == json.loads(
+        b'{"name": "source_name", "license_type": ["advanced"]}'
     )
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"
@@ -199,9 +200,8 @@ async def test_async_update_200(async_client):
     request_content.read()
 
     assert request.called
-    assert (
-        request_content.content
-        == b'{"name": "source_name", "license_type": ["advanced"]}'
+    assert json.loads(request_content.content) == json.loads(
+        b'{"name": "source_name", "license_type": ["advanced"]}'
     )
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"
