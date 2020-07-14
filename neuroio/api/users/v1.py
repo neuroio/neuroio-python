@@ -56,7 +56,7 @@ class Users(APIBase):
         }
         try:
             return self.client.post(
-                url="/v1/users/password/change/", data=data
+                url="/v1/users/password/change/", json=data
             )
         finally:
             self.client.close()
@@ -123,7 +123,7 @@ class UsersAsync(APIBaseAsync):
         }
         try:
             return await self.client.post(
-                url="/v1/users/password/change/", data=data
+                url="/v1/users/password/change/", json=data
             )
         finally:
             await self.client.aclose()
