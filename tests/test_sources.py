@@ -14,6 +14,14 @@ def test_create_201(client):
         content={"id": 1, "name": "test_name"},
     )
     response = client.sources.create(name="test_name")
+
+    request_content = request.calls[0][0]
+    request_content.read()
+
+    assert (
+        "store_images_for_results"
+        not in json.loads(request_content.content).keys()
+    )
     assert request.called
     assert response.status_code == 201
     assert response.json()["name"] == "test_name"
@@ -29,6 +37,14 @@ def test_create_store_images_results_201(client):
     response = client.sources.create(
         name="test_name", store_images_for_results=[EntryResult.DET]
     )
+
+    request_content = request.calls[0][0]
+    request_content.read()
+
+    assert (
+        "store_images_for_results"
+        in json.loads(request_content.content).keys()
+    )
     assert request.called
     assert response.status_code == 201
     assert response.json()["name"] == "test_name"
@@ -43,6 +59,14 @@ async def test_async_create_201(async_client):
         content={"id": 1, "name": "test_name"},
     )
     response = await async_client.sources.create(name="test_name")
+
+    request_content = request.calls[0][0]
+    request_content.read()
+
+    assert (
+        "store_images_for_results"
+        not in json.loads(request_content.content).keys()
+    )
     assert request.called
     assert response.status_code == 201
     assert response.json()["name"] == "test_name"
@@ -58,6 +82,13 @@ async def test_async_create_store_images_results_201(async_client):
     )
     response = await async_client.sources.create(
         name="test_name", store_images_for_results=[EntryResult.DET]
+    )
+    request_content = request.calls[0][0]
+    request_content.read()
+
+    assert (
+        "store_images_for_results"
+        in json.loads(request_content.content).keys()
     )
     assert request.called
     assert response.status_code == 201
@@ -170,7 +201,7 @@ def test_update_200(client):
         content={"id": 1, "name": "source_name"},
     )
     response = client.sources.update(
-        id=1, name="source_name", license_type=[SourceLicense.ADVANCED]
+        id=1, name="source_name", license_type=SourceLicense.ADVANCED
     )
 
     request_content = request.calls[0][0]
@@ -178,7 +209,7 @@ def test_update_200(client):
 
     assert request.called
     assert json.loads(request_content.content) == json.loads(
-        b'{"name": "source_name", "license_type": ["advanced"]}'
+        b'{"name": "source_name", "license_type": "advanced"}'
     )
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"
@@ -193,7 +224,7 @@ async def test_async_update_200(async_client):
         content={"id": 1, "name": "source_name"},
     )
     response = await async_client.sources.update(
-        id=1, name="source_name", license_type=[SourceLicense.ADVANCED]
+        id=1, name="source_name", license_type=SourceLicense.ADVANCED
     )
 
     request_content = request.calls[0][0]
@@ -201,7 +232,7 @@ async def test_async_update_200(async_client):
 
     assert request.called
     assert json.loads(request_content.content) == json.loads(
-        b'{"name": "source_name", "license_type": ["advanced"]}'
+        b'{"name": "source_name", "license_type": "advanced"}'
     )
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"

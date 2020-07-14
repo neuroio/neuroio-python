@@ -30,27 +30,13 @@ class Sources(APIBase):
         store_images_for_results: Optional[List[str]] = None,
     ) -> Response:
         data = dict(
-            name=name,
-            license_type=license_type,
-            identify_facesize_threshold=identify_facesize_threshold,
-            use_pps_time=use_pps_time,
-            manual_create_facesize_threshold=manual_create_facesize_threshold,
-            manual_create_on_ha=manual_create_on_ha,
-            manual_create_on_junk=manual_create_on_junk,
-            manual_identify_asm=manual_identify_asm,
-            auto_create_persons=auto_create_persons,
-            auto_create_facesize_threshold=auto_create_facesize_threshold,
-            auto_create_check_blur=auto_create_check_blur,
-            auto_create_check_exposure=auto_create_check_exposure,
-            auto_create_on_ha=auto_create_on_ha,
-            auto_create_on_junk=auto_create_on_junk,
-            auto_check_face_angle=auto_check_face_angle,
-            auto_check_liveness=auto_check_liveness,
-            auto_create_liveness_only=auto_create_liveness_only,
-            auto_identify_asm=auto_identify_asm,
+            filter(
+                lambda kwarg: kwarg[1] is not sentinel and kwarg[0] != "self",
+                locals().items(),
+            )
         )
-        if store_images_for_results is not None:
-            data["store_images_for_results"] = store_images_for_results
+        if store_images_for_results is None:
+            del data["store_images_for_results"]
         try:
             return self.client.post(url="/v1/sources/", json=data)
         finally:
@@ -138,27 +124,13 @@ class SourcesAsync(APIBaseAsync):
         store_images_for_results: Optional[List[str]] = None,
     ) -> Response:
         data = dict(
-            name=name,
-            license_type=license_type,
-            identify_facesize_threshold=identify_facesize_threshold,
-            use_pps_time=use_pps_time,
-            manual_create_facesize_threshold=manual_create_facesize_threshold,
-            manual_create_on_ha=manual_create_on_ha,
-            manual_create_on_junk=manual_create_on_junk,
-            manual_identify_asm=manual_identify_asm,
-            auto_create_persons=auto_create_persons,
-            auto_create_facesize_threshold=auto_create_facesize_threshold,
-            auto_create_check_blur=auto_create_check_blur,
-            auto_create_check_exposure=auto_create_check_exposure,
-            auto_create_on_ha=auto_create_on_ha,
-            auto_create_on_junk=auto_create_on_junk,
-            auto_check_face_angle=auto_check_face_angle,
-            auto_check_liveness=auto_check_liveness,
-            auto_create_liveness_only=auto_create_liveness_only,
-            auto_identify_asm=auto_identify_asm,
+            filter(
+                lambda kwarg: kwarg[1] is not sentinel and kwarg[0] != "self",
+                locals().items(),
+            )
         )
-        if store_images_for_results is not None:
-            data["store_images_for_results"] = store_images_for_results
+        if store_images_for_results is None:
+            del data["store_images_for_results"]
         try:
             return await self.client.post(url="/v1/sources/", json=data)
         finally:
