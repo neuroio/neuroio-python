@@ -7,8 +7,8 @@ import respx
 from neuroio.constants import API_BASE_URL
 
 
-def mock_query_params_all_combos(*args, args_count=0, content=None):
-    combos = list(itertools.combinations_with_replacement(args, args_count))
+def mock_query_params_all_combos(*args, content=None):
+    combos = list(itertools.permutations(args))
 
     return [
         respx.get(
@@ -23,10 +23,7 @@ def mock_query_params_all_combos(*args, args_count=0, content=None):
 @respx.mock
 def test_list_without_params200(client):
     requests = mock_query_params_all_combos(
-        "limit=20",
-        "offset=0",
-        args_count=2,
-        content={"results": [{"id": 1, "pid": "pid"}]},
+        "limit=20", "offset=0", content={"results": [{"id": 1, "pid": "pid"}]}
     )
 
     response = client.entries.list()
@@ -45,7 +42,6 @@ def test_list_with_params200(client):
         f"date_from={date_str}",
         "limit=20",
         "offset=0",
-        args_count=4,
         content={"results": [{"id": 1, "pid": "pid"}]},
     )
 
@@ -60,10 +56,7 @@ def test_list_with_params200(client):
 @pytest.mark.asyncio
 async def test_async_list_without_params_200(async_client):
     requests = mock_query_params_all_combos(
-        "limit=20",
-        "offset=0",
-        args_count=2,
-        content={"results": [{"id": 1, "pid": "pid"}]},
+        "limit=20", "offset=0", content={"results": [{"id": 1, "pid": "pid"}]}
     )
     response = await async_client.entries.list()
     assert any([request.called for request in requests])
@@ -82,7 +75,6 @@ async def test_async_list_with_params_200(async_client):
         f"date_from={date_str}",
         "limit=20",
         "offset=0",
-        args_count=4,
         content={"results": [{"id": 1, "pid": "pid"}]},
     )
     response = await async_client.entries.list(
