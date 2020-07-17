@@ -59,7 +59,7 @@ async def test_async_create_400(async_client):
 
 
 @respx.mock
-def test_create_by_entry(client):
+def test_create_by_entry_201(client):
     request = respx.post(f"{API_BASE_URL}/v1/persons/entry/", status_code=201)
     response = client.persons.create_by_entry(1, False, False)
 
@@ -69,11 +69,28 @@ def test_create_by_entry(client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_create_by_entry(async_client):
+async def test_async_create_by_entry_201(async_client):
     request = respx.post(f"{API_BASE_URL}/v1/persons/entry/", status_code=201)
     response = await async_client.persons.create_by_entry(1, False, False)
     assert request.called
     assert response.status_code == 201
+
+
+@respx.mock
+def test_reinit_204(client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/reinit/", status_code=204)
+    response = client.persons.reinit(1)
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_204(async_client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/reinit/", status_code=204)
+    response = await async_client.persons.reinit(1)
+    assert request.called
+    assert response.status_code == 204
 
 
 @respx.mock

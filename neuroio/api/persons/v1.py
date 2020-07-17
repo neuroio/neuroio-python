@@ -41,6 +41,12 @@ class Persons(APIBase):
         finally:
             self.client.close()
 
+    def reinit(self, id: int) -> Response:
+        try:
+            return self.client.post(url="/v1/persons/reinit/", json={"id": id})
+        finally:
+            self.client.close()
+
     def delete(self, pid: str) -> Response:
         try:
             return self.client.delete(url=f"/v1/persons/{pid}/")
@@ -83,6 +89,14 @@ class PersonsAsync(APIBaseAsync):
         }
         try:
             return await self.client.post(url="/v1/persons/entry/", json=data)
+        finally:
+            await self.client.aclose()
+
+    async def reinit(self, id: int) -> Response:
+        try:
+            return await self.client.post(
+                url="/v1/persons/reinit/", json={"id": id}
+            )
         finally:
             await self.client.aclose()
 
