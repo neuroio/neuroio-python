@@ -1,0 +1,95 @@
+import pytest
+import respx
+
+from neuroio.constants import API_BASE_URL
+
+
+@respx.mock
+def test_create_201(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/",
+        status_code=201,
+        content={"result": "new", "confidence": 100},
+    )
+    response = client.persons.create(
+        b"image", "test_source", 1000, True, True, True
+    )
+
+    assert request.called
+    assert response.status_code == 201
+
+
+@respx.mock
+def test_create_400(client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/", status_code=400)
+    response = client.persons.create(
+        b"image", "test_source", 1000, True, True, True
+    )
+
+    assert request.called
+    assert response.status_code == 400
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_create_200(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/",
+        status_code=201,
+        content={"result": "new", "confidence": 100},
+    )
+    response = await async_client.persons.create(
+        b"image", "test_source", 1000, True, True, True
+    )
+
+    assert request.called
+    assert response.status_code == 201
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_create_400(async_client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/", status_code=400)
+    response = await async_client.persons.create(
+        b"image", "test_source", 1000, True, True, True
+    )
+
+    assert request.called
+    assert response.status_code == 400
+
+
+@respx.mock
+def test_create_by_entry(client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/entry/", status_code=201)
+    response = client.persons.create_by_entry(1, False, False)
+
+    assert request.called
+    assert response.status_code == 201
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_create_by_entry(async_client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/entry/", status_code=201)
+    response = await async_client.persons.create_by_entry(1, False, False)
+    assert request.called
+    assert response.status_code == 201
+
+
+@respx.mock
+def test_delete(client):
+    request = respx.delete(f"{API_BASE_URL}/v1/persons/pid/", status_code=204)
+    response = client.persons.delete("pid")
+
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_delete(async_client):
+    request = respx.delete(f"{API_BASE_URL}/v1/persons/pid/", status_code=204)
+    response = await async_client.persons.delete("pid")
+
+    assert request.called
+    assert response.status_code == 204
