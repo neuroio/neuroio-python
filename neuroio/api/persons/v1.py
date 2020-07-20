@@ -72,6 +72,16 @@ class Persons(APIBase):
         finally:
             self.client.close()
 
+    def search(self, image: BinaryIO, identify_asm: bool = False) -> Response:
+        files = {"upload-file": image}
+        data = {"identify_asm": identify_asm}
+        try:
+            return self.client.post(
+                url="/v1/persons/search/", json=data, files=files
+            )
+        finally:
+            self.client.close()
+
     def delete(self, pid: str) -> Response:
         try:
             return self.client.delete(url=f"/v1/persons/{pid}/")
@@ -145,6 +155,18 @@ class PersonsAsync(APIBaseAsync):
         try:
             return await self.client.post(
                 url=f"/v1/persons/reinit/{pid}/", json=data, files=files
+            )
+        finally:
+            await self.client.aclose()
+
+    async def search(
+        self, image: BinaryIO, identify_asm: bool = False
+    ) -> Response:
+        files = {"upload-file": image}
+        data = {"identify_asm": identify_asm}
+        try:
+            return await self.client.post(
+                url="/v1/persons/search/", json=data, files=files
             )
         finally:
             await self.client.aclose()

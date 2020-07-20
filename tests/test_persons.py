@@ -1,7 +1,7 @@
 import pytest
 import respx
 
-from neuroio.constants import API_BASE_URL
+from neuroio.constants import API_BASE_URL, EntryResult
 
 
 @respx.mock
@@ -162,3 +162,47 @@ async def test_async_reinit_by_photo_400(async_client):
 
     assert request.called
     assert response.status_code == 400
+
+
+@respx.mock
+def test_search_200(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/search/",
+        status_code=200,
+        content={"result": EntryResult.NEW, "pid": "pid"},
+    )
+    response = client.persons.search(b"photo")
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["pid"] == "pid"
+
+
+@respx.mock
+def test_search_404(client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/search/", status_code=404)
+    response = client.persons.search(b"photo")
+    assert request.called
+    assert response.status_code == 404
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_search_200(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/search/",
+        status_code=200,
+        content={"result": EntryResult.NEW, "pid": "pid"},
+    )
+    response = await async_client.persons.search(b"photo")
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["pid"] == "pid"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_404(async_client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/search/", status_code=404)
+    response = await async_client.persons.search(b"image")
+    assert request.called
+    assert response.status_code == 404
