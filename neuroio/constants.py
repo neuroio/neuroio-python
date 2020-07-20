@@ -22,3 +22,22 @@ class EntryResult(str, Enum):
     JUNK = "junk"
     NM = "nm"
     DET = "det"
+
+
+class EntryMood(str, Enum):
+    NEUTRAL = "neutral"
+    ANGER = "anger"
+    CONTEMPT = "contempt"
+    DISGUST = "disgust"
+    FEAR = "fear"
+    HAPPINESS = "happiness"
+    SADNESS = "sadness"
+    SURPRISE = "surprise"
+    NM = "nm"
+    DET = "det"
+
+
+class EntryLiveness(str, Enum):
+    PASSED = "passed"
+    FAILED = "failed"
+    UNDETERMINED = "undetermined"
