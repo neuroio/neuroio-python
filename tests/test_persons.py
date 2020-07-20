@@ -110,3 +110,55 @@ async def test_async_delete(async_client):
 
     assert request.called
     assert response.status_code == 204
+
+
+@respx.mock
+def test_reinit_by_photo_204(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/reinit/pid/", status_code=204
+    )
+    response = client.persons.reinit_by_photo(
+        "pid", b"image", "source_name", 100, True
+    )
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+def test_reinit_by_photo_400(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/reinit/pid/", status_code=400
+    )
+    response = client.persons.reinit_by_photo(
+        "pid", b"image", "source_name", 100, True
+    )
+    assert request.called
+    assert response.status_code == 400
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_reinit_by_photo_204(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/reinit/pid/", status_code=204
+    )
+    response = await async_client.persons.reinit_by_photo(
+        "pid", b"image", "source_name", 100, True
+    )
+
+    assert request.called
+    assert response.status_code == 204
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_reinit_by_photo_400(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/reinit/pid/", status_code=400
+    )
+    response = await async_client.persons.reinit_by_photo(
+        "pid", b"image", "source_name", 100, True
+    )
+
+    assert request.called
+    assert response.status_code == 400

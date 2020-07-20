@@ -3,6 +3,7 @@ from typing import BinaryIO
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
+from neuroio.constants import EntryResult
 
 
 class Persons(APIBase):
@@ -44,6 +45,30 @@ class Persons(APIBase):
     def reinit(self, id: int) -> Response:
         try:
             return self.client.post(url="/v1/persons/reinit/", json={"id": id})
+        finally:
+            self.client.close()
+
+    def reinit_by_photo(
+        self,
+        pid: str,
+        image: BinaryIO,
+        source: str,
+        facesize: int,
+        identify_asm: bool,
+        result: str = EntryResult.HA,
+    ) -> Response:
+        files = {"upload-file": image}
+        data = {
+            "source": source,
+            "facesize": facesize,
+            "identify_asm": identify_asm,
+            "result": result,
+        }
+
+        try:
+            return self.client.post(
+                url=f"/v1/persons/reinit/{pid}/", json=data, files=files
+            )
         finally:
             self.client.close()
 
@@ -96,6 +121,30 @@ class PersonsAsync(APIBaseAsync):
         try:
             return await self.client.post(
                 url="/v1/persons/reinit/", json={"id": id}
+            )
+        finally:
+            await self.client.aclose()
+
+    async def reinit_by_photo(
+        self,
+        pid: str,
+        image: BinaryIO,
+        source: str,
+        facesize: int,
+        identify_asm: bool,
+        result: str = EntryResult.HA,
+    ) -> Response:
+        files = {"upload-file": image}
+        data = {
+            "source": source,
+            "facesize": facesize,
+            "identify_asm": identify_asm,
+            "result": result,
+        }
+
+        try:
+            return await self.client.post(
+                url=f"/v1/persons/reinit/{pid}/", json=data, files=files
             )
         finally:
             await self.client.aclose()
