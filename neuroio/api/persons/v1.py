@@ -16,16 +16,16 @@ class Persons(APIBase):
         create_on_junk: bool,
         identify_asm: bool,
     ) -> Response:
-        files = {"upload-file": image}
+        files = {"image": image}
         data = {
             "source": source,
-            "facesize": facesize,
-            "create_on_ha": create_on_ha,
-            "create_on_junk": create_on_junk,
-            "identify_asm": identify_asm,
+            "facesize": str(facesize),
+            "create_on_ha": str(create_on_ha),
+            "create_on_junk": str(create_on_junk),
+            "identify_asm": str(identify_asm),
         }
         try:
-            return self.client.post(url="/v1/persons/", files=files, json=data)
+            return self.client.post(url="/v1/persons/", data=data, files=files)
         finally:
             self.client.close()
 
@@ -57,27 +57,27 @@ class Persons(APIBase):
         identify_asm: bool,
         result: str = EntryResult.HA,
     ) -> Response:
-        files = {"upload-file": image}
+        files = {"image": image}
         data = {
             "source": source,
-            "facesize": facesize,
-            "identify_asm": identify_asm,
+            "facesize": str(facesize),
+            "identify_asm": str(identify_asm),
             "result": result,
         }
 
         try:
             return self.client.post(
-                url=f"/v1/persons/reinit/{pid}/", json=data, files=files
+                url=f"/v1/persons/reinit/{pid}/", data=data, files=files
             )
         finally:
             self.client.close()
 
     def search(self, image: BinaryIO, identify_asm: bool = False) -> Response:
-        files = {"upload-file": image}
-        data = {"identify_asm": identify_asm}
+        files = {"image": ("image", image, "image/jpeg")}
+        data = {"identify_asm": str(identify_asm)}
         try:
             return self.client.post(
-                url="/v1/persons/search/", json=data, files=files
+                url="/v1/persons/search/", data=data, files=files
             )
         finally:
             self.client.close()
@@ -99,17 +99,17 @@ class PersonsAsync(APIBaseAsync):
         create_on_junk: bool,
         identify_asm: bool,
     ) -> Response:
-        files = {"upload-file": image}
+        files = {"image": image}
         data = {
             "source": source,
-            "facesize": facesize,
-            "create_on_ha": create_on_ha,
-            "create_on_junk": create_on_junk,
-            "identiry_asm": identify_asm,
+            "facesize": str(facesize),
+            "create_on_ha": str(create_on_ha),
+            "create_on_junk": str(create_on_junk),
+            "identify_asm": str(identify_asm),
         }
         try:
             return await self.client.post(
-                url="/v1/persons/", files=files, json=data
+                url="/v1/persons/", data=data, files=files
             )
         finally:
             await self.client.aclose()
@@ -144,17 +144,17 @@ class PersonsAsync(APIBaseAsync):
         identify_asm: bool,
         result: str = EntryResult.HA,
     ) -> Response:
-        files = {"upload-file": image}
+        files = {"image": image}
         data = {
             "source": source,
-            "facesize": facesize,
-            "identify_asm": identify_asm,
+            "facesize": str(facesize),
+            "identify_asm": str(identify_asm),
             "result": result,
         }
 
         try:
             return await self.client.post(
-                url=f"/v1/persons/reinit/{pid}/", json=data, files=files
+                url=f"/v1/persons/reinit/{pid}/", data=data, files=files
             )
         finally:
             await self.client.aclose()
@@ -162,11 +162,11 @@ class PersonsAsync(APIBaseAsync):
     async def search(
         self, image: BinaryIO, identify_asm: bool = False
     ) -> Response:
-        files = {"upload-file": image}
-        data = {"identify_asm": identify_asm}
+        files = {"image": ("image", image, "image/jpeg")}
+        data = {"identify_asm": str(identify_asm)}
         try:
             return await self.client.post(
-                url="/v1/persons/search/", json=data, files=files
+                url="/v1/persons/search/", data=data, files=files
             )
         finally:
             await self.client.aclose()
