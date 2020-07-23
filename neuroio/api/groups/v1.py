@@ -4,7 +4,7 @@ from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import sentinel
-from neuroio.utils import process_query_params
+from neuroio.utils import process_get_query_params
 
 
 class Groups(APIBase):
@@ -24,16 +24,7 @@ class Groups(APIBase):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_query_params(
-            dict(
-                filter(
-                    lambda kwarg: kwarg[1] is not sentinel
-                    and kwarg[0] != "self",
-                    locals().items(),
-                )
-            )
-        )
-
+        data = process_get_query_params(locals(), ["self"])
         try:
             return self.client.get(url="/v1/groups/persons/", params=data)
         finally:
@@ -67,15 +58,8 @@ class Groups(APIBase):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_query_params(
-            dict(
-                filter(
-                    lambda kwarg: kwarg[1] is not sentinel
-                    and kwarg[0] not in ["self", "id"],
-                    locals().items(),
-                )
-            )
-        )
+        data = process_get_query_params(locals(), ["self", "id"])
+
         try:
             return self.client.get(
                 url=f"/v1/groups/persons/{id}/pids/", params=data
@@ -117,16 +101,7 @@ class GroupsAsync(APIBaseAsync):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_query_params(
-            dict(
-                filter(
-                    lambda kwarg: kwarg[1] is not sentinel
-                    and kwarg[0] != "self",
-                    locals().items(),
-                )
-            )
-        )
-
+        data = process_get_query_params(locals(), ["self"])
         try:
             return await self.client.get(
                 url="/v1/groups/persons/", params=data
@@ -162,15 +137,7 @@ class GroupsAsync(APIBaseAsync):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_query_params(
-            dict(
-                filter(
-                    lambda kwarg: kwarg[1] is not sentinel
-                    and kwarg[0] not in ["self", "id"],
-                    locals().items(),
-                )
-            )
-        )
+        data = process_get_query_params(locals(), ["self", "id"])
         try:
             return await self.client.get(
                 url=f"/v1/groups/persons/{id}/pids/", params=data
