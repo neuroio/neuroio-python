@@ -1,6 +1,11 @@
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
+from neuroio.constants import (
+    DEFAULT_EXACT_THRESHOLD,
+    DEFAULT_HA_THRESHOLD,
+    DEFAULT_JUNK_THRESHOLD,
+)
 
 
 class Settings(APIBase):
@@ -11,7 +16,10 @@ class Settings(APIBase):
             self.client.close()
 
     def update(
-        self, exact: float = 79.3, ha: float = 75.5, junk: float = 68.84
+        self,
+        exact: float = DEFAULT_EXACT_THRESHOLD,
+        ha: float = DEFAULT_HA_THRESHOLD,
+        junk: float = DEFAULT_JUNK_THRESHOLD,
     ) -> Response:
         data = locals()
         del data["self"]
@@ -35,7 +43,10 @@ class SettingsAsync(APIBaseAsync):
             await self.client.aclose()
 
     async def update(
-        self, exact: float = 79.3, ha: float = 75.5, junk: float = 68.84
+        self,
+        exact: float = DEFAULT_EXACT_THRESHOLD,
+        ha: float = DEFAULT_HA_THRESHOLD,
+        junk: float = DEFAULT_JUNK_THRESHOLD,
     ) -> Response:
         data = locals()
         del data["self"]

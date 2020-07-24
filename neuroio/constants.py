@@ -41,3 +41,8 @@ class EntryLiveness(str, Enum):
     PASSED = "passed"
     FAILED = "failed"
     UNDETERMINED = "undetermined"
+
+
+DEFAULT_EXACT_THRESHOLD = 79.3
+DEFAULT_HA_THRESHOLD = 75.5
+DEFAULT_JUNK_THRESHOLD = 68.84
