@@ -82,6 +82,12 @@ class Client:
             namespace="neuroio.api.utility", clsname="Utility"
         )
 
+    @cached_property
+    def settings(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="neuroio.api.settings", clsname="Settings"
+        )
+
 
 class AsyncClient(Client):
     @property
@@ -122,4 +128,10 @@ class AsyncClient(Client):
     def utility(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="neuroio.api.utility", clsname="UtilityAsync"
+        )
+
+    @cached_property
+    def settings(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="neuroio.api.settings", clsname="SettingsAsync"
         )
