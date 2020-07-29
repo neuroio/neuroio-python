@@ -81,7 +81,6 @@ class Client:
         return self.get_api_class_instance(
             namespace="neuroio.api.groups", clsname="Groups"
         )
-            
 
     @cached_property
     def persons(self) -> APIBase:
