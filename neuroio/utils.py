@@ -1,6 +1,8 @@
 import functools
 from importlib import import_module
-from typing import Any, Callable, TypeVar
+from typing import Any, Callable, List, Optional, TypeVar, Union
+
+from neuroio.constants import sentinel
 
 
 def get_package_version() -> str:
@@ -34,3 +36,17 @@ def process_query_params(params: dict) -> dict:
         if isinstance(item, list):
             params[key] = ",".join(map(str, item))
     return params
+
+
+def process_get_query_params(
+    local_items: dict, reserved_names: List[str]
+) -> dict:
+    return process_query_params(
+        dict(
+            filter(
+                lambda kwarg: kwarg[1] is not sentinel
+                and kwarg[0] not in reserved_names,
+                local_items.items(),
+            )
+        )
+    )

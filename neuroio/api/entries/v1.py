@@ -5,7 +5,7 @@ from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import EntryLiveness, EntryMood, EntryResult, sentinel
-from neuroio.utils import process_query_params
+from neuroio.utils import process_get_query_params
 
 
 class Entries(APIBase):
@@ -24,15 +24,7 @@ class Entries(APIBase):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_query_params(
-            dict(
-                filter(
-                    lambda kwarg: kwarg[1] is not sentinel
-                    and kwarg[0] != "self",
-                    locals().items(),
-                )
-            )
-        )
+        data = process_get_query_params(locals(), ["self"])
         try:
             return self.client.get(url="/v1/entries/", params=data)
         finally:
@@ -67,15 +59,7 @@ class EntriesAsync(APIBaseAsync):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_query_params(
-            dict(
-                filter(
-                    lambda kwarg: kwarg[1] is not sentinel
-                    and kwarg[0] != "self",
-                    locals().items(),
-                )
-            )
-        )
+        data = process_get_query_params(locals(), ["self"])
         try:
             return await self.client.get(url="/v1/entries/", params=data)
         finally:
