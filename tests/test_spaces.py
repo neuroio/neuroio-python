@@ -165,3 +165,32 @@ async def test_async_get_not_found(async_client):
 
     assert request.called
     assert response.status_code == 404
+
+
+@respx.mock
+def test_update_ok(client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/spaces/1/",
+        status_code=200,
+        content={"id": 1, "name": "new_name"},
+    )
+    response = client.spaces.update(id=1, name="new_name")
+
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["name"] == "new_name"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_update_ok(async_client):
+    request = respx.patch(
+        f"{API_BASE_URL}/v1/spaces/1/",
+        status_code=200,
+        content={"id": 1, "name": "new_name"},
+    )
+    response = await async_client.spaces.update(id=1, name="new_name")
+
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["name"] == "new_name"

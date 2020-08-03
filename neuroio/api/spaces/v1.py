@@ -26,6 +26,13 @@ class Spaces(APIBase):
         finally:
             self.client.close()
 
+    def update(self, id: int, name: str) -> Response:
+        data = {"name": name}
+        try:
+            return self.client.patch(url=f"/v1/spaces/{id}/", json=data)
+        finally:
+            self.client.close()
+
 
 class SpacesAsync(APIBaseAsync):
     async def create(self, name: str) -> Response:
@@ -47,5 +54,12 @@ class SpacesAsync(APIBaseAsync):
     async def get(self, id: int) -> Response:
         try:
             return await self.client.get(url=f"/v1/spaces/{id}/")
+        finally:
+            await self.client.aclose()
+
+    async def update(self, id: int, name: str) -> Response:
+        data = {"name": name}
+        try:
+            return await self.client.patch(url=f"/v1/spaces/{id}/", json=data)
         finally:
             await self.client.aclose()
