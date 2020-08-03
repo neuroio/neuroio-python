@@ -117,3 +117,51 @@ async def test_async_list_with_params(async_client):
     assert any([request.called for request in requests])
     assert response.status_code == 200
     assert response.json()["results"][0]["id"] == 1
+
+
+@respx.mock
+def test_get_ok(client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/spaces/1/",
+        status_code=200,
+        content={"id": 1, "name": "name"},
+    )
+    response = client.spaces.get(id=1)
+
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["id"] == 1
+
+
+@respx.mock
+def test_get_not_found(client):
+    request = respx.get(f"{API_BASE_URL}/v1/spaces/1/", status_code=404)
+    response = client.spaces.get(id=1)
+
+    assert request.called
+    assert response.status_code == 404
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_get_ok(async_client):
+    request = respx.get(
+        f"{API_BASE_URL}/v1/spaces/1/",
+        status_code=200,
+        content={"id": 1, "name": "name"},
+    )
+    response = await async_client.spaces.get(id=1)
+
+    assert request.called
+    assert response.status_code == 200
+    assert response.json()["id"] == 1
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_get_not_found(async_client):
+    request = respx.get(f"{API_BASE_URL}/v1/spaces/1/", status_code=404)
+    response = await async_client.spaces.get(id=1)
+
+    assert request.called
+    assert response.status_code == 404

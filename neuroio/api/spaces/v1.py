@@ -20,6 +20,12 @@ class Spaces(APIBase):
         finally:
             self.client.close()
 
+    def get(self, id: int) -> Response:
+        try:
+            return self.client.get(url=f"/v1/spaces/{id}/")
+        finally:
+            self.client.close()
+
 
 class SpacesAsync(APIBaseAsync):
     async def create(self, name: str) -> Response:
@@ -35,5 +41,11 @@ class SpacesAsync(APIBaseAsync):
         data = {"q": q, "limit": limit, "offset": offset}
         try:
             return await self.client.get(url="/v1/spaces/", params=data)
+        finally:
+            await self.client.aclose()
+
+    async def get(self, id: int) -> Response:
+        try:
+            return await self.client.get(url=f"/v1/spaces/{id}/")
         finally:
             await self.client.aclose()
