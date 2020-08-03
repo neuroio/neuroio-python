@@ -1,6 +1,7 @@
 from enum import Enum
 
 API_BASE_URL: str = "https://api.neuroio.com"
+IAM_BASE_URL: str = "https://iam.neuroio.com"
 HTTP_CLIENT_TIMEOUT: float = 4.0
 
 
