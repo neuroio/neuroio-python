@@ -2,6 +2,7 @@ import pytest
 import respx
 
 from neuroio.constants import API_BASE_URL
+from tests.utils import mock_query_params_all_combos
 
 
 @respx.mock
@@ -50,3 +51,69 @@ async def test_async_create_failed(async_client):
 
     assert request.called
     assert response.status_code == 400
+
+
+@respx.mock
+def test_list_without_params(client):
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/spaces",
+        "limit=20",
+        "offset=0",
+        "q=",
+        content={"results": [{"id": 1, "name": "name"}]},
+    )
+    response = client.spaces.list()
+
+    assert any([request.called for request in requests])
+    assert response.status_code == 200
+    assert response.json()["results"][0]["id"] == 1
+
+
+@respx.mock
+def test_list_with_params(client):
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/spaces",
+        "limit=20",
+        "offset=20",
+        "q=test",
+        content={"results": [{"id": 1, "name": "name"}]},
+    )
+    response = client.spaces.list(q="test", offset=20)
+
+    assert any([request.called for request in requests])
+    assert response.status_code == 200
+    assert response.json()["results"][0]["id"] == 1
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_list_without_params(async_client):
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/spaces",
+        "limit=20",
+        "offset=0",
+        "q=",
+        content={"results": [{"id": 1, "name": "name"}]},
+    )
+    response = await async_client.spaces.list()
+
+    assert any([request.called for request in requests])
+    assert response.status_code == 200
+    assert response.json()["results"][0]["id"] == 1
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_list_with_params(async_client):
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/spaces",
+        "limit=20",
+        "offset=20",
+        "q=test",
+        content={"results": [{"id": 1, "name": "name"}]},
+    )
+    response = await async_client.spaces.list(q="test", offset=20)
+
+    assert any([request.called for request in requests])
+    assert response.status_code == 200
+    assert response.json()["results"][0]["id"] == 1
