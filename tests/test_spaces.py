@@ -194,3 +194,22 @@ async def test_async_update_ok(async_client):
     assert request.called
     assert response.status_code == 200
     assert response.json()["name"] == "new_name"
+
+
+@respx.mock
+def test_delete_ok(client):
+    request = respx.delete(f"{API_BASE_URL}/v1/spaces/1/", status_code=202)
+    response = client.spaces.delete(id=1)
+
+    assert request.called
+    assert response.status_code == 202
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_delete_ok(async_client):
+    request = respx.delete(f"{API_BASE_URL}/v1/spaces/1/", status_code=202)
+    response = await async_client.spaces.delete(id=1)
+
+    assert request.called
+    assert response.status_code == 202
