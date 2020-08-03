@@ -213,3 +213,55 @@ async def test_async_delete_ok(async_client):
 
     assert request.called
     assert response.status_code == 202
+
+
+@respx.mock
+def test_token_create_ok(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/spaces/1/tokens/",
+        status_code=201,
+        content={"is_active": True, "key": "key"},
+    )
+    response = client.spaces.token(id=1)
+
+    assert request.called
+    assert response.status_code == 201
+    assert response.json()["key"] == "key"
+
+
+@respx.mock
+def test_token_create_failed(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/spaces/1/tokens/", status_code=400
+    )
+    response = client.spaces.token(id=1)
+
+    assert request.called
+    assert response.status_code == 400
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_token_create(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/spaces/1/tokens/",
+        status_code=201,
+        content={"is_active": True, "key": "key"},
+    )
+    response = await async_client.spaces.token(id=1)
+
+    assert request.called
+    assert response.status_code == 201
+    assert response.json()["key"] == "key"
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_async_token_create_failed(async_client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/spaces/1/tokens/", status_code=400
+    )
+    response = await async_client.spaces.token(id=1)
+
+    assert request.called
+    assert response.status_code == 400

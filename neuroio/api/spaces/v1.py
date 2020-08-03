@@ -39,6 +39,13 @@ class Spaces(APIBase):
         finally:
             self.client.close()
 
+    def token(self, id: int, permanent: bool = False) -> Response:
+        data = {"permanent": permanent}
+        try:
+            return self.client.post(url=f"/v1/spaces/{id}/tokens/", json=data)
+        finally:
+            self.client.close()
+
 
 class SpacesAsync(APIBaseAsync):
     async def create(self, name: str) -> Response:
@@ -73,5 +80,14 @@ class SpacesAsync(APIBaseAsync):
     async def delete(self, id: int) -> Response:
         try:
             return await self.client.delete(url=f"/v1/spaces/{id}/")
+        finally:
+            await self.client.aclose()
+
+    async def token(self, id: int, permanent: bool = False) -> Response:
+        data = {"permanent": permanent}
+        try:
+            return await self.client.post(
+                url=f"/v1/spaces/{id}/tokens/", json=data
+            )
         finally:
             await self.client.aclose()
