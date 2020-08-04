@@ -4,6 +4,7 @@ import pytest
 import respx
 
 from neuroio.constants import API_BASE_URL, EntryResult, SourceLicense
+from tests.utils import mock_query_params_all_combos
 
 
 @respx.mock
@@ -110,13 +111,17 @@ def test_sources_list_without_params_200(client):
 
 @respx.mock
 def test_sources_list_with_params_200(client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/sources/?q=test&limit=20&offset=20",
-        status_code=200,
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/sources",
+        "q=test",
+        "spaces_ids=1,2".replace(",", "%2C"),
+        "limit=20",
+        "offset=20",
         content={"results": [{"id": 1, "name": "source_name"}]},
     )
-    response = client.sources.list(q="test", offset=20)
-    assert request.called
+    response = client.sources.list(q="test", offset=20, spaces_ids=[1, 2])
+
+    assert any([request.called for request in requests])
     assert response.status_code == 200
     assert response.json()["results"][0]["name"] == "source_name"
 

@@ -4,7 +4,7 @@ from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import SourceLicense, sentinel
-from neuroio.utils import request_data_processing
+from neuroio.utils import request_dict_processing, request_query_processing
 
 
 class Sources(APIBase):
@@ -32,7 +32,7 @@ class Sources(APIBase):
             Optional[List[str]], object
         ] = sentinel,
     ) -> Response:
-        data = request_data_processing(locals(), ["self"])
+        data = request_dict_processing(locals(), ["self"])
         try:
             return self.client.post(url="/v1/sources/", json=data)
         finally:
@@ -45,7 +45,7 @@ class Sources(APIBase):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = request_data_processing(locals(), ["self"])
+        data = request_query_processing(locals(), ["self"])
 
         try:
             return self.client.get(url="/v1/sources/", params=data)
@@ -81,7 +81,7 @@ class Sources(APIBase):
         auto_identify_asm: Union[bool, object] = sentinel,
         store_images_for_results: Union[List[str], object] = sentinel,
     ) -> Response:
-        data = request_data_processing(locals(), ["id", "self"])
+        data = request_dict_processing(locals(), ["id", "self"])
 
         try:
             return self.client.patch(url=f"/v1/sources/{id}/", json=data)
@@ -120,7 +120,7 @@ class SourcesAsync(APIBaseAsync):
             Optional[List[str]], object
         ] = sentinel,
     ) -> Response:
-        data = request_data_processing(locals(), ["self"])
+        data = request_dict_processing(locals(), ["self"])
         try:
             return await self.client.post(url="/v1/sources/", json=data)
         finally:
@@ -133,7 +133,7 @@ class SourcesAsync(APIBaseAsync):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = request_data_processing(locals(), ["self"])
+        data = request_query_processing(locals(), ["self"])
 
         try:
             return await self.client.get(url="/v1/sources/", params=data)
@@ -169,7 +169,7 @@ class SourcesAsync(APIBaseAsync):
         auto_identify_asm: Union[bool, object] = sentinel,
         store_images_for_results: Union[List[str], object] = sentinel,
     ) -> Response:
-        data = request_data_processing(locals(), ["id", "self"])
+        data = request_dict_processing(locals(), ["id", "self"])
 
         try:
             return await self.client.patch(url=f"/v1/sources/{id}/", json=data)

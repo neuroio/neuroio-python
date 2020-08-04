@@ -4,7 +4,7 @@ from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import sentinel
-from neuroio.utils import request_data_processing
+from neuroio.utils import request_query_processing
 
 
 class Groups(APIBase):
@@ -24,7 +24,7 @@ class Groups(APIBase):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = request_data_processing(locals(), ["self"])
+        data = request_query_processing(locals(), ["self"])
         try:
             return self.client.get(url="/v1/groups/persons/", params=data)
         finally:
@@ -58,7 +58,7 @@ class Groups(APIBase):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = request_data_processing(locals(), ["self", "id"])
+        data = request_query_processing(locals(), ["self", "id"])
 
         try:
             return self.client.get(
@@ -101,7 +101,7 @@ class GroupsAsync(APIBaseAsync):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = request_data_processing(locals(), ["self"])
+        data = request_query_processing(locals(), ["self"])
         try:
             return await self.client.get(
                 url="/v1/groups/persons/", params=data
@@ -137,7 +137,7 @@ class GroupsAsync(APIBaseAsync):
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = request_data_processing(locals(), ["self", "id"])
+        data = request_query_processing(locals(), ["self", "id"])
         try:
             return await self.client.get(
                 url=f"/v1/groups/persons/{id}/pids/", params=data

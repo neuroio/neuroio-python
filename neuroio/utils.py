@@ -38,15 +38,21 @@ def process_query_params(params: dict) -> dict:
     return params
 
 
-def request_data_processing(
+def request_dict_processing(
+    local_items: dict, reserved_names: List[str]
+) -> dict:
+    return dict(
+        filter(
+            lambda kwarg: kwarg[1] is not sentinel
+            and kwarg[0] not in reserved_names,
+            local_items.items(),
+        )
+    )
+
+
+def request_query_processing(
     local_items: dict, reserved_names: List[str]
 ) -> dict:
     return process_query_params(
-        dict(
-            filter(
-                lambda kwarg: kwarg[1] is not sentinel
-                and kwarg[0] not in reserved_names,
-                local_items.items(),
-            )
-        )
+        request_dict_processing(local_items, reserved_names)
     )
