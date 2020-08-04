@@ -38,7 +38,7 @@ def process_query_params(params: dict) -> dict:
     return params
 
 
-def process_get_query_params(
+def request_data_processing(
     local_items: dict, reserved_names: List[str]
 ) -> dict:
     return process_query_params(

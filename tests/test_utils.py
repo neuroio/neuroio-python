@@ -1,5 +1,5 @@
 from neuroio.constants import sentinel
-from neuroio.utils import process_get_query_params, process_query_params
+from neuroio.utils import process_query_params, request_data_processing
 
 
 def test_process_query_params():
@@ -12,5 +12,5 @@ def test_process_query_params():
 def test_process_get_query_params():
     data = {"one": 1, "two": sentinel, "self": 3}
 
-    result = process_get_query_params(data, ["self"])
+    result = request_data_processing(data, ["self"])
     assert result == {"one": 1}
