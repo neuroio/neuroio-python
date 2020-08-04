@@ -79,10 +79,6 @@ class Client:
         )
 
     @cached_property
-    def users(self) -> APIBase:
-        return self.get_api_class_instance(namespace="users", clsname="Users")
-
-    @cached_property
     def sources(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="sources", clsname="Sources"
@@ -130,6 +126,12 @@ class Client:
             namespace="whoami", clsname="Whoami", service=Service.IAM
         )
 
+    @cached_property
+    def tokens(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="tokens", clsname="Tokens", service=Service.IAM
+        )
+
 
 class AsyncClient(Client):
     @property
@@ -146,12 +148,6 @@ class AsyncClient(Client):
     def auth(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="auth", clsname="AuthAsync", service=Service.IAM
-        )
-
-    @cached_property
-    def users(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="users", clsname="UsersAsync"
         )
 
     @cached_property
@@ -200,4 +196,10 @@ class AsyncClient(Client):
     def whoami(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="whoami", clsname="WhoamiAsync", service=Service.IAM
+        )
+
+    @cached_property
+    def tokens(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="tokens", clsname="TokensAsync", service=Service.IAM
         )
