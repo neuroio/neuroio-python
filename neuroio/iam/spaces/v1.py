@@ -1,5 +1,7 @@
-from httpx import Response
+import httpx
+from httpx import URL, Response
 
+from neuroio import constants
 from neuroio.api.base import APIBase, APIBaseAsync
 
 
@@ -48,6 +50,10 @@ class Spaces(APIBase):
 
 
 class SpacesAsync(APIBaseAsync):
+    def __init__(self, client: httpx.AsyncClient):
+        client.base_url = URL(constants.IAM_BASE_URL)
+        super().__init__(client=client)
+
     async def create(self, name: str) -> Response:
         data = {"name": name}
         try:
