@@ -45,22 +45,6 @@ class Users(APIBase):
         finally:
             self.client.close()
 
-    def password_change(
-        self, old_password: str, new_password: str, reset_tokens: bool = False
-    ) -> Response:
-        data = {
-            "old_password": old_password,
-            "password": new_password,
-            "password2": new_password,
-            "reset_tokens": reset_tokens,
-        }
-        try:
-            return self.client.post(
-                url="/v1/users/password/change/", json=data
-            )
-        finally:
-            self.client.close()
-
     def me(self) -> Response:
         try:
             return self.client.get(url="/v1/users/me/")
@@ -108,22 +92,6 @@ class UsersAsync(APIBaseAsync):
         try:
             return await self.client.delete(
                 url=f"/v1/users/tokens/{token_id_or_key}/"
-            )
-        finally:
-            await self.client.aclose()
-
-    async def password_change(
-        self, old_password: str, new_password: str, reset_tokens: bool = False
-    ) -> Response:
-        data = {
-            "old_password": old_password,
-            "password": new_password,
-            "password2": new_password,
-            "reset_tokens": reset_tokens,
-        }
-        try:
-            return await self.client.post(
-                url="/v1/users/password/change/", json=data
             )
         finally:
             await self.client.aclose()
