@@ -4,6 +4,7 @@ from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import SourceLicense, sentinel
+from neuroio.utils import process_get_query_params
 
 
 class Sources(APIBase):
@@ -27,25 +28,25 @@ class Sources(APIBase):
         auto_check_liveness: bool = False,
         auto_create_liveness_only: bool = True,
         auto_identify_asm: bool = True,
-        store_images_for_results: Optional[List[str]] = None,
+        store_images_for_results: Union[
+            Optional[List[str]], object
+        ] = sentinel,
     ) -> Response:
-        data = dict(
-            filter(
-                lambda kwarg: kwarg[1] is not sentinel and kwarg[0] != "self",
-                locals().items(),
-            )
-        )
-        if store_images_for_results is None:
-            del data["store_images_for_results"]
+        data = process_get_query_params(locals(), ["self"])
         try:
             return self.client.post(url="/v1/sources/", json=data)
         finally:
             self.client.close()
 
     def list(
-        self, q: str = None, limit: int = 20, offset: int = 0
+        self,
+        q: str = None,
+        spaces_ids: Union[List[int], object] = sentinel,
+        limit: int = 20,
+        offset: int = 0,
     ) -> Response:
-        data = {"q": q, "limit": limit, "offset": offset}
+        data = process_get_query_params(locals(), ["self"])
+
         try:
             return self.client.get(url="/v1/sources/", params=data)
         finally:
@@ -80,13 +81,7 @@ class Sources(APIBase):
         auto_identify_asm: Union[bool, object] = sentinel,
         store_images_for_results: Union[List[str], object] = sentinel,
     ) -> Response:
-        data = dict(
-            filter(
-                lambda kwarg: kwarg[1] is not sentinel
-                and kwarg[0] not in ["id", "self"],
-                locals().items(),
-            )
-        )
+        data = process_get_query_params(locals(), ["id", "self"])
 
         try:
             return self.client.patch(url=f"/v1/sources/{id}/", json=data)
@@ -121,25 +116,25 @@ class SourcesAsync(APIBaseAsync):
         auto_check_liveness: bool = False,
         auto_create_liveness_only: bool = True,
         auto_identify_asm: bool = True,
-        store_images_for_results: Optional[List[str]] = None,
+        store_images_for_results: Union[
+            Optional[List[str]], object
+        ] = sentinel,
     ) -> Response:
-        data = dict(
-            filter(
-                lambda kwarg: kwarg[1] is not sentinel and kwarg[0] != "self",
-                locals().items(),
-            )
-        )
-        if store_images_for_results is None:
-            del data["store_images_for_results"]
+        data = process_get_query_params(locals(), ["self"])
         try:
             return await self.client.post(url="/v1/sources/", json=data)
         finally:
             await self.client.aclose()
 
     async def list(
-        self, q: str = None, limit: int = 20, offset: int = 0
+        self,
+        q: str = None,
+        spaces_ids: Union[List[int], object] = sentinel,
+        limit: int = 20,
+        offset: int = 0,
     ) -> Response:
-        data = {"q": q, "limit": limit, "offset": offset}
+        data = process_get_query_params(locals(), ["self"])
+
         try:
             return await self.client.get(url="/v1/sources/", params=data)
         finally:
@@ -174,13 +169,7 @@ class SourcesAsync(APIBaseAsync):
         auto_identify_asm: Union[bool, object] = sentinel,
         store_images_for_results: Union[List[str], object] = sentinel,
     ) -> Response:
-        data = dict(
-            filter(
-                lambda kwarg: kwarg[1] is not sentinel
-                and kwarg[0] not in ["id", "self"],
-                locals().items(),
-            )
-        )
+        data = process_get_query_params(locals(), ["id", "self"])
 
         try:
             return await self.client.patch(url=f"/v1/sources/{id}/", json=data)
