@@ -124,6 +124,12 @@ class Client:
             namespace="spaces", clsname="Spaces", service=Service.IAM
         )
 
+    @cached_property
+    def whoami(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="whoami", clsname="Whoami", service=Service.IAM
+        )
+
 
 class AsyncClient(Client):
     @property
@@ -188,4 +194,10 @@ class AsyncClient(Client):
     def spaces(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="spaces", clsname="SpacesAsync", service=Service.IAM
+        )
+
+    @cached_property
+    def whoami(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="whoami", clsname="WhoamiAsync", service=Service.IAM
         )

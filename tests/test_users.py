@@ -280,30 +280,3 @@ async def test_async_token_delete_by_id(async_client):
     response = await async_client.users.token_delete(token_id_or_key=1)
     assert request.called
     assert response.status_code == 204
-
-
-@respx.mock
-def test_me_username_200(client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/users/me/",
-        status_code=200,
-        content={"username": "name"},
-    )
-    response = client.users.me()
-    assert request.called
-    assert response.status_code == 200
-    assert response.json()["username"] == "name"
-
-
-@respx.mock
-@pytest.mark.asyncio
-async def test_async_me_username_200(async_client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/users/me/",
-        status_code=200,
-        content={"username": "name"},
-    )
-    response = await async_client.users.me()
-    assert request.called
-    assert response.status_code == 200
-    assert response.json()["username"] == "name"
