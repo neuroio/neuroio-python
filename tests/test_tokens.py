@@ -2,6 +2,7 @@ import pytest
 import respx
 
 from neuroio.constants import IAM_BASE_URL
+from tests.utils import mock_query_params_all_combos
 
 
 @respx.mock
@@ -54,13 +55,16 @@ async def test_async_create_failed(async_client):
 
 @respx.mock
 def test_list_200(client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/",
-        status_code=200,
+    requests = mock_query_params_all_combos(
+        f"{IAM_BASE_URL}/v1/tokens",
+        "permanent=",
+        "limit=20",
+        "offset=0",
         content=[{"token": "key"}, {"token": "key2"}],
     )
+
     tokens = client.tokens.list()
-    assert request.called
+    assert any([request.called for request in requests])
     assert tokens.status_code == 200
     assert tokens.json()[0]["token"] == "key"
     assert tokens.json()[1]["token"] == "key2"
@@ -68,68 +72,82 @@ def test_list_200(client):
 
 @respx.mock
 def test_permanent_list_200(client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/?permanent=true",
-        status_code=200,
+    requests = mock_query_params_all_combos(
+        f"{IAM_BASE_URL}/v1/tokens",
+        "permanent=true",
+        "limit=20",
+        "offset=0",
         content=[{"token": "key"}],
     )
     tokens = client.tokens.list(permanent=True)
-    assert request.called
+
+    assert any([request.called for request in requests])
     assert tokens.status_code == 200
     assert tokens.json()[0]["token"] == "key"
 
 
 @respx.mock
 def test_not_permanent_list_200(client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/?permanent=false",
-        status_code=200,
+    requests = mock_query_params_all_combos(
+        f"{IAM_BASE_URL}/v1/tokens",
+        "permanent=false",
+        "limit=20",
+        "offset=0",
         content=[{"token": "key"}],
     )
     tokens = client.tokens.list(permanent=False)
-    assert request.called
+    assert any([request.called for request in requests])
     assert tokens.status_code == 200
     assert tokens.json()[0]["token"] == "key"
 
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_tokens_list_200(async_client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/",
-        status_code=200,
+async def test_async_list_200(async_client):
+    requests = mock_query_params_all_combos(
+        f"{IAM_BASE_URL}/v1/tokens",
+        "permanent=",
+        "limit=20",
+        "offset=0",
         content=[{"token": "key"}, {"token": "key2"}],
     )
     tokens = await async_client.tokens.list()
-    assert request.called
+
+    assert any([request.called for request in requests])
     assert tokens.status_code == 200
     assert tokens.json()[0]["token"] == "key"
 
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_tokens_permanent_list_200(async_client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/?permanent=true",
-        status_code=200,
+async def test_async_permanent_list_200(async_client):
+    requests = mock_query_params_all_combos(
+        f"{IAM_BASE_URL}/v1/tokens",
+        "permanent=true",
+        "limit=20",
+        "offset=0",
         content=[{"token": "key"}],
     )
     tokens = await async_client.tokens.list(permanent=True)
-    assert request.called
+
+    assert any([request.called for request in requests])
     assert tokens.status_code == 200
     assert tokens.json()[0]["token"] == "key"
 
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_tokens_not_permanent_list_200(async_client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/?permanent=false",
-        status_code=200,
+async def test_async_not_permanent_list_200(async_client):
+    requests = mock_query_params_all_combos(
+        f"{IAM_BASE_URL}/v1/tokens",
+        "permanent=false",
+        "limit=20",
+        "offset=0",
         content=[{"token": "key"}],
     )
     tokens = await async_client.tokens.list(permanent=False)
-    assert request.called
+
+    assert any([request.called for request in requests])
     assert tokens.status_code == 200
     assert tokens.json()[0]["token"] == "key"
 
@@ -162,7 +180,7 @@ def test_token_info_by_key_200(client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_token_info_by_id_200(async_client):
+async def test_async_info_by_id_200(async_client):
     request = respx.get(
         f"{IAM_BASE_URL}/v1/tokens/1/",
         status_code=200,
@@ -176,7 +194,7 @@ async def test_async_token_info_by_id_200(async_client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_token_info_by_key_200(async_client):
+async def test_async_info_by_key_200(async_client):
     request = respx.get(
         f"{IAM_BASE_URL}/v1/tokens/token/",
         status_code=200,
@@ -218,7 +236,7 @@ def test_token_update_by_id_deactivate_200(client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_token_update_by_key_200(async_client):
+async def test_async_update_by_key_200(async_client):
     request = respx.patch(
         f"{IAM_BASE_URL}/v1/tokens/token/",
         status_code=200,
@@ -235,7 +253,7 @@ async def test_async_token_update_by_key_200(async_client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_token_update_by_id_deactivate_200(async_client):
+async def test_async_update_by_id_deactivate_200(async_client):
     request = respx.patch(
         f"{IAM_BASE_URL}/v1/tokens/1/",
         status_code=200,
@@ -270,7 +288,7 @@ def test_delete_permanent(client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_tokens_delete(async_client):
+async def test_asyncs_delete(async_client):
     request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/", status_code=204)
     response = await async_client.tokens.delete_list()
     assert request.called
@@ -279,7 +297,7 @@ async def test_async_tokens_delete(async_client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_tokens_delete_permanent(async_client):
+async def test_asyncs_delete_permanent(async_client):
     request = respx.delete(
         f"{IAM_BASE_URL}/v1/tokens/?permanent=true", status_code=204
     )
@@ -306,7 +324,7 @@ def test_token_delete_by_id_204(client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_token_delete_by_key(async_client):
+async def test_async_delete_by_key(async_client):
     request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/token/", status_code=204)
     response = await async_client.tokens.delete(token_id_or_key="token")
     assert request.called
@@ -315,7 +333,7 @@ async def test_async_token_delete_by_key(async_client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_token_delete_by_id(async_client):
+async def test_async_delete_by_id(async_client):
     request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/1/", status_code=204)
     response = await async_client.tokens.delete(token_id_or_key=1)
     assert request.called

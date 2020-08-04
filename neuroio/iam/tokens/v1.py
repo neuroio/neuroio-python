@@ -13,8 +13,10 @@ class Tokens(APIBase):
         finally:
             self.client.close()
 
-    def list(self, permanent: bool = None) -> Response:
-        data = {"permanent": permanent} if permanent is not None else None
+    def list(
+        self, permanent: bool = None, limit: int = 20, offset: int = 0
+    ) -> Response:
+        data = {"permanent": permanent, "limit": limit, "offset": offset}
         try:
             return self.client.get(url="/v1/tokens/", params=data)
         finally:
@@ -59,8 +61,10 @@ class TokensAsync(APIBaseAsync):
         finally:
             await self.client.aclose()
 
-    async def list(self, permanent: bool = None) -> Response:
-        data = {"permanent": permanent} if permanent is not None else None
+    async def list(
+        self, permanent: bool = None, limit: int = 20, offset: int = 0
+    ) -> Response:
+        data = {"permanent": permanent, "limit": limit, "offset": offset}
         try:
             return await self.client.get(url="/v1/tokens/", params=data)
         finally:
