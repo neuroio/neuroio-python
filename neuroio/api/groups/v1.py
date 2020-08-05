@@ -21,6 +21,7 @@ class Groups(APIBase):
         pids_include: Union[List[str], object] = sentinel,
         pids_exclude: Union[List[str], object] = sentinel,
         groups_ids: Union[List[int], object] = sentinel,
+        spaces_ids: Union[List[int], object] = sentinel,
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
@@ -98,6 +99,7 @@ class GroupsAsync(APIBaseAsync):
         pids_include: Union[List[str], object] = sentinel,
         pids_exclude: Union[List[str], object] = sentinel,
         groups_ids: Union[List[int], object] = sentinel,
+        spaces_ids: Union[List[int], object] = sentinel,
         limit: int = 20,
         offset: int = 0,
     ) -> Response:

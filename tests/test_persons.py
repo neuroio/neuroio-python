@@ -178,11 +178,11 @@ def test_search_200(client):
 
 
 @respx.mock
-def test_search_404(client):
-    request = respx.post(f"{API_BASE_URL}/v1/persons/search/", status_code=404)
+def test_search_not_found_200(client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/search/", status_code=200)
     response = client.persons.search(b"photo")
     assert request.called
-    assert response.status_code == 404
+    assert response.status_code == 200
 
 
 @respx.mock
@@ -201,8 +201,8 @@ async def test_async_search_200(async_client):
 
 @respx.mock
 @pytest.mark.asyncio
-async def test_async_404(async_client):
-    request = respx.post(f"{API_BASE_URL}/v1/persons/search/", status_code=404)
+async def test_async_not_found_200(async_client):
+    request = respx.post(f"{API_BASE_URL}/v1/persons/search/", status_code=200)
     response = await async_client.persons.search(b"image")
     assert request.called
-    assert response.status_code == 404
+    assert response.status_code == 200
