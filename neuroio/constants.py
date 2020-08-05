@@ -44,6 +44,16 @@ class EntryLiveness(str, Enum):
     UNDETERMINED = "undetermined"
 
 
+class Sex(int, Enum):
+    MALE = 0
+    FEMALE = 1
+
+
+class HttpMethod(int, Enum):
+    POST = 0
+    GET = 1
+
+
 DEFAULT_EXACT_THRESHOLD = 79.3
 DEFAULT_HA_THRESHOLD = 75.5
 DEFAULT_JUNK_THRESHOLD = 68.84
