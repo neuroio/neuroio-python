@@ -98,13 +98,16 @@ async def test_async_create_store_images_results_201(async_client):
 
 @respx.mock
 def test_sources_list_without_params_200(client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/sources/?q=&limit=20&offset=0",
-        status_code=200,
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/sources",
+        "limit=20",
+        "offset=0",
+        "q=",
         content={"results": [{"id": 1, "name": "source_name"}]},
     )
     response = client.sources.list()
-    assert request.called
+
+    assert any([request.called for request in requests])
     assert response.status_code == 200
     assert response.json()["results"][0]["name"] == "source_name"
 
@@ -129,13 +132,16 @@ def test_sources_list_with_params_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_list_without_params_200(async_client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/sources/?q=&limit=20&offset=0",
-        status_code=200,
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/sources",
+        "limit=20",
+        "offset=0",
+        "q=",
         content={"results": [{"id": 1, "name": "source_name"}]},
     )
     response = await async_client.sources.list()
-    assert request.called
+
+    assert any([request.called for request in requests])
     assert response.status_code == 200
     assert response.json()["results"][0]["name"] == "source_name"
 
@@ -143,13 +149,16 @@ async def test_async_list_without_params_200(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_list_with_params_200(async_client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/sources/?q=test&limit=20&offset=20",
-        status_code=200,
+    requests = mock_query_params_all_combos(
+        f"{API_BASE_URL}/v1/sources",
+        "limit=20",
+        "offset=20",
+        "q=test",
         content={"results": [{"id": 1, "name": "source_name"}]},
     )
     response = await async_client.sources.list(q="test", offset=20)
-    assert request.called
+
+    assert any([request.called for request in requests])
     assert response.status_code == 200
     assert response.json()["results"][0]["name"] == "source_name"
 
