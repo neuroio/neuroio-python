@@ -115,6 +115,12 @@ class Client:
         )
 
     @cached_property
+    def notifications(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="notifications", clsname="Notifications"
+        )
+
+    @cached_property
     def spaces(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="spaces", clsname="Spaces", service=Service.IAM
@@ -184,6 +190,12 @@ class AsyncClient(Client):
     def persons(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="persons", clsname="PersonsAsync"
+        )
+
+    @cached_property
+    def notifications(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="notifications", clsname="NotificationsAsync"
         )
 
     @cached_property
