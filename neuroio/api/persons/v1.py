@@ -4,6 +4,7 @@ from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import EntryResult
+from neuroio.utils import request_dict_processing
 
 
 class Persons(APIBase):
@@ -32,11 +33,8 @@ class Persons(APIBase):
     def create_by_entry(
         self, id: int, create_on_ha: bool, create_on_junk: bool
     ) -> Response:
-        data = {
-            "id": id,
-            "create_on_ha": create_on_ha,
-            "create_on_junk": create_on_junk,
-        }
+        data = request_dict_processing(locals(), ["self"])
+
         try:
             return self.client.post(url="/v1/persons/entry/", json=data)
         finally:
@@ -117,11 +115,8 @@ class PersonsAsync(APIBaseAsync):
     async def create_by_entry(
         self, id: int, create_on_ha: bool, create_on_junk: bool
     ) -> Response:
-        data = {
-            "id": id,
-            "create_on_ha": create_on_ha,
-            "create_on_junk": create_on_junk,
-        }
+        data = request_dict_processing(locals(), ["self"])
+
         try:
             return await self.client.post(url="/v1/persons/entry/", json=data)
         finally:

@@ -5,7 +5,7 @@ from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import EntryLiveness, EntryMood, EntryResult, sentinel
-from neuroio.utils import process_get_query_params
+from neuroio.utils import request_query_processing
 
 
 class Entries(APIBase):
@@ -18,13 +18,14 @@ class Entries(APIBase):
         sex: Union[int, object] = sentinel,
         mood: Union[List[EntryMood], object] = sentinel,
         liveness: Union[List[EntryLiveness], object] = sentinel,
-        source: Union[List[int], object] = sentinel,
+        sources_ids: Union[List[int], object] = sentinel,
+        spaces_ids: Union[List[int], object] = sentinel,
         date_from: Union[datetime, object] = sentinel,
         date_to: Union[datetime, object] = sentinel,
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_get_query_params(locals(), ["self"])
+        data = request_query_processing(locals(), ["self"])
         try:
             return self.client.get(url="/v1/entries/", params=data)
         finally:
@@ -53,13 +54,14 @@ class EntriesAsync(APIBaseAsync):
         sex: Union[int, object] = sentinel,
         mood: Union[List[EntryMood], object] = sentinel,
         liveness: Union[List[EntryLiveness], object] = sentinel,
-        source: Union[List[int], object] = sentinel,
+        sources_ids: Union[List[int], object] = sentinel,
+        spaces_ids: Union[List[int], object] = sentinel,
         date_from: Union[datetime, object] = sentinel,
         date_to: Union[datetime, object] = sentinel,
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
-        data = process_get_query_params(locals(), ["self"])
+        data = request_query_processing(locals(), ["self"])
         try:
             return await self.client.get(url="/v1/entries/", params=data)
         finally:

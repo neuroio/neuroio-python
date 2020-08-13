@@ -11,10 +11,17 @@ class Auth(APIBase):
         finally:
             self.client.close()
 
-    def login_permanent(self, username: str, password: str) -> Response:
-        data = {"username": username, "password": password}
+    def password_change(
+        self, old_password: str, new_password: str, reset_tokens: bool = False
+    ) -> Response:
+        data = {
+            "old_password": old_password,
+            "password": new_password,
+            "password2": new_password,
+            "reset_tokens": reset_tokens,
+        }
         try:
-            return self.client.post(url="/v1/login/permanent/", json=data)
+            return self.client.post(url="/v1/auth/password/change/", json=data)
         finally:
             self.client.close()
 
@@ -27,11 +34,18 @@ class AuthAsync(APIBaseAsync):
         finally:
             await self.client.aclose()
 
-    async def login_permanent(self, username: str, password: str) -> Response:
-        data = {"username": username, "password": password}
+    async def password_change(
+        self, old_password: str, new_password: str, reset_tokens: bool = False
+    ) -> Response:
+        data = {
+            "old_password": old_password,
+            "password": new_password,
+            "password2": new_password,
+            "reset_tokens": reset_tokens,
+        }
         try:
             return await self.client.post(
-                url="/v1/login/permanent/", json=data
+                url="/v1/auth/password/change/", json=data
             )
         finally:
             await self.client.aclose()

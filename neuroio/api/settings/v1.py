@@ -6,6 +6,7 @@ from neuroio.constants import (
     DEFAULT_HA_THRESHOLD,
     DEFAULT_JUNK_THRESHOLD,
 )
+from neuroio.utils import request_dict_processing
 
 
 class Settings(APIBase):
@@ -21,8 +22,8 @@ class Settings(APIBase):
         ha: float = DEFAULT_HA_THRESHOLD,
         junk: float = DEFAULT_JUNK_THRESHOLD,
     ) -> Response:
-        data = locals()
-        del data["self"]
+        data = request_dict_processing(locals(), ["self"])
+
         try:
             return self.client.patch(url="/v1/settings/thresholds/", data=data)
         finally:
@@ -48,8 +49,8 @@ class SettingsAsync(APIBaseAsync):
         ha: float = DEFAULT_HA_THRESHOLD,
         junk: float = DEFAULT_JUNK_THRESHOLD,
     ) -> Response:
-        data = locals()
-        del data["self"]
+        data = request_dict_processing(locals(), ["self"])
+
         try:
             return await self.client.patch(
                 url="/v1/settings/thresholds/", data=data

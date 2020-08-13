@@ -29,14 +29,16 @@ def test_list_with_params200(client):
 
     requests = mock_query_params_all_combos(
         f"{API_BASE_URL}/v1/entries",
-        "source=1,2,3".replace(",", "%2C"),
+        "sources_ids=1,2,3".replace(",", "%2C"),
         f"date_from={date_str}",
         "limit=20",
         "offset=0",
         content={"results": [{"id": 1, "pid": "pid"}]},
     )
 
-    response = client.entries.list(source=[1, 2, 3], date_from=date_obj.date())
+    response = client.entries.list(
+        sources_ids=[1, 2, 3], date_from=date_obj.date()
+    )
 
     assert any([request.called for request in requests])
     assert response.status_code == 200
@@ -66,14 +68,14 @@ async def test_async_list_with_params_200(async_client):
 
     requests = mock_query_params_all_combos(
         f"{API_BASE_URL}/v1/entries",
-        "source=1,2,3".replace(",", "%2C"),
+        "sources_ids=1,2,3".replace(",", "%2C"),
         f"date_from={date_str}",
         "limit=20",
         "offset=0",
         content={"results": [{"id": 1, "pid": "pid"}]},
     )
     response = await async_client.entries.list(
-        source=[1, 2, 3], date_from=date_obj.date()
+        sources_ids=[1, 2, 3], date_from=date_obj.date()
     )
     assert any([request.called for request in requests])
     assert response.status_code == 200
