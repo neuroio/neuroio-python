@@ -2,7 +2,7 @@
 name = "neuroio"
 version = "0.0.1"
 description = "A Python package for interacting with NeuroIO API"
-authors = ["Lev Rubel <l@datacorp.ee>"]
+authors = ["Lev Rubel <l@datacorp.ee>", "Roman Lyalin <rly@datacorp.ee>"]
 license = "MIT"
 readme = "README.md"
 
