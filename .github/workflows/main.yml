@@ -26,4 +26,8 @@ jobs:
       run: |
         bash scripts/test.sh
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.13
+      uses: codecov/codecov-action@v1
+      with:
+        flags: unittests
+        env_vars: OS,PYTHON
+        name: codecov-umbrella
