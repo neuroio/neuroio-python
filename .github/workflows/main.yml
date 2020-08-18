@@ -25,3 +25,13 @@ jobs:
     - name: Lint & Test
       run: |
         bash scripts/test.sh
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
+        files: ./coverage1.xml,./coverage2.xml
+        directory: ./coverage/reports/
+        flags: unittests
+        env_vars: OS,PYTHON
+        name: codecov-umbrella
+        path_to_write_report: ./coverage/codecov_report.gz
