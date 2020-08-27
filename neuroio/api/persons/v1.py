@@ -1,10 +1,10 @@
-from typing import BinaryIO
+from typing import BinaryIO, Union
 
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
-from neuroio.constants import EntryResult
-from neuroio.utils import request_dict_processing
+from neuroio.constants import EntryResult, sentinel
+from neuroio.utils import request_dict_processing, request_form_processing
 
 
 class Persons(APIBase):
@@ -12,19 +12,13 @@ class Persons(APIBase):
         self,
         image: BinaryIO,
         source: str,
-        facesize: int,
-        create_on_ha: bool,
-        create_on_junk: bool,
-        identify_asm: bool,
+        facesize: Union[int, object] = sentinel,
+        create_on_ha: Union[bool, object] = sentinel,
+        create_on_junk: Union[bool, object] = sentinel,
+        identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
+        data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
-        data = {
-            "source": source,
-            "facesize": str(facesize),
-            "create_on_ha": str(create_on_ha),
-            "create_on_junk": str(create_on_junk),
-            "identify_asm": str(identify_asm),
-        }
         try:
             return self.client.post(url="/v1/persons/", data=data, files=files)
         finally:
@@ -51,18 +45,12 @@ class Persons(APIBase):
         pid: str,
         image: BinaryIO,
         source: str,
-        facesize: int,
-        identify_asm: bool,
+        facesize: Union[int, object] = sentinel,
+        identify_asm: Union[bool, object] = sentinel,
         result: str = EntryResult.HA,
     ) -> Response:
+        data = request_form_processing(locals())
         files = {"image": image}
-        data = {
-            "source": source,
-            "facesize": str(facesize),
-            "identify_asm": str(identify_asm),
-            "result": result,
-        }
-
         try:
             return self.client.post(
                 url=f"/v1/persons/reinit/{pid}/", data=data, files=files
@@ -92,19 +80,14 @@ class PersonsAsync(APIBaseAsync):
         self,
         image: BinaryIO,
         source: str,
-        facesize: int,
-        create_on_ha: bool,
-        create_on_junk: bool,
-        identify_asm: bool,
+        facesize: Union[int, object] = sentinel,
+        create_on_ha: Union[bool, object] = sentinel,
+        create_on_junk: Union[bool, object] = sentinel,
+        identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
+        data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
-        data = {
-            "source": source,
-            "facesize": str(facesize),
-            "create_on_ha": str(create_on_ha),
-            "create_on_junk": str(create_on_junk),
-            "identify_asm": str(identify_asm),
-        }
+
         try:
             return await self.client.post(
                 url="/v1/persons/", data=data, files=files
@@ -135,17 +118,12 @@ class PersonsAsync(APIBaseAsync):
         pid: str,
         image: BinaryIO,
         source: str,
-        facesize: int,
-        identify_asm: bool,
+        facesize: Union[int, object] = sentinel,
+        identify_asm: Union[bool, object] = sentinel,
         result: str = EntryResult.HA,
     ) -> Response:
+        data = request_form_processing(locals(), ["self", "image", "pid"])
         files = {"image": image}
-        data = {
-            "source": source,
-            "facesize": str(facesize),
-            "identify_asm": str(identify_asm),
-            "result": result,
-        }
 
         try:
             return await self.client.post(
