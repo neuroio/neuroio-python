@@ -11,10 +11,7 @@ from neuroio.utils import request_dict_processing
 
 class Settings(APIBase):
     def get(self) -> Response:
-        try:
-            return self.client.get(url="/v1/settings/thresholds/")
-        finally:
-            self.client.close()
+        return self.client.get(url="/v1/settings/thresholds/")
 
     def update(
         self,
@@ -24,24 +21,15 @@ class Settings(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        try:
-            return self.client.patch(url="/v1/settings/thresholds/", data=data)
-        finally:
-            self.client.close()
+        return self.client.patch(url="/v1/settings/thresholds/", data=data)
 
     def reset(self) -> Response:
-        try:
-            return self.client.post(url="/v1/settings/thresholds/reset/")
-        finally:
-            self.client.close()
+        return self.client.post(url="/v1/settings/thresholds/reset/")
 
 
 class SettingsAsync(APIBaseAsync):
     async def get(self) -> Response:
-        try:
-            return await self.client.get(url="/v1/settings/thresholds/")
-        finally:
-            await self.client.aclose()
+        return await self.client.get(url="/v1/settings/thresholds/")
 
     async def update(
         self,
@@ -51,15 +39,9 @@ class SettingsAsync(APIBaseAsync):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        try:
-            return await self.client.patch(
-                url="/v1/settings/thresholds/", data=data
-            )
-        finally:
-            await self.client.aclose()
+        return await self.client.patch(
+            url="/v1/settings/thresholds/", data=data
+        )
 
     async def reset(self) -> Response:
-        try:
-            return await self.client.post(url="/v1/settings/thresholds/reset/")
-        finally:
-            await self.client.aclose()
+        return await self.client.post(url="/v1/settings/thresholds/reset/")
