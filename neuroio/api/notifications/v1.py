@@ -31,10 +31,8 @@ class Notifications(APIBase):
         persons_groups: Union[List[int], object] = sentinel,
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
-        try:
-            return self.client.post(url="/v1/notifications/", json=data)
-        finally:
-            self.client.close()
+
+        return self.client.post(url="/v1/notifications/", json=data)
 
     def list(
         self,
@@ -44,16 +42,11 @@ class Notifications(APIBase):
         offset: int = 0,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
-        try:
-            return self.client.get(url="/v1/notifications/", params=data)
-        finally:
-            self.client.close()
+
+        return self.client.get(url="/v1/notifications/", params=data)
 
     def get(self, id: int) -> Response:
-        try:
-            return self.client.get(url=f"/v1/notifications/{id}/")
-        finally:
-            self.client.close()
+        return self.client.get(url=f"/v1/notifications/{id}/")
 
     def update(
         self,
@@ -72,16 +65,11 @@ class Notifications(APIBase):
         persons_groups: Union[List[int], object] = sentinel,
     ) -> Response:
         data = request_dict_processing(locals(), ["self", "id"])
-        try:
-            return self.client.patch(url=f"/v1/notifications/{id}/", json=data)
-        finally:
-            self.client.close()
+
+        return self.client.patch(url=f"/v1/notifications/{id}/", json=data)
 
     def delete(self, id: int) -> Response:
-        try:
-            return self.client.delete(url=f"/v1/notifications/{id}/")
-        finally:
-            self.client.close()
+        return self.client.delete(url=f"/v1/notifications/{id}/")
 
 
 class NotificationsAsync(APIBaseAsync):
@@ -101,10 +89,8 @@ class NotificationsAsync(APIBaseAsync):
         persons_groups: Union[List[int], object] = sentinel,
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
-        try:
-            return await self.client.post(url="/v1/notifications/", json=data)
-        finally:
-            await self.client.aclose()
+
+        return await self.client.post(url="/v1/notifications/", json=data)
 
     async def list(
         self,
@@ -114,16 +100,11 @@ class NotificationsAsync(APIBaseAsync):
         offset: int = 0,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
-        try:
-            return await self.client.get(url="/v1/notifications/", params=data)
-        finally:
-            await self.client.aclose()
+
+        return await self.client.get(url="/v1/notifications/", params=data)
 
     async def get(self, id: int) -> Response:
-        try:
-            return await self.client.get(url=f"/v1/notifications/{id}/")
-        finally:
-            await self.client.aclose()
+        return await self.client.get(url=f"/v1/notifications/{id}/")
 
     async def update(
         self,
@@ -142,15 +123,9 @@ class NotificationsAsync(APIBaseAsync):
         persons_groups: Union[List[int], object] = sentinel,
     ) -> Response:
         data = request_dict_processing(locals(), ["self", "id"])
-        try:
-            return await self.client.patch(
-                url=f"/v1/notifications/{id}/", json=data
-            )
-        finally:
-            await self.client.aclose()
+        return await self.client.patch(
+            url=f"/v1/notifications/{id}/", json=data
+        )
 
     async def delete(self, id: int) -> Response:
-        try:
-            return await self.client.delete(url=f"/v1/notifications/{id}/")
-        finally:
-            await self.client.aclose()
+        return await self.client.delete(url=f"/v1/notifications/{id}/")

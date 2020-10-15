@@ -33,10 +33,8 @@ class Sources(APIBase):
         ] = sentinel,
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
-        try:
-            return self.client.post(url="/v1/sources/", json=data)
-        finally:
-            self.client.close()
+
+        return self.client.post(url="/v1/sources/", json=data)
 
     def list(
         self,
@@ -47,16 +45,10 @@ class Sources(APIBase):
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
-        try:
-            return self.client.get(url="/v1/sources/", params=data)
-        finally:
-            self.client.close()
+        return self.client.get(url="/v1/sources/", params=data)
 
     def get(self, id: int) -> Response:
-        try:
-            return self.client.get(url=f"/v1/sources/{id}/")
-        finally:
-            self.client.close()
+        return self.client.get(url=f"/v1/sources/{id}/")
 
     def update(
         self,
@@ -83,16 +75,10 @@ class Sources(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["id", "self"])
 
-        try:
-            return self.client.patch(url=f"/v1/sources/{id}/", json=data)
-        finally:
-            self.client.close()
+        return self.client.patch(url=f"/v1/sources/{id}/", json=data)
 
     def delete(self, id: int) -> Response:
-        try:
-            return self.client.delete(url=f"/v1/sources/{id}/")
-        finally:
-            self.client.close()
+        return self.client.delete(url=f"/v1/sources/{id}/")
 
 
 class SourcesAsync(APIBaseAsync):
@@ -121,10 +107,8 @@ class SourcesAsync(APIBaseAsync):
         ] = sentinel,
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
-        try:
-            return await self.client.post(url="/v1/sources/", json=data)
-        finally:
-            await self.client.aclose()
+
+        return await self.client.post(url="/v1/sources/", json=data)
 
     async def list(
         self,
@@ -135,16 +119,10 @@ class SourcesAsync(APIBaseAsync):
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
-        try:
-            return await self.client.get(url="/v1/sources/", params=data)
-        finally:
-            await self.client.aclose()
+        return await self.client.get(url="/v1/sources/", params=data)
 
     async def get(self, id: int) -> Response:
-        try:
-            return await self.client.get(url=f"/v1/sources/{id}/")
-        finally:
-            await self.client.aclose()
+        return await self.client.get(url=f"/v1/sources/{id}/")
 
     async def update(
         self,
@@ -171,13 +149,7 @@ class SourcesAsync(APIBaseAsync):
     ) -> Response:
         data = request_dict_processing(locals(), ["id", "self"])
 
-        try:
-            return await self.client.patch(url=f"/v1/sources/{id}/", json=data)
-        finally:
-            await self.client.aclose()
+        return await self.client.patch(url=f"/v1/sources/{id}/", json=data)
 
     async def delete(self, id: int) -> Response:
-        try:
-            return await self.client.delete(url=f"/v1/sources/{id}/")
-        finally:
-            await self.client.aclose()
+        return await self.client.delete(url=f"/v1/sources/{id}/")

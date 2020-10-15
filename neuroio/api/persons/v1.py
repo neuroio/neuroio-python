@@ -19,26 +19,18 @@ class Persons(APIBase):
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
-        try:
-            return self.client.post(url="/v1/persons/", data=data, files=files)
-        finally:
-            self.client.close()
+
+        return self.client.post(url="/v1/persons/", data=data, files=files)
 
     def create_by_entry(
         self, id: int, create_on_ha: bool, create_on_junk: bool
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        try:
-            return self.client.post(url="/v1/persons/entry/", json=data)
-        finally:
-            self.client.close()
+        return self.client.post(url="/v1/persons/entry/", json=data)
 
     def reinit(self, id: int) -> Response:
-        try:
-            return self.client.post(url="/v1/persons/reinit/", json={"id": id})
-        finally:
-            self.client.close()
+        return self.client.post(url="/v1/persons/reinit/", json={"id": id})
 
     def reinit_by_photo(
         self,
@@ -51,28 +43,21 @@ class Persons(APIBase):
     ) -> Response:
         data = request_form_processing(locals())
         files = {"image": image}
-        try:
-            return self.client.post(
-                url=f"/v1/persons/reinit/{pid}/", data=data, files=files
-            )
-        finally:
-            self.client.close()
+
+        return self.client.post(
+            url=f"/v1/persons/reinit/{pid}/", data=data, files=files
+        )
 
     def search(self, image: BinaryIO, identify_asm: bool = False) -> Response:
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
-        try:
-            return self.client.post(
-                url="/v1/persons/search/", data=data, files=files
-            )
-        finally:
-            self.client.close()
+
+        return self.client.post(
+            url="/v1/persons/search/", data=data, files=files
+        )
 
     def delete(self, pid: str) -> Response:
-        try:
-            return self.client.delete(url=f"/v1/persons/{pid}/")
-        finally:
-            self.client.close()
+        return self.client.delete(url=f"/v1/persons/{pid}/")
 
 
 class PersonsAsync(APIBaseAsync):
@@ -88,30 +73,21 @@ class PersonsAsync(APIBaseAsync):
         data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
 
-        try:
-            return await self.client.post(
-                url="/v1/persons/", data=data, files=files
-            )
-        finally:
-            await self.client.aclose()
+        return await self.client.post(
+            url="/v1/persons/", data=data, files=files
+        )
 
     async def create_by_entry(
         self, id: int, create_on_ha: bool, create_on_junk: bool
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        try:
-            return await self.client.post(url="/v1/persons/entry/", json=data)
-        finally:
-            await self.client.aclose()
+        return await self.client.post(url="/v1/persons/entry/", json=data)
 
     async def reinit(self, id: int) -> Response:
-        try:
-            return await self.client.post(
-                url="/v1/persons/reinit/", json={"id": id}
-            )
-        finally:
-            await self.client.aclose()
+        return await self.client.post(
+            url="/v1/persons/reinit/", json={"id": id}
+        )
 
     async def reinit_by_photo(
         self,
@@ -125,27 +101,19 @@ class PersonsAsync(APIBaseAsync):
         data = request_form_processing(locals(), ["self", "image", "pid"])
         files = {"image": image}
 
-        try:
-            return await self.client.post(
-                url=f"/v1/persons/reinit/{pid}/", data=data, files=files
-            )
-        finally:
-            await self.client.aclose()
+        return await self.client.post(
+            url=f"/v1/persons/reinit/{pid}/", data=data, files=files
+        )
 
     async def search(
         self, image: BinaryIO, identify_asm: bool = False
     ) -> Response:
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
-        try:
-            return await self.client.post(
-                url="/v1/persons/search/", data=data, files=files
-            )
-        finally:
-            await self.client.aclose()
+
+        return await self.client.post(
+            url="/v1/persons/search/", data=data, files=files
+        )
 
     async def delete(self, pid: str) -> Response:
-        try:
-            return await self.client.delete(url=f"/v1/persons/{pid}/")
-        finally:
-            await self.client.aclose()
+        return await self.client.delete(url=f"/v1/persons/{pid}/")
