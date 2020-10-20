@@ -1,5 +1,6 @@
 from typing import List, Union
 
+import httpx
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
@@ -10,10 +11,8 @@ from neuroio.utils import request_query_processing
 class Groups(APIBase):
     def create(self, name: str) -> Response:
         data = {"name": name}
-        try:
-            return self.client.post(url="/v1/groups/persons/", json=data)
-        finally:
-            self.client.close()
+        with httpx.Client(**self.settings) as client:
+            return client.post(url="/v1/groups/persons/", json=data)
 
     def list(
         self,
@@ -26,31 +25,21 @@ class Groups(APIBase):
         offset: int = 0,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
-        try:
-            return self.client.get(url="/v1/groups/persons/", params=data)
-        finally:
-            self.client.close()
+        with httpx.Client(**self.settings) as client:
+            return client.get(url="/v1/groups/persons/", params=data)
 
     def get(self, id: int) -> Response:
-        try:
-            return self.client.get(url=f"/v1/groups/persons/{id}/")
-        finally:
-            self.client.close()
+        with httpx.Client(**self.settings) as client:
+            return client.get(url=f"/v1/groups/persons/{id}/")
 
     def update(self, id: int, name: str) -> Response:
         data = {"name": name}
-        try:
-            return self.client.patch(
-                url=f"/v1/groups/persons/{id}/", json=data
-            )
-        finally:
-            self.client.close()
+        with httpx.Client(**self.settings) as client:
+            return client.patch(url=f"/v1/groups/persons/{id}/", json=data)
 
     def delete(self, id: int) -> Response:
-        try:
-            return self.client.delete(url=f"/v1/groups/persons/{id}/")
-        finally:
-            self.client.close()
+        with httpx.Client(**self.settings) as client:
+            return client.delete(url=f"/v1/groups/persons/{id}/")
 
     def persons(
         self,
@@ -61,37 +50,29 @@ class Groups(APIBase):
     ) -> Response:
         data = request_query_processing(locals(), ["self", "id"])
 
-        try:
-            return self.client.get(
+        with httpx.Client(**self.settings) as client:
+            return client.get(
                 url=f"/v1/groups/persons/{id}/pids/", params=data
             )
-        finally:
-            self.client.close()
 
     def add(self, pids: List[str], groups_ids: List[int]) -> Response:
         data = {"pids": pids, "groups_ids": groups_ids}
-        try:
-            return self.client.post(url="/v1/groups/persons/pids/", json=data)
-        finally:
-            self.client.close()
+        with httpx.Client(**self.settings) as client:
+            return client.post(url="/v1/groups/persons/pids/", json=data)
 
     def remove(self, pids: List[str], groups_ids: List[int]) -> Response:
         data = {"pids": pids, "groups_ids": groups_ids}
-        try:
-            return self.client.request(
+        with httpx.Client(**self.settings) as client:
+            return client.request(
                 "DELETE", url="/v1/groups/persons/pids/", json=data
             )
-        finally:
-            self.client.close()
 
 
 class GroupsAsync(APIBaseAsync):
     async def create(self, name: str) -> Response:
         data = {"name": name}
-        try:
-            return await self.client.post(url="/v1/groups/persons/", json=data)
-        finally:
-            await self.client.aclose()
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.post(url="/v1/groups/persons/", json=data)
 
     async def list(
         self,
@@ -104,33 +85,23 @@ class GroupsAsync(APIBaseAsync):
         offset: int = 0,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
-        try:
-            return await self.client.get(
-                url="/v1/groups/persons/", params=data
-            )
-        finally:
-            await self.client.aclose()
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.get(url="/v1/groups/persons/", params=data)
 
     async def get(self, id: int) -> Response:
-        try:
-            return await self.client.get(url=f"/v1/groups/persons/{id}/")
-        finally:
-            await self.client.aclose()
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.get(url=f"/v1/groups/persons/{id}/")
 
     async def update(self, id: int, name: str) -> Response:
         data = {"name": name}
-        try:
-            return await self.client.patch(
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.patch(
                 url=f"/v1/groups/persons/{id}/", json=data
             )
-        finally:
-            await self.client.aclose()
 
     async def delete(self, id: int) -> Response:
-        try:
-            return await self.client.delete(url=f"/v1/groups/persons/{id}/")
-        finally:
-            await self.client.aclose()
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.delete(url=f"/v1/groups/persons/{id}/")
 
     async def persons(
         self,
@@ -140,27 +111,19 @@ class GroupsAsync(APIBaseAsync):
         offset: int = 0,
     ) -> Response:
         data = request_query_processing(locals(), ["self", "id"])
-        try:
-            return await self.client.get(
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.get(
                 url=f"/v1/groups/persons/{id}/pids/", params=data
             )
-        finally:
-            await self.client.aclose()
 
     async def add(self, pids: List[str], groups_ids: List[int]) -> Response:
         data = {"pids": pids, "groups_ids": groups_ids}
-        try:
-            return await self.client.post(
-                url="/v1/groups/persons/pids/", json=data
-            )
-        finally:
-            await self.client.aclose()
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.post(url="/v1/groups/persons/pids/", json=data)
 
     async def remove(self, pids: List[str], groups_ids: List[int]) -> Response:
         data = {"pids": pids, "groups_ids": groups_ids}
-        try:
-            return await self.client.request(
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.request(
                 "DELETE", url="/v1/groups/persons/pids/", json=data
             )
-        finally:
-            await self.client.aclose()

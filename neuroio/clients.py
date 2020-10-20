@@ -1,5 +1,5 @@
 import enum
-from typing import Optional, Type, Union
+from typing import Any, Dict, Optional, Type, Union
 
 import httpx
 
@@ -19,7 +19,7 @@ class Client:
         self,
         api_token: Optional[str] = None,
         api_version: int = 1,
-        timeout: Optional[float] = None,
+        timeout: float = constants.HTTP_CLIENT_TIMEOUT,
     ):
         """
         Creates and manages singleton of HTTP client, that is used to make
@@ -27,41 +27,28 @@ class Client:
         """
         self.api_token = api_token
         self.api_version = api_version
-        self.api_client = self.httpx_client_class(
-            base_url=constants.API_BASE_URL,
-            headers=self.common_headers,
-            timeout=timeout or constants.HTTP_CLIENT_TIMEOUT,
-        )
-        self.iam_client = self.httpx_client_class(
-            base_url=constants.IAM_BASE_URL,
-            headers=self.common_headers,
-            timeout=timeout or constants.HTTP_CLIENT_TIMEOUT,
-        )
-        self.inject_api_token()
 
-    @property
-    def httpx_client_class(
-        self,
-    ) -> Union[Type[httpx.Client], Type[httpx.AsyncClient]]:
-        return httpx.Client
+        self.api_settings = self.client_settings(
+            timeout=timeout, base_url=constants.API_BASE_URL
+        )
+        self.iam_settings = self.client_settings(
+            timeout=timeout, base_url=constants.IAM_BASE_URL
+        )
 
     @property
     def common_headers(self) -> dict:
         return {"User-Agent": f"neuroio-python/{get_package_version()}"}
 
-    def inject_api_token(self, api_token: Optional[str] = None) -> None:
-        # Override api token only if provided api_token is not empty or None
-        if api_token:
-            self.api_token = api_token
-
-        # Injecting auth only if api_token is not empty or None
+    def client_settings(self, base_url: str, timeout: float) -> Dict[Any, Any]:
+        settings = {
+            "base_url": base_url,
+            "timeout": timeout,
+            "headers": self.common_headers,
+        }
         if self.api_token:
-            self.api_client.auth = AuthorizationTokenAuth(
-                api_token=self.api_token
-            )
-            self.iam_client.auth = AuthorizationTokenAuth(
-                api_token=self.api_token
-            )
+            settings["auth"] = AuthorizationTokenAuth(api_token=self.api_token)
+
+        return settings
 
     def get_api_class_instance(
         self, namespace: str, clsname: str, service: Service = Service.API
@@ -69,8 +56,8 @@ class Client:
         abs_path = f"neuroio.{service}.{namespace}.v{self.api_version}"
         cls = dynamic_import(abs_path=abs_path, attribute=clsname)
         if service == Service.API:
-            return cls(client=self.api_client)
-        return cls(client=self.iam_client)
+            return cls(settings=self.api_settings)
+        return cls(settings=self.iam_settings)
 
     @cached_property
     def auth(self) -> APIBase:
@@ -140,12 +127,6 @@ class Client:
 
 
 class AsyncClient(Client):
-    @property
-    def httpx_client_class(
-        self,
-    ) -> Union[Type[httpx.Client], Type[httpx.AsyncClient]]:
-        return httpx.AsyncClient
-
     @property
     def common_headers(self) -> dict:
         return {"User-Agent": f"neuroio-async-python/{get_package_version()}"}

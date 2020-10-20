@@ -1,5 +1,6 @@
 from typing.io import BinaryIO
 
+import httpx
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
@@ -13,14 +14,16 @@ class Utility(APIBase):
         files = {"image1": image1, "image2": image2}
         data = {"result": result}
 
-        return self.client.post(
-            url="/v1/utility/compare/", data=data, files=files
-        )
+        with httpx.Client(**self.settings) as client:
+            return client.post(
+                url="/v1/utility/compare/", data=data, files=files
+            )
 
     def asm(self, image: BinaryIO) -> Response:
         files = {"image": image}
 
-        return self.client.post(url="/v1/utility/asm/", files=files)
+        with httpx.Client(**self.settings) as client:
+            return client.post(url="/v1/utility/asm/", files=files)
 
 
 class UtilityAsync(APIBaseAsync):
@@ -30,11 +33,13 @@ class UtilityAsync(APIBaseAsync):
         files = {"image1": image1, "image2": image2}
         data = {"result": result}
 
-        return await self.client.post(
-            url="/v1/utility/compare/", data=data, files=files
-        )
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.post(
+                url="/v1/utility/compare/", data=data, files=files
+            )
 
     async def asm(self, image: BinaryIO) -> Response:
         files = {"image": image}
 
-        return await self.client.post(url="/v1/utility/asm/", files=files)
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.post(url="/v1/utility/asm/", files=files)

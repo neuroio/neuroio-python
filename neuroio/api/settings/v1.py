@@ -1,3 +1,4 @@
+import httpx
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
@@ -11,7 +12,8 @@ from neuroio.utils import request_dict_processing
 
 class Settings(APIBase):
     def get(self) -> Response:
-        return self.client.get(url="/v1/settings/thresholds/")
+        with httpx.Client(**self.settings) as client:
+            return client.get(url="/v1/settings/thresholds/")
 
     def update(
         self,
@@ -21,15 +23,18 @@ class Settings(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        return self.client.patch(url="/v1/settings/thresholds/", data=data)
+        with httpx.Client(**self.settings) as client:
+            return client.patch(url="/v1/settings/thresholds/", data=data)
 
     def reset(self) -> Response:
-        return self.client.post(url="/v1/settings/thresholds/reset/")
+        with httpx.Client(**self.settings) as client:
+            return client.post(url="/v1/settings/thresholds/reset/")
 
 
 class SettingsAsync(APIBaseAsync):
     async def get(self) -> Response:
-        return await self.client.get(url="/v1/settings/thresholds/")
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.get(url="/v1/settings/thresholds/")
 
     async def update(
         self,
@@ -39,9 +44,11 @@ class SettingsAsync(APIBaseAsync):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        return await self.client.patch(
-            url="/v1/settings/thresholds/", data=data
-        )
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.patch(
+                url="/v1/settings/thresholds/", data=data
+            )
 
     async def reset(self) -> Response:
-        return await self.client.post(url="/v1/settings/thresholds/reset/")
+        async with httpx.AsyncClient(**self.settings) as client:
+            return await client.post(url="/v1/settings/thresholds/reset/")
