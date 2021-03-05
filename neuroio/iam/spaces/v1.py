@@ -1,7 +1,6 @@
 import httpx
-from httpx import URL, Response
+from httpx import Response
 
-from neuroio import constants
 from neuroio.api.base import APIBase, APIBaseAsync
 
 
