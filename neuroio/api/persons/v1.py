@@ -1,6 +1,5 @@
 from typing import BinaryIO, Union
 
-import httpx
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
@@ -21,7 +20,7 @@ class Persons(APIBase):
         data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(url="/v1/persons/", data=data, files=files)
 
     def create_by_entry(
@@ -29,11 +28,11 @@ class Persons(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(url="/v1/persons/entry/", json=data)
 
     def reinit(self, id: int) -> Response:
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(url="/v1/persons/reinit/", json={"id": id})
 
     def reinit_by_photo(
@@ -48,7 +47,7 @@ class Persons(APIBase):
         data = request_form_processing(locals())
         files = {"image": image}
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(
                 url=f"/v1/persons/reinit/{pid}/", data=data, files=files
             )
@@ -57,13 +56,13 @@ class Persons(APIBase):
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(
                 url="/v1/persons/search/", data=data, files=files
             )
 
     def delete(self, pid: str) -> Response:
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.delete(url=f"/v1/persons/{pid}/")
 
 
@@ -80,7 +79,7 @@ class PersonsAsync(APIBaseAsync):
         data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(
                 url="/v1/persons/", data=data, files=files
             )
@@ -90,11 +89,11 @@ class PersonsAsync(APIBaseAsync):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(url="/v1/persons/entry/", json=data)
 
     async def reinit(self, id: int) -> Response:
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(
                 url="/v1/persons/reinit/", json={"id": id}
             )
@@ -111,7 +110,7 @@ class PersonsAsync(APIBaseAsync):
         data = request_form_processing(locals(), ["self", "image", "pid"])
         files = {"image": image}
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(
                 url=f"/v1/persons/reinit/{pid}/", data=data, files=files
             )
@@ -122,11 +121,11 @@ class PersonsAsync(APIBaseAsync):
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(
                 url="/v1/persons/search/", data=data, files=files
             )
 
     async def delete(self, pid: str) -> Response:
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.delete(url=f"/v1/persons/{pid}/")

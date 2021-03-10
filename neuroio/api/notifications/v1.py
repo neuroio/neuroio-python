@@ -1,6 +1,5 @@
 from typing import List, Union
 
-import httpx
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
@@ -33,7 +32,7 @@ class Notifications(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(url="/v1/notifications/", json=data)
 
     def list(
@@ -45,11 +44,11 @@ class Notifications(APIBase):
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.get(url="/v1/notifications/", params=data)
 
     def get(self, id: int) -> Response:
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.get(url=f"/v1/notifications/{id}/")
 
     def update(
@@ -70,11 +69,11 @@ class Notifications(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["self", "id"])
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.patch(url=f"/v1/notifications/{id}/", json=data)
 
     def delete(self, id: int) -> Response:
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.delete(url=f"/v1/notifications/{id}/")
 
 
@@ -96,7 +95,7 @@ class NotificationsAsync(APIBaseAsync):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(url="/v1/notifications/", json=data)
 
     async def list(
@@ -108,11 +107,11 @@ class NotificationsAsync(APIBaseAsync):
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.get(url="/v1/notifications/", params=data)
 
     async def get(self, id: int) -> Response:
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.get(url=f"/v1/notifications/{id}/")
 
     async def update(
@@ -132,11 +131,11 @@ class NotificationsAsync(APIBaseAsync):
         persons_groups: Union[List[int], object] = sentinel,
     ) -> Response:
         data = request_dict_processing(locals(), ["self", "id"])
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.patch(
                 url=f"/v1/notifications/{id}/", json=data
             )
 
     async def delete(self, id: int) -> Response:
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.delete(url=f"/v1/notifications/{id}/")

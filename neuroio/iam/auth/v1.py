@@ -1,4 +1,3 @@
-import httpx
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
@@ -8,7 +7,7 @@ class Auth(APIBase):
     def login(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(url="/v1/login/", json=data)
 
     def password_change(
@@ -21,7 +20,7 @@ class Auth(APIBase):
             "reset_tokens": reset_tokens,
         }
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(url="/v1/auth/password/change/", json=data)
 
 
@@ -29,7 +28,7 @@ class AuthAsync(APIBaseAsync):
     async def login(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(url="/v1/login/", json=data)
 
     async def password_change(
@@ -42,7 +41,7 @@ class AuthAsync(APIBaseAsync):
             "reset_tokens": reset_tokens,
         }
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(
                 url="/v1/auth/password/change/", json=data
             )

@@ -1,6 +1,5 @@
 from typing import List, Optional, Union
 
-import httpx
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
@@ -35,7 +34,7 @@ class Sources(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.post(url="/v1/sources/", json=data)
 
     def list(
@@ -47,11 +46,11 @@ class Sources(APIBase):
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.get(url="/v1/sources/", params=data)
 
     def get(self, id: int) -> Response:
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.get(url=f"/v1/sources/{id}/")
 
     def update(
@@ -79,11 +78,11 @@ class Sources(APIBase):
     ) -> Response:
         data = request_dict_processing(locals(), ["id", "self"])
 
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.patch(url=f"/v1/sources/{id}/", json=data)
 
     def delete(self, id: int) -> Response:
-        with httpx.Client(**self.settings) as client:
+        with self.get_client() as client:
             return client.delete(url=f"/v1/sources/{id}/")
 
 
@@ -114,7 +113,7 @@ class SourcesAsync(APIBaseAsync):
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.post(url="/v1/sources/", json=data)
 
     async def list(
@@ -126,11 +125,11 @@ class SourcesAsync(APIBaseAsync):
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.get(url="/v1/sources/", params=data)
 
     async def get(self, id: int) -> Response:
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.get(url=f"/v1/sources/{id}/")
 
     async def update(
@@ -158,9 +157,9 @@ class SourcesAsync(APIBaseAsync):
     ) -> Response:
         data = request_dict_processing(locals(), ["id", "self"])
 
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.patch(url=f"/v1/sources/{id}/", json=data)
 
     async def delete(self, id: int) -> Response:
-        async with httpx.AsyncClient(**self.settings) as client:
+        async with self.get_client() as client:
             return await client.delete(url=f"/v1/sources/{id}/")
