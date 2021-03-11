@@ -20,17 +20,20 @@ class Persons(APIBase):
         data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
 
-        return self.client.post(url="/v1/persons/", data=data, files=files)
+        with self.get_client() as client:
+            return client.post(url="/v1/persons/", data=data, files=files)
 
     def create_by_entry(
         self, id: int, create_on_ha: bool, create_on_junk: bool
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        return self.client.post(url="/v1/persons/entry/", json=data)
+        with self.get_client() as client:
+            return client.post(url="/v1/persons/entry/", json=data)
 
     def reinit(self, id: int) -> Response:
-        return self.client.post(url="/v1/persons/reinit/", json={"id": id})
+        with self.get_client() as client:
+            return client.post(url="/v1/persons/reinit/", json={"id": id})
 
     def reinit_by_photo(
         self,
@@ -44,20 +47,23 @@ class Persons(APIBase):
         data = request_form_processing(locals())
         files = {"image": image}
 
-        return self.client.post(
-            url=f"/v1/persons/reinit/{pid}/", data=data, files=files
-        )
+        with self.get_client() as client:
+            return client.post(
+                url=f"/v1/persons/reinit/{pid}/", data=data, files=files
+            )
 
     def search(self, image: BinaryIO, identify_asm: bool = False) -> Response:
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
 
-        return self.client.post(
-            url="/v1/persons/search/", data=data, files=files
-        )
+        with self.get_client() as client:
+            return client.post(
+                url="/v1/persons/search/", data=data, files=files
+            )
 
     def delete(self, pid: str) -> Response:
-        return self.client.delete(url=f"/v1/persons/{pid}/")
+        with self.get_client() as client:
+            return client.delete(url=f"/v1/persons/{pid}/")
 
 
 class PersonsAsync(APIBaseAsync):
@@ -73,21 +79,24 @@ class PersonsAsync(APIBaseAsync):
         data = request_form_processing(locals(), ["self", "image"])
         files = {"image": image}
 
-        return await self.client.post(
-            url="/v1/persons/", data=data, files=files
-        )
+        async with self.get_client() as client:
+            return await client.post(
+                url="/v1/persons/", data=data, files=files
+            )
 
     async def create_by_entry(
         self, id: int, create_on_ha: bool, create_on_junk: bool
     ) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
-        return await self.client.post(url="/v1/persons/entry/", json=data)
+        async with self.get_client() as client:
+            return await client.post(url="/v1/persons/entry/", json=data)
 
     async def reinit(self, id: int) -> Response:
-        return await self.client.post(
-            url="/v1/persons/reinit/", json={"id": id}
-        )
+        async with self.get_client() as client:
+            return await client.post(
+                url="/v1/persons/reinit/", json={"id": id}
+            )
 
     async def reinit_by_photo(
         self,
@@ -101,9 +110,10 @@ class PersonsAsync(APIBaseAsync):
         data = request_form_processing(locals(), ["self", "image", "pid"])
         files = {"image": image}
 
-        return await self.client.post(
-            url=f"/v1/persons/reinit/{pid}/", data=data, files=files
-        )
+        async with self.get_client() as client:
+            return await client.post(
+                url=f"/v1/persons/reinit/{pid}/", data=data, files=files
+            )
 
     async def search(
         self, image: BinaryIO, identify_asm: bool = False
@@ -111,9 +121,11 @@ class PersonsAsync(APIBaseAsync):
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
 
-        return await self.client.post(
-            url="/v1/persons/search/", data=data, files=files
-        )
+        async with self.get_client() as client:
+            return await client.post(
+                url="/v1/persons/search/", data=data, files=files
+            )
 
     async def delete(self, pid: str) -> Response:
-        return await self.client.delete(url=f"/v1/persons/{pid}/")
+        async with self.get_client() as client:
+            return await client.delete(url=f"/v1/persons/{pid}/")

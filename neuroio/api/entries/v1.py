@@ -26,22 +26,16 @@ class Entries(APIBase):
         offset: int = 0,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
-        try:
-            return self.client.get(url="/v1/entries/", params=data)
-        finally:
-            self.client.close()
+        with self.get_client() as client:
+            return client.get(url="/v1/entries/", params=data)
 
     def get(self, pid: str) -> Response:
-        try:
-            return self.client.get(url=f"/v1/entries/stats/pid/{pid}/")
-        finally:
-            self.client.close()
+        with self.get_client() as client:
+            return client.get(url=f"/v1/entries/stats/pid/{pid}/")
 
     def delete(self, pid: str) -> Response:
-        try:
-            return self.client.delete(url=f"/v1/entries/{pid}/")
-        finally:
-            self.client.close()
+        with self.get_client() as client:
+            return client.delete(url=f"/v1/entries/{pid}/")
 
 
 class EntriesAsync(APIBaseAsync):
@@ -62,19 +56,13 @@ class EntriesAsync(APIBaseAsync):
         offset: int = 0,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
-        try:
-            return await self.client.get(url="/v1/entries/", params=data)
-        finally:
-            await self.client.aclose()
+        async with self.get_client() as client:
+            return await client.get(url="/v1/entries/", params=data)
 
     async def get(self, pid: str) -> Response:
-        try:
-            return await self.client.get(url=f"/v1/entries/stats/pid/{pid}/")
-        finally:
-            await self.client.aclose()
+        async with self.get_client() as client:
+            return await client.get(url=f"/v1/entries/stats/pid/{pid}/")
 
     async def delete(self, pid: str) -> Response:
-        try:
-            return await self.client.delete(url=f"/v1/entries/{pid}/")
-        finally:
-            await self.client.aclose()
+        async with self.get_client() as client:
+            return await client.delete(url=f"/v1/entries/{pid}/")

@@ -13,14 +13,16 @@ class Utility(APIBase):
         files = {"image1": image1, "image2": image2}
         data = {"result": result}
 
-        return self.client.post(
-            url="/v1/utility/compare/", data=data, files=files
-        )
+        with self.get_client() as client:
+            return client.post(
+                url="/v1/utility/compare/", data=data, files=files
+            )
 
     def asm(self, image: BinaryIO) -> Response:
         files = {"image": image}
 
-        return self.client.post(url="/v1/utility/asm/", files=files)
+        with self.get_client() as client:
+            return client.post(url="/v1/utility/asm/", files=files)
 
 
 class UtilityAsync(APIBaseAsync):
@@ -30,11 +32,13 @@ class UtilityAsync(APIBaseAsync):
         files = {"image1": image1, "image2": image2}
         data = {"result": result}
 
-        return await self.client.post(
-            url="/v1/utility/compare/", data=data, files=files
-        )
+        async with self.get_client() as client:
+            return await client.post(
+                url="/v1/utility/compare/", data=data, files=files
+            )
 
     async def asm(self, image: BinaryIO) -> Response:
         files = {"image": image}
 
-        return await self.client.post(url="/v1/utility/asm/", files=files)
+        async with self.get_client() as client:
+            return await client.post(url="/v1/utility/asm/", files=files)
