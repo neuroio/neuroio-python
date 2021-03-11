@@ -84,4 +84,4 @@ venv/
 docs/preconvert
 site/
 out
-
+coverage.xml
