@@ -8,7 +8,7 @@
             "github_username": "levchik",
             "project_name": "neuroio-python",
             "description": "A Python package for interacting with the NeuroIO API",
-            "version": "0.0.1",
+            "version": "0.0.5",
             "_template": "https://github.com/timothycrosley/cookiecutter-python/"
         }
     }
