@@ -8,7 +8,7 @@ class Auth(APIBase):
         data = {"username": username, "password": password}
 
         with self.get_client() as client:
-            return client.post(url="/v1/login/", json=data)
+            return client.post(url="/v1/auth/token/", json=data)
 
     def password_change(
         self, old_password: str, new_password: str, reset_tokens: bool = False
@@ -29,7 +29,7 @@ class AuthAsync(APIBaseAsync):
         data = {"username": username, "password": password}
 
         async with self.get_client() as client:
-            return await client.post(url="/v1/login/", json=data)
+            return await client.post(url="/v1/auth/token/", json=data)
 
     async def password_change(
         self, old_password: str, new_password: str, reset_tokens: bool = False
