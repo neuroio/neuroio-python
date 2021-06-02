@@ -33,9 +33,9 @@ class Entries(APIBase):
         with self.get_client() as client:
             return client.get(url=f"/v1/entries/stats/pid/{pid}/")
 
-    def delete(self, pid: str) -> Response:
+    def delete(self, id: int) -> Response:
         with self.get_client() as client:
-            return client.delete(url=f"/v1/entries/{pid}/")
+            return client.delete(url=f"/v1/entries/{id}/")
 
 
 class EntriesAsync(APIBaseAsync):
@@ -63,6 +63,6 @@ class EntriesAsync(APIBaseAsync):
         async with self.get_client() as client:
             return await client.get(url=f"/v1/entries/stats/pid/{pid}/")
 
-    async def delete(self, pid: str) -> Response:
+    async def delete(self, id: int) -> Response:
         async with self.get_client() as client:
-            return await client.delete(url=f"/v1/entries/{pid}/")
+            return await client.delete(url=f"/v1/entries/{id}/")

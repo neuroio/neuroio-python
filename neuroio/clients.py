@@ -1,7 +1,5 @@
 import enum
-from typing import Any, Dict, Optional, Type, Union
-
-import httpx
+from typing import Any, Dict, Optional
 
 from neuroio import constants
 from neuroio.api.base import APIBase
