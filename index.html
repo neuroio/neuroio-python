@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -11,7 +12,7 @@
       
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.7">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.14">
     
     
       
@@ -19,14 +20,14 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.b8ac9624.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.d3202873.min.css">
       
-        <link rel="stylesheet" href="assets/stylesheets/palette.28f3ef9a.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.ff0a5ce4.min.css">
       
       
         
         
-        <meta name="theme-color" content="#4caf50">
+        <meta name="theme-color" content="#4cae4f">
       
     
     
@@ -56,6 +57,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#python-api-client-for-neuroio" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -186,10 +192,76 @@
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Home
+        <span class="md-nav__icon md-icon"></span>
+      </label>
     
     <a href="." title="Home" class="md-nav__link md-nav__link--active">
       Home
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-example-sync" class="md-nav__link">
+    Usage example (sync)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-setup" class="md-nav__link">
+    Development setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-history" class="md-nav__link">
+    Release History
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    Contributing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -212,8 +284,140 @@
 
 
   <li class="md-nav__item">
-    <a href="docs/" title="Index" class="md-nav__link">
-      Index
+    <a href="docs/authentication/" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/basics/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/entries/" title="Entries" class="md-nav__link">
+      Entries
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/groups/" title="Groups" class="md-nav__link">
+      Groups
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/notifications/" title="Notifications" class="md-nav__link">
+      Notifications
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/persons/" title="Persons" class="md-nav__link">
+      Persons
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/settings/" title="Settings" class="md-nav__link">
+      Settings
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/sources/" title="Sources" class="md-nav__link">
+      Sources
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/spaces/" title="Spaces" class="md-nav__link">
+      Spaces
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/tokens/" title="Tokens" class="md-nav__link">
+      Tokens
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/utility/" title="Utility" class="md-nav__link">
+      Utility
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="docs/whoami/" title="Whoami" class="md-nav__link">
+      Whoami
     </a>
   </li>
 
@@ -225,19 +429,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-15">
       Contributing
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Contributing" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-15">
+        <span class="md-nav__icon md-icon"></span>
         Contributing
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -303,19 +503,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16" type="checkbox" id="nav-16">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-16">
       Reference
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Reference" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16">
+        <span class="md-nav__icon md-icon"></span>
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -328,19 +524,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1" type="checkbox" id="nav-16-1">
     
-    <label class="md-nav__link" for="nav-5-1">
+    <label class="md-nav__link" for="nav-16-1">
       Neuroio
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Neuroio" data-md-level="2">
-      <label class="md-nav__title" for="nav-5-1">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1">
+        <span class="md-nav__icon md-icon"></span>
         Neuroio
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -413,19 +605,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6" type="checkbox" id="nav-5-1-6">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6" type="checkbox" id="nav-16-1-6">
     
-    <label class="md-nav__link" for="nav-5-1-6">
+    <label class="md-nav__link" for="nav-16-1-6">
       API
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="API" data-md-level="3">
-      <label class="md-nav__title" for="nav-5-1-6">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6">
+        <span class="md-nav__icon md-icon"></span>
         API
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -462,19 +650,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6-3" type="checkbox" id="nav-5-1-6-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6-3" type="checkbox" id="nav-16-1-6-3">
     
-    <label class="md-nav__link" for="nav-5-1-6-3">
+    <label class="md-nav__link" for="nav-16-1-6-3">
       Entries
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Entries" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-6-3">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6-3">
+        <span class="md-nav__icon md-icon"></span>
         Entries
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -516,19 +700,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6-4" type="checkbox" id="nav-5-1-6-4">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6-4" type="checkbox" id="nav-16-1-6-4">
     
-    <label class="md-nav__link" for="nav-5-1-6-4">
+    <label class="md-nav__link" for="nav-16-1-6-4">
       Groups
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Groups" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-6-4">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6-4">
+        <span class="md-nav__icon md-icon"></span>
         Groups
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -570,19 +750,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6-5" type="checkbox" id="nav-5-1-6-5">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6-5" type="checkbox" id="nav-16-1-6-5">
     
-    <label class="md-nav__link" for="nav-5-1-6-5">
+    <label class="md-nav__link" for="nav-16-1-6-5">
       Notifications
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Notifications" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-6-5">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6-5">
+        <span class="md-nav__icon md-icon"></span>
         Notifications
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -624,19 +800,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6-6" type="checkbox" id="nav-5-1-6-6">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6-6" type="checkbox" id="nav-16-1-6-6">
     
-    <label class="md-nav__link" for="nav-5-1-6-6">
+    <label class="md-nav__link" for="nav-16-1-6-6">
       Persons
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Persons" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-6-6">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6-6">
+        <span class="md-nav__icon md-icon"></span>
         Persons
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -678,19 +850,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6-7" type="checkbox" id="nav-5-1-6-7">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6-7" type="checkbox" id="nav-16-1-6-7">
     
-    <label class="md-nav__link" for="nav-5-1-6-7">
+    <label class="md-nav__link" for="nav-16-1-6-7">
       Settings
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Settings" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-6-7">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6-7">
+        <span class="md-nav__icon md-icon"></span>
         Settings
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -732,19 +900,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6-8" type="checkbox" id="nav-5-1-6-8">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6-8" type="checkbox" id="nav-16-1-6-8">
     
-    <label class="md-nav__link" for="nav-5-1-6-8">
+    <label class="md-nav__link" for="nav-16-1-6-8">
       Sources
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Sources" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-6-8">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6-8">
+        <span class="md-nav__icon md-icon"></span>
         Sources
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -786,19 +950,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-6-9" type="checkbox" id="nav-5-1-6-9">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-6-9" type="checkbox" id="nav-16-1-6-9">
     
-    <label class="md-nav__link" for="nav-5-1-6-9">
+    <label class="md-nav__link" for="nav-16-1-6-9">
       Utility
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Utility" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-6-9">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-6-9">
+        <span class="md-nav__icon md-icon"></span>
         Utility
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -845,19 +1005,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-7" type="checkbox" id="nav-5-1-7">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-7" type="checkbox" id="nav-16-1-7">
     
-    <label class="md-nav__link" for="nav-5-1-7">
+    <label class="md-nav__link" for="nav-16-1-7">
       Iam
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Iam" data-md-level="3">
-      <label class="md-nav__title" for="nav-5-1-7">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-7">
+        <span class="md-nav__icon md-icon"></span>
         Iam
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -882,19 +1038,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-7-2" type="checkbox" id="nav-5-1-7-2">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-7-2" type="checkbox" id="nav-16-1-7-2">
     
-    <label class="md-nav__link" for="nav-5-1-7-2">
+    <label class="md-nav__link" for="nav-16-1-7-2">
       Auth
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Auth" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-7-2">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-7-2">
+        <span class="md-nav__icon md-icon"></span>
         Auth
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -936,19 +1088,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-7-3" type="checkbox" id="nav-5-1-7-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-7-3" type="checkbox" id="nav-16-1-7-3">
     
-    <label class="md-nav__link" for="nav-5-1-7-3">
+    <label class="md-nav__link" for="nav-16-1-7-3">
       Spaces
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Spaces" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-7-3">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-7-3">
+        <span class="md-nav__icon md-icon"></span>
         Spaces
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -990,19 +1138,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-7-4" type="checkbox" id="nav-5-1-7-4">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-7-4" type="checkbox" id="nav-16-1-7-4">
     
-    <label class="md-nav__link" for="nav-5-1-7-4">
+    <label class="md-nav__link" for="nav-16-1-7-4">
       Tokens
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Tokens" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-7-4">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-7-4">
+        <span class="md-nav__icon md-icon"></span>
         Tokens
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1044,19 +1188,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1-7-5" type="checkbox" id="nav-5-1-7-5">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-16-1-7-5" type="checkbox" id="nav-16-1-7-5">
     
-    <label class="md-nav__link" for="nav-5-1-7-5">
+    <label class="md-nav__link" for="nav-16-1-7-5">
       Whoami
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Whoami" data-md-level="4">
-      <label class="md-nav__title" for="nav-5-1-7-5">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-16-1-7-5">
+        <span class="md-nav__icon md-icon"></span>
         Whoami
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1113,6 +1253,71 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-example-sync" class="md-nav__link">
+    Usage example (sync)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-setup" class="md-nav__link">
+    Development setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-history" class="md-nav__link">
+    Release History
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    Contributing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -1126,10 +1331,7 @@
                   
                 
                 
-                  <h1>Home</h1>
-                
-                <p>neuroio-python</p>
-<hr />
+                <h1 id="python-api-client-for-neuroio">Python API client for NeuroIO</h1>
 <p><a href="http://badge.fury.io/py/neuroio"><img alt="PyPI version" src="https://badge.fury.io/py/neuroio.svg" /></a>
 <a href="https://codecov.io/gh/neuroio/neuroio-python"><img alt="codecov" src="https://codecov.io/gh/neuroio/neuroio-python/branch/master/graph/badge.svg" /></a>
 <a href="https://pypi.python.org/pypi/neuroio/"><img alt="License" src="https://img.shields.io/github/license/mashape/apistatus.svg" /></a>
@@ -1139,7 +1341,121 @@
 <hr />
 <p><a href="https://neuroio.github.io/neuroio-python/">Read Latest Documentation</a> - <a href="https://github.com/neuroio/neuroio-python/">Browse GitHub Code Repository</a></p>
 <hr />
-<p><strong>neuroio-python</strong> A Python package for interacting with NeuroIO API</p>
+<p>This library strives to be a complete mirror of official NeuroIO API in terms of methods and interfaces.</p>
+<p>Official latest API documentation can be found <a href="https://kb.neuroio.com/">here</a>.</p>
+<p>For your convenience, you can make API calls using sync or async (asyncio) interface.</p>
+<h2 id="installation">Installation</h2>
+<div class="codehilite"><pre><span></span><code>pip install neuroio
+</code></pre></div>
+
+<p>Note that it is always recommended pinning version of your installed packages.</p>
+<h2 id="usage-example-sync">Usage example (sync)</h2>
+<p>An example of how to create a source:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">neuroio</span> <span class="kn">import</span> <span class="n">Client</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># api_token is just str with your API token from NeuroIO</span>
+    <span class="n">api_token</span> <span class="o">=</span> <span class="s2">&quot;abcd012345&quot;</span>
+    <span class="c1"># Now create instance of Client. There should be only one per process.</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">api_token</span><span class="o">=</span><span class="n">api_token</span><span class="p">)</span>
+    <span class="c1"># Issue API request to create source</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_name&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now that we have our source created, we can create person inside that source:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">neuroio</span> <span class="kn">import</span> <span class="n">Client</span>
+
+
+<span class="k">def</span> <span class="nf">create_persons_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="n">source_name</span> <span class="o">=</span> <span class="s2">&quot;test_name&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;image.png&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">persons</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">image</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">source_name</span><span class="p">,</span>
+            <span class="n">facesize</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+            <span class="n">create_on_ha</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">create_on_junk</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">identify_asm</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Persons Create Response:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># api_token is just str with your API token from NeuroIO</span>
+    <span class="n">api_token</span> <span class="o">=</span> <span class="s2">&quot;abcd012345&quot;</span>
+    <span class="c1"># Now create instance of Client. There should be only one per process.</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">api_token</span><span class="o">=</span><span class="n">api_token</span><span class="p">)</span>
+    <span class="c1"># Issue API request to create a person</span>
+    <span class="n">create_persons_example</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now that we have our source &amp; person created, we can search for persons:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">neuroio</span> <span class="kn">import</span> <span class="n">Client</span>
+
+
+<span class="k">def</span> <span class="nf">search_persons_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;image.png&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">persons</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+            <span class="n">image</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+            <span class="n">identify_asm</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Persons Search Response:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># api_token is just str with your API token from NeuroIO</span>
+    <span class="n">api_token</span> <span class="o">=</span> <span class="s2">&quot;abcd012345&quot;</span>
+    <span class="c1"># Now create instance of Client. There should be only one per process.</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">api_token</span><span class="o">=</span><span class="n">api_token</span><span class="p">)</span>
+    <span class="c1"># Issue API request to search persons</span>
+    <span class="n">search_persons_example</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+</code></pre></div>
+
+<p><em>For more examples and usage, please refer to the <a href="https://neuroio.github.io/neuroio-python/">docs</a>.</em></p>
+<h2 id="development-setup">Development setup</h2>
+<p>To install all the development requirements:</p>
+<div class="codehilite"><pre><span></span><code>pip install --upgrade pip
+pip install poetry
+poetry install
+</code></pre></div>
+
+<p>To run linters &amp; test suite:</p>
+<div class="codehilite"><pre><span></span><code>./scripts/test.sh
+</code></pre></div>
+
+<h2 id="release-history">Release History</h2>
+<ul>
+<li>0.0.6<ul>
+<li>Updated library to latest API version (at the time of this release - 1.2.1)</li>
+<li>Updated README &amp; docs</li>
+</ul>
+</li>
+<li>0.0.5<ul>
+<li>Fixed persistent connection problems</li>
+<li>Updated requirements</li>
+<li>Codebase cleanup</li>
+</ul>
+</li>
+<li>0.0.4<ul>
+<li>Changed the way how we treat httpx connection - now we don't close it after every request (which was supposedly right way in httpx docs)</li>
+</ul>
+</li>
+<li>0.0.3<ul>
+<li>Updated httpx version, disabled cruft check since it just messes up project files</li>
+</ul>
+</li>
+</ul>
+<h2 id="license">License</h2>
+<p>Distributed under the MIT license. See <code>LICENSE</code> for more information.</p>
+<h2 id="contributing">Contributing</h2>
+<ol>
+<li>Fork it (<a href="https://github.com/yourname/yourproject/fork">https://github.com/yourname/yourproject/fork</a>)</li>
+<li>Create your feature branch (<code>git checkout -b feature/fooBar</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some fooBar'</code>)</li>
+<li>Push to the branch (<code>git push origin feature/fooBar</code>)</li>
+<li>Create a new Pull Request</li>
+</ol>
                 
               
               
@@ -1194,15 +1510,15 @@
       
     </div>
     
-      <script src="assets/javascripts/vendor.d1f5a259.min.js"></script>
-      <script src="assets/javascripts/bundle.d5fec882.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="assets/javascripts/vendor.2d1db4bd.min.js"></script>
+      <script src="assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
       
       <script>
         app = initialize({
           base: ".",
           features: [],
           search: Object.assign({
-            worker: "assets/javascripts/worker/search.fae956e7.min.js"
+            worker: "assets/javascripts/worker/search.5eca75d3.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
