@@ -96,4 +96,3 @@ class LicensesAsync(APIBaseAsync):
             return await client.patch(
                 url=f"/v1/licenses/sources/{id}/", json=data
             )
-
