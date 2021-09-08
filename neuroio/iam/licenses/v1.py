@@ -51,11 +51,6 @@ class Licenses(APIBase):
         with self.get_client() as client:
             return client.patch(url=f"/v1/licenses/sources/{id}/", json=data)
 
-    # def delete(self, id: int) -> Response:
-    #     with self.get_client() as client:
-    #         pass
-    #         #return client.delete(url=f"/v1/licenses/{id}/")
-
 
 class LicensesAsync(APIBaseAsync):
     async def create(self, name: str, entry_storage_days: int = 1) -> Response:
@@ -102,6 +97,3 @@ class LicensesAsync(APIBaseAsync):
                 url=f"/v1/licenses/sources/{id}/", json=data
             )
 
-    # async def delete(self, id: int) -> Response:
-    #     async with self.get_client() as client:
-    #         return await client.delete(url=f"/v1/licenses/sources/{id}/")

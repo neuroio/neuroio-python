@@ -3,7 +3,7 @@ from typing import List, Optional, Union
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
-from neuroio.constants import SourceLicense, sentinel
+from neuroio.constants import sentinel
 from neuroio.utils import request_dict_processing, request_query_processing
 
 
@@ -11,7 +11,7 @@ class Sources(APIBase):
     def create(
         self,
         name: str,
-        license: int,  # SourceLicense = SourceLicense.BASIC,
+        license: int,
         identify_facesize_threshold: int = 7000,
         use_pps_time: bool = False,
         manual_create_facesize_threshold: int = 25000,
@@ -57,7 +57,7 @@ class Sources(APIBase):
         self,
         id: int,
         name: str,
-        license: int,  # Union[SourceLicense, object] = sentinel,
+        license: int,
         identify_facesize_threshold: Union[int, object] = sentinel,
         use_pps_time: Union[bool, object] = sentinel,
         manual_create_facesize_threshold: Union[int, object] = sentinel,
@@ -90,7 +90,7 @@ class SourcesAsync(APIBaseAsync):
     async def create(
         self,
         name: str,
-        license: int,  # SourceLicense = SourceLicense.BASIC,
+        license: int,
         identify_facesize_threshold: int = 7000,
         use_pps_time: bool = False,
         manual_create_facesize_threshold: int = 25000,
@@ -136,7 +136,7 @@ class SourcesAsync(APIBaseAsync):
         self,
         id: int,
         name: str,
-        license: int,  # Union[SourceLicense, object] = sentinel,
+        license: int,
         identify_facesize_threshold: Union[int, object] = sentinel,
         use_pps_time: Union[bool, object] = sentinel,
         manual_create_facesize_threshold: Union[int, object] = sentinel,

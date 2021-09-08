@@ -20,12 +20,12 @@ All of the parameters, except `name`, are optional.
 
 ```python
 from neuroio import Client
-from neuroio.constants import EntryResult, SourceLicense
+from neuroio.constants import EntryResult
 
 c = Client(api_token="abcd")
 response = c.sources.create(
     name="test",
-    license=1,#SourceLicense.BASIC,
+    license=1,
     identify_facesize_threshold=1000,
     use_pps_time=True,
     manual_create_facesize_threshold=1000,
@@ -87,13 +87,13 @@ This method updates source info, if found by its id.
 
 ```python
 from neuroio import Client
-from neuroio.constants import EntryResult, SourceLicense
+from neuroio.constants import EntryResult
 
 c = Client(api_token="abcd")
 response = c.sources.update(
     id=1, 
     name="test",
-    license=1, #SourceLicense.BASIC,
+    license=1,
     identify_facesize_threshold=1000,
     use_pps_time=True,
     manual_create_facesize_threshold=1000,
