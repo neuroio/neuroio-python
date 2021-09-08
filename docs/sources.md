@@ -25,7 +25,7 @@ from neuroio.constants import EntryResult, SourceLicense
 c = Client(api_token="abcd")
 response = c.sources.create(
     name="test",
-    license_type=SourceLicense.BASIC,
+    license=1,#SourceLicense.BASIC,
     identify_facesize_threshold=1000,
     use_pps_time=True,
     manual_create_facesize_threshold=1000,
@@ -93,7 +93,7 @@ c = Client(api_token="abcd")
 response = c.sources.update(
     id=1, 
     name="test",
-    license_type=SourceLicense.BASIC,
+    license=1, #SourceLicense.BASIC,
     identify_facesize_threshold=1000,
     use_pps_time=True,
     manual_create_facesize_threshold=1000,

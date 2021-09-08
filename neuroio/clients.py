@@ -70,6 +70,12 @@ class Client:
         )
 
     @cached_property
+    def stream_tokens(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="stream_tokens", clsname="StreamTokens"
+        )
+
+    @cached_property
     def entries(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="entries", clsname="Entries"
@@ -118,6 +124,18 @@ class Client:
         )
 
     @cached_property
+    def billing(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="billing", clsname="Billing", service=Service.IAM
+        )
+
+    @cached_property
+    def licenses(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="licenses", clsname="Licenses", service=Service.IAM
+        )
+
+    @cached_property
     def tokens(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="tokens", clsname="Tokens", service=Service.IAM
@@ -139,6 +157,12 @@ class AsyncClient(Client):
     def sources(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="sources", clsname="SourcesAsync"
+        )
+
+    @cached_property
+    def stream_tokens(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="stream_tokens", clsname="StreamTokensAsync"
         )
 
     @cached_property
@@ -187,6 +211,18 @@ class AsyncClient(Client):
     def whoami(self) -> APIBase:
         return self.get_api_class_instance(
             namespace="whoami", clsname="WhoamiAsync", service=Service.IAM
+        )
+
+    @cached_property
+    def billing(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="billing", clsname="BillingAsync", service=Service.IAM
+        )
+
+    @cached_property
+    def licenses(self) -> APIBase:
+        return self.get_api_class_instance(
+            namespace="licenses", clsname="LicensesAsync", service=Service.IAM
         )
 
     @cached_property
