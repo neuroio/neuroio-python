@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import List, Union
 
 from httpx import Response
@@ -15,8 +14,8 @@ class Billing(APIBase):
         offset: int = 0,
         spaces_ids: Union[List[int], object] = sentinel,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
@@ -26,8 +25,8 @@ class Billing(APIBase):
     def billing_usage_total(
         self,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
@@ -36,13 +35,13 @@ class Billing(APIBase):
 
     def manager_account_billing_usage(
         self,
-        pk: str,
+        pk: int,
         limit: int = 20,
         offset: int = 0,
         spaces_ids: Union[List[int], object] = sentinel,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
@@ -56,8 +55,8 @@ class Billing(APIBase):
         pk: str,
         spaces_ids: Union[List[int], object] = sentinel,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
@@ -74,8 +73,8 @@ class BillingAsync(APIBaseAsync):
         offset: int = 0,
         spaces_ids: Union[List[int], object] = sentinel,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
@@ -85,13 +84,15 @@ class BillingAsync(APIBaseAsync):
     async def billing_usage_total(
         self,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
         async with self.get_client() as client:
-            return await client.get(url="/v1/billing/usage/total", params=data)
+            return await client.get(
+                url="/v1/billing/usage/total/", params=data
+            )
 
     async def manager_account_billing_usage(
         self,
@@ -100,8 +101,8 @@ class BillingAsync(APIBaseAsync):
         offset: int = 0,
         spaces_ids: Union[List[int], object] = sentinel,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
@@ -114,12 +115,12 @@ class BillingAsync(APIBaseAsync):
         self,
         pk: str,
         event_types: Union[List[int], object] = sentinel,
-        month_from: Union[datetime, object] = sentinel,
-        month_to: Union[datetime, object] = sentinel,
+        month_from: Union[str, object] = sentinel,
+        month_to: Union[str, object] = sentinel,
     ) -> Response:
         data = request_query_processing(locals(), ["self"])
 
         async with self.get_client() as client:
             return await client.get(
-                url=f"/v1/accounts/{pk}/billing/usage/total", params=data
+                url=f"/v1/accounts/{pk}/billing/usage/total/", params=data
             )
