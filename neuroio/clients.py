@@ -32,10 +32,39 @@ class Client:
         self.iam_settings = self.client_settings(
             timeout=timeout, base_url=constants.IAM_BASE_URL
         )
+        self.init()
+
+    def init(self) -> None:
+        self.api_atrr_names = [
+            "sources",
+            "entries",
+            "streams",
+            "utility",
+            "settings",
+            "groups",
+            "persons",
+            "notifications",
+        ]
+        self.iam_atrr_names = [
+            "auth",
+            "spaces",
+            "lists",
+            "licenses",
+            "whoami",
+            "tokens",
+            "billing",
+        ]
+
+    @cached_property
+    def is_async(self) -> bool:
+        return self.__class__.__name__ == "AsyncClient"
 
     @property
     def common_headers(self) -> dict:
-        return {"User-Agent": f"neuroio-python/{get_package_version()}"}
+        root = "neuroio-python"
+        if self.is_async:
+            root = "neuroio-async-python"
+        return {"User-Agent": f"{root}/{get_package_version()}"}
 
     def client_settings(self, base_url: str, timeout: float) -> Dict[Any, Any]:
         settings = {
@@ -57,176 +86,81 @@ class Client:
             return cls(settings=self.api_settings)
         return cls(settings=self.iam_settings)
 
-    @cached_property
-    def auth(self) -> APIBase:
+    def get_attr_instance_by_name(
+        self,
+        attr_name: str,
+        is_async: bool = False,
+        service: Service = Service.API,
+    ) -> APIBase:
         return self.get_api_class_instance(
-            namespace="auth", clsname="Auth", service=Service.IAM
+            namespace=attr_name,
+            clsname=attr_name.capitalize() + ("Async" if is_async else ""),
+            service=service,
         )
 
-    @cached_property
-    def sources(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="sources", clsname="Sources"
-        )
+    class Lists:
+        def __init__(self, parent: Any) -> None:
+            self.parent = parent
 
-    @cached_property
-    def stream_tokens(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="stream_tokens", clsname="StreamTokens"
-        )
+        @cached_property
+        def spaces(self) -> APIBase:
+            return self.parent.get_api_class_instance(
+                namespace="lists.spaces",
+                clsname=(
+                    "ListsSpaces" + ("Async" if self.parent.is_async else "")
+                ),
+                service=Service.IAM,
+            )
 
-    @cached_property
-    def entries(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="entries", clsname="Entries"
-        )
+    class Licenses:
+        def __init__(self, parent: Any) -> None:
+            self.parent = parent
 
-    @cached_property
-    def utility(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="utility", clsname="Utility"
-        )
+        @cached_property
+        def sources(self) -> APIBase:
+            return self.parent.get_api_class_instance(
+                namespace="licenses.sources",
+                clsname=(
+                    "Licenses" + ("Async" if self.parent.is_async else "")
+                ),
+                service=Service.IAM,
+            )
 
-    @cached_property
-    def settings(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="settings", clsname="Settings"
-        )
+    class Streams:
+        def __init__(self, parent: Any) -> None:
+            self.parent = parent
 
-    @cached_property
-    def groups(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="groups", clsname="Groups"
-        )
+        @cached_property
+        def tokens(self) -> APIBase:
+            return self.parent.get_api_class_instance(
+                namespace="streams.tokens",
+                clsname="StreamTokens"
+                + ("Async" if self.parent.is_async else ""),
+            )
 
-    @cached_property
-    def persons(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="persons", clsname="Persons"
-        )
-
-    @cached_property
-    def notifications(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="notifications", clsname="Notifications"
-        )
-
-    @cached_property
-    def spaces(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="spaces", clsname="Spaces", service=Service.IAM
-        )
-
-    @cached_property
-    def whoami(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="whoami", clsname="Whoami", service=Service.IAM
-        )
-
-    @cached_property
-    def billing(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="billing", clsname="Billing", service=Service.IAM
-        )
-
-    @cached_property
-    def licenses(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="licenses", clsname="Licenses", service=Service.IAM
-        )
-
-    @cached_property
-    def tokens(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="tokens", clsname="Tokens", service=Service.IAM
-        )
+    def __getattr__(self, name: str) -> Any:
+        if name in self.iam_atrr_names:
+            if name == "lists":
+                return Client.Lists(self)
+            elif name == "licenses":
+                return Client.Licenses(self)
+            else:
+                return self.get_attr_instance_by_name(
+                    attr_name=name,
+                    is_async=self.is_async,
+                    service=Service.IAM,
+                )
+        elif name in self.api_atrr_names:
+            if name == "streams":
+                return Client.Streams(self)
+            else:
+                return self.get_attr_instance_by_name(
+                    attr_name=name, is_async=self.is_async
+                )
+        else:
+            # Default behaviour
+            raise AttributeError
 
 
 class AsyncClient(Client):
-    @property
-    def common_headers(self) -> dict:
-        return {"User-Agent": f"neuroio-async-python/{get_package_version()}"}
-
-    @cached_property
-    def auth(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="auth", clsname="AuthAsync", service=Service.IAM
-        )
-
-    @cached_property
-    def sources(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="sources", clsname="SourcesAsync"
-        )
-
-    @cached_property
-    def stream_tokens(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="stream_tokens", clsname="StreamTokensAsync"
-        )
-
-    @cached_property
-    def entries(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="entries", clsname="EntriesAsync"
-        )
-
-    @cached_property
-    def utility(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="utility", clsname="UtilityAsync"
-        )
-
-    @cached_property
-    def settings(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="settings", clsname="SettingsAsync"
-        )
-
-    @cached_property
-    def groups(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="groups", clsname="GroupsAsync"
-        )
-
-    @cached_property
-    def persons(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="persons", clsname="PersonsAsync"
-        )
-
-    @cached_property
-    def notifications(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="notifications", clsname="NotificationsAsync"
-        )
-
-    @cached_property
-    def spaces(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="spaces", clsname="SpacesAsync", service=Service.IAM
-        )
-
-    @cached_property
-    def whoami(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="whoami", clsname="WhoamiAsync", service=Service.IAM
-        )
-
-    @cached_property
-    def billing(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="billing", clsname="BillingAsync", service=Service.IAM
-        )
-
-    @cached_property
-    def licenses(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="licenses", clsname="LicensesAsync", service=Service.IAM
-        )
-
-    @cached_property
-    def tokens(self) -> APIBase:
-        return self.get_api_class_instance(
-            namespace="tokens", clsname="TokensAsync", service=Service.IAM
-        )
+    pass

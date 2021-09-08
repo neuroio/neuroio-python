@@ -18,10 +18,6 @@ class Spaces(APIBase):
         with self.get_client() as client:
             return client.get(url="/v1/spaces/", params=data)
 
-    def spaces_full_list(self) -> Response:
-        with self.get_client() as client:
-            return client.get(url="/v1/lists/spaces/")
-
     def get(self, id: int) -> Response:
         with self.get_client() as client:
             return client.get(url=f"/v1/spaces/{id}/")
@@ -57,10 +53,6 @@ class SpacesAsync(APIBaseAsync):
 
         async with self.get_client() as client:
             return await client.get(url="/v1/spaces/", params=data)
-
-    async def spaces_full_list(self) -> Response:
-        async with self.get_client() as client:
-            return await client.get(url="/v1/lists/spaces/")
 
     async def get(self, id: int) -> Response:
         async with self.get_client() as client:

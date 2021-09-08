@@ -16,13 +16,14 @@ Can be filtered by name using list of event types & by list of space ids and mon
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.billing.billing_usage(
-                            month_from="2020-01",
-                            month_to="2020-06",
-                            spaces_ids=[4,5,6],
-                            event_types=[1,2,3],
-                            limit=10,
-                            offset=5)
+response = c.billing.usage(
+    month_from="2020-01",
+    month_to="2020-06",
+    spaces_ids=[4, 5, 6],
+    event_types=[1, 2, 3],
+    limit=10,
+    offset=5,
+)
 json_response = response.json()
 print(json_response)
 ```
@@ -40,10 +41,9 @@ Can be filtered by name using list of event types and months range.
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.billing.billing_usage_total(
-                            month_from="2020-01",
-                            month_to="2020-06",
-                            event_types=[1,2,3])
+response = c.billing.usage_total(
+    month_from="2020-01", month_to="2020-06", event_types=[1, 2, 3]
+)
 json_response = response.json()
 print(json_response)
 ```
@@ -60,14 +60,15 @@ Can be filtered by name using list of event types & by list of space ids and mon
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.billing.manager_account_billing_usage(  
-                            pk=1,
-                            month_from="2020-01",
-                            month_to="2020-06",
-                            spaces_ids=[4,5,6],
-                            event_types=[1,2,3],
-                            limit=10,
-                            offset=5)
+response = c.billing.manager_account_usage(
+    pk=1,
+    month_from="2020-01",
+    month_to="2020-06",
+    spaces_ids=[4, 5, 6],
+    event_types=[1, 2, 3],
+    limit=10,
+    offset=5,
+)
 json_response = response.json()
 print(json_response)
 ```
@@ -84,11 +85,9 @@ Can be filtered by months range & by list of space ids.
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.billing.manager_account_billing_usage_total(  
-                            pk=1,
-                            month_from="2020-01",
-                            month_to="2020-06",
-                            event_types=[1,2,3])
+response = c.billing.manager_account_usage_total(
+    pk=1, month_from="2020-01", month_to="2020-06", event_types=[1, 2, 3]
+)
 json_response = response.json()
 print(json_response)
 ```

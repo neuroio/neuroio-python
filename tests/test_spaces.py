@@ -70,14 +70,6 @@ def test_list_without_params(client):
 
 
 @respx.mock
-def test_spaces_full_list(client):
-    request = respx.get(f"{IAM_BASE_URL}/v1/lists/spaces/", status_code=200)
-    response = client.spaces.spaces_full_list()
-    assert request.called
-    assert response.status_code == 200
-
-
-@respx.mock
 def test_list_with_params(client):
     requests = mock_query_params_all_combos(
         f"{IAM_BASE_URL}/v1/spaces",
@@ -108,16 +100,6 @@ async def test_async_list_without_params(async_client):
     assert any([request.called for request in requests])
     assert response.status_code == 200
     assert response.json()["results"][0]["id"] == 1
-
-
-@respx.mock
-@pytest.mark.asyncio
-async def test_async_spaces_full_list(async_client):
-    request = respx.get(f"{IAM_BASE_URL}/v1/lists/spaces/", status_code=200)
-    response = await async_client.spaces.spaces_full_list()
-
-    assert request.called
-    assert response.status_code == 200
 
 
 @respx.mock

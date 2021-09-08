@@ -26,7 +26,7 @@ This method creates new temporary or permanent token.
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.stream_tokens.create(permanent=True)
+response = c.streams.tokens.create(permanent=True)
 json_response = response.json()
 print(json_response)
 ```
@@ -44,7 +44,7 @@ Can be filtered by permanence of stream_tokens.
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.stream_tokens.list(permanent=False, limit=10, offset=5)
+response = c.streams.tokens.list(permanent=False, limit=10, offset=5)
 json_response = response.json()  # if response is 200, this is list of dicts
 print(json_response)
 ```
@@ -59,7 +59,7 @@ This method returns stream-token info, if found by its id.
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.stream_tokens.get(token_id_or_key=1)
+response = c.streams.tokens.get(token_id_or_key=1)
 json_response = response.json()
 print(json_response)
 ```
@@ -74,7 +74,7 @@ This method updates stream-token info, if found by its id.
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.stream_tokens.update(token_id_or_key=1, is_active=False)
+response = c.streams.tokens.update(token_id_or_key=1, is_active=False)
 json_response = response.json()
 print(json_response)
 ```
@@ -90,7 +90,7 @@ from neuroio import Client
 
 c = Client(api_token="abcd")
 # NOTE: There is empty response in case of successful operation
-response = c.stream_tokens.delete(token_id_or_key=1)
+response = c.streams.tokens.delete(token_id_or_key=1)
 if response.status_code == 204:
     print("Stream-Token deleted successfully.")
 ```
@@ -111,7 +111,7 @@ from neuroio import Client
 
 c = Client(api_token="abcd")
 # NOTE: There is empty response in case of successful operation
-response = c.stream_tokens.delete_list(permanent=False)
+response = c.streams.tokens.delete_list(permanent=False)
 if response.status_code == 204:
     print("Stream-Tokens deleted successfully.")
 ```
