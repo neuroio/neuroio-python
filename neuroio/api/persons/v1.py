@@ -21,7 +21,7 @@ class Persons(APIBase):
         data = request_form_processing(locals(), ["self", "image"])
 
         if isinstance(image, bytes):
-            image = ('image.jpg', io.BytesIO(image))
+            image = ("image.jpg", io.BytesIO(image))
 
         files = {"image": image}
 
@@ -57,7 +57,11 @@ class Persons(APIBase):
                 url=f"/v1/persons/reinit/{pid}/", data=data, files=files
             )
 
-    def search(self, image: Union[BinaryIO, Tuple[str, BinaryIO], bytes], identify_asm: bool = False) -> Response:
+    def search(
+        self,
+        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        identify_asm: bool = False,
+    ) -> Response:
         if isinstance(image, tuple):
             image = image[1]
         files = {"image": ("image", image, "image/jpeg")}
@@ -85,7 +89,7 @@ class PersonsAsync(APIBaseAsync):
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
         if isinstance(image, bytes):
-            image = ('image.jpg', io.BytesIO(image))
+            image = ("image.jpg", io.BytesIO(image))
         files = {"image": image}
 
         async with self.get_client() as client:
@@ -127,7 +131,7 @@ class PersonsAsync(APIBaseAsync):
     async def search(
         self,
         image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
-        identify_asm: bool = False
+        identify_asm: bool = False,
     ) -> Response:
         if isinstance(image, tuple):
             image = image[1]
