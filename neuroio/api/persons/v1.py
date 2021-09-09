@@ -1,4 +1,5 @@
-from typing import BinaryIO, Union
+import io
+from typing import BinaryIO, Union, Tuple
 
 from httpx import Response
 
@@ -10,7 +11,7 @@ from neuroio.utils import request_dict_processing, request_form_processing
 class Persons(APIBase):
     def create(
         self,
-        image: BinaryIO,
+        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
         source: str,
         facesize: Union[int, object] = sentinel,
         create_on_ha: Union[bool, object] = sentinel,
@@ -18,6 +19,10 @@ class Persons(APIBase):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
+
+        if isinstance(image, bytes):
+            image = ('image.jpg', io.BytesIO(image))
+
         files = {"image": image}
 
         with self.get_client() as client:
@@ -52,7 +57,9 @@ class Persons(APIBase):
                 url=f"/v1/persons/reinit/{pid}/", data=data, files=files
             )
 
-    def search(self, image: BinaryIO, identify_asm: bool = False) -> Response:
+    def search(self, image: Union[BinaryIO, Tuple[str, BinaryIO], bytes], identify_asm: bool = False) -> Response:
+        if isinstance(image, tuple):
+            image = image[1]
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
 
@@ -69,7 +76,7 @@ class Persons(APIBase):
 class PersonsAsync(APIBaseAsync):
     async def create(
         self,
-        image: BinaryIO,
+        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
         source: str,
         facesize: Union[int, object] = sentinel,
         create_on_ha: Union[bool, object] = sentinel,
@@ -77,6 +84,8 @@ class PersonsAsync(APIBaseAsync):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
+        if isinstance(image, bytes):
+            image = ('image.jpg', io.BytesIO(image))
         files = {"image": image}
 
         async with self.get_client() as client:
@@ -116,8 +125,13 @@ class PersonsAsync(APIBaseAsync):
             )
 
     async def search(
-        self, image: BinaryIO, identify_asm: bool = False
+        self,
+        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        identify_asm: bool = False
     ) -> Response:
+        if isinstance(image, tuple):
+            image = image[1]
+
         files = {"image": ("image", image, "image/jpeg")}
         data = {"identify_asm": str(identify_asm)}
 
