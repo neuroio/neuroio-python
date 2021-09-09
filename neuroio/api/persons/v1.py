@@ -43,7 +43,7 @@ class Persons(APIBase):
     def reinit_by_photo(
         self,
         pid: str,
-        image: BinaryIO,
+        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
         source: str,
         facesize: Union[int, object] = sentinel,
         identify_asm: Union[bool, object] = sentinel,
@@ -110,7 +110,7 @@ class PersonsAsync(APIBaseAsync):
     async def reinit_by_photo(
         self,
         pid: str,
-        image: BinaryIO,
+        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
         source: str,
         facesize: Union[int, object] = sentinel,
         identify_asm: Union[bool, object] = sentinel,
