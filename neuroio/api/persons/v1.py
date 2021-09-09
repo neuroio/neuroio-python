@@ -1,5 +1,5 @@
 import io
-from typing import BinaryIO, Union, Tuple
+from typing import BinaryIO, Tuple, Union
 
 from httpx import Response
 
