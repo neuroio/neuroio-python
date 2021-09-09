@@ -1,6 +1,16 @@
 import functools
+import io
 from importlib import import_module
-from typing import Any, Callable, List, Optional, TypeVar, Union
+from typing import (
+    Any,
+    BinaryIO,
+    Callable,
+    List,
+    Optional,
+    Tuple,
+    TypeVar,
+    Union,
+)
 
 from neuroio.constants import sentinel
 
@@ -29,6 +39,14 @@ F = TypeVar("F", bound=Callable[..., Any])
 
 def cached_property(f: F) -> property:
     return property(functools.lru_cache()(f))
+
+
+def prepare_image_processing(
+    image: Union[BinaryIO, Tuple[str, BinaryIO], bytes]
+) -> Union[BinaryIO, Tuple[str, BinaryIO]]:
+    return (
+        ("image.jpg", io.BytesIO(image)) if isinstance(image, bytes) else image
+    )
 
 
 def process_query_params(params: dict) -> dict:

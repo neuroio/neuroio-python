@@ -1,11 +1,14 @@
-import io
 from typing import BinaryIO, Tuple, Union
 
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import EntryResult, sentinel
-from neuroio.utils import request_dict_processing, request_form_processing
+from neuroio.utils import (
+    prepare_image_processing,
+    request_dict_processing,
+    request_form_processing,
+)
 
 
 class Persons(APIBase):
@@ -19,10 +22,7 @@ class Persons(APIBase):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
-
-        if isinstance(image, bytes):
-            image = ("image.jpg", io.BytesIO(image))
-
+        image = prepare_image_processing(image)
         files = {"image": image}
 
         with self.get_client() as client:
@@ -50,6 +50,7 @@ class Persons(APIBase):
         result: str = EntryResult.HA,
     ) -> Response:
         data = request_form_processing(locals())
+        image = prepare_image_processing(image)
         files = {"image": image}
 
         with self.get_client() as client:
@@ -88,8 +89,7 @@ class PersonsAsync(APIBaseAsync):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
-        if isinstance(image, bytes):
-            image = ("image.jpg", io.BytesIO(image))
+        image = prepare_image_processing(image)
         files = {"image": image}
 
         async with self.get_client() as client:
@@ -121,6 +121,7 @@ class PersonsAsync(APIBaseAsync):
         result: str = EntryResult.HA,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image", "pid"])
+        image = prepare_image_processing(image)
         files = {"image": image}
 
         async with self.get_client() as client:
