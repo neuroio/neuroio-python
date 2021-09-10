@@ -2,8 +2,8 @@ import enum
 from typing import Any, Dict, Optional
 
 from neuroio import constants
-from neuroio.api.base import APIBase
-from neuroio.auth import AuthorizationTokenAuth
+from neuroio.auth_token import AuthorizationTokenAuth
+from neuroio.base import APIBase
 from neuroio.utils import cached_property, dynamic_import, get_package_version
 
 
@@ -26,12 +26,7 @@ class Client:
         self.api_token = api_token
         self.api_version = api_version
 
-        self.api_settings = self.client_settings(
-            timeout=timeout, base_url=constants.API_BASE_URL
-        )
-        self.iam_settings = self.client_settings(
-            timeout=timeout, base_url=constants.IAM_BASE_URL
-        )
+        self.csettings = self.client_settings(timeout=timeout)
         self.init()
 
     def init(self) -> None:
@@ -66,9 +61,8 @@ class Client:
             root = "neuroio-async-python"
         return {"User-Agent": f"{root}/{get_package_version()}"}
 
-    def client_settings(self, base_url: str, timeout: float) -> Dict[Any, Any]:
+    def client_settings(self, timeout: float) -> Dict[Any, Any]:
         settings = {
-            "base_url": base_url,
             "timeout": timeout,
             "headers": self.common_headers,
         }
@@ -80,11 +74,9 @@ class Client:
     def get_api_class_instance(
         self, namespace: str, clsname: str, service: Service = Service.API
     ) -> APIBase:
-        abs_path = f"neuroio.{service}.{namespace}.v{self.api_version}"
+        abs_path = f"neuroio.{namespace}.v{self.api_version}"
         cls = dynamic_import(abs_path=abs_path, attribute=clsname)
-        if service == Service.API:
-            return cls(settings=self.api_settings)
-        return cls(settings=self.iam_settings)
+        return cls(settings=self.csettings)
 
     def get_attr_instance_by_name(
         self,

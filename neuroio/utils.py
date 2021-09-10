@@ -1,8 +1,18 @@
+import datetime
 import functools
 from importlib import import_module
 from typing import Any, Callable, List, Optional, TypeVar, Union
 
 from neuroio.constants import sentinel
+
+
+def validate_month_str(month_str: str) -> None:
+    try:
+        datetime.datetime.strptime(month_str, "%Y-%m")
+    except ValueError:
+        raise ValueError(
+            f"Incorrect month format in {month_str}, should be YYYY-MM"
+        )
 
 
 def get_package_version() -> str:
