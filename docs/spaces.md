@@ -111,7 +111,7 @@ This method returns full list of spaces.
 from neuroio import Client
 
 c = Client(api_token="abcd")
-response = c.spaces.lists.spaces.all()
+response = c.lists.spaces.all()
 json_response = response.json()
 print(json_response)
 ```

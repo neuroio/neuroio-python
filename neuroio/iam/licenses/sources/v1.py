@@ -28,7 +28,7 @@ class Licenses(APIBase):
         with self.get_client() as client:
             return client.get(url="/v1/licenses/sources/", params=data)
 
-    def get(self, id: int) -> Response:
+    def get(self, id: str) -> Response:
         with self.get_client() as client:
             return client.get(url=f"/v1/licenses/sources/{id}/")
 
