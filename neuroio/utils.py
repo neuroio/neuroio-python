@@ -45,17 +45,20 @@ def cached_property(f: F) -> property:
     return property(functools.lru_cache()(f))
 
 
-def prepare_image_processing(image: ImageType) -> dict:
+def prepare_image_processing(
+    image: ImageType, filename: str = "image"
+) -> dict:
     if isinstance(image, (bytes, bytearray)):
         image_data = io.BytesIO(image)
     elif isinstance(image, _io.BufferedReader):
         image_data = image
+        filename = image.name
     elif isinstance(image, tuple):
-        image_data = image[1]
+        filename, image_data = image
     else:
         raise Exception("Wrong image datatype")
 
-    return {"image": ("image", image_data, "image/jpeg")}
+    return {"image": (filename, image_data)}
 
 
 def process_query_params(params: dict) -> dict:

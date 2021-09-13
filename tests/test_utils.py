@@ -19,13 +19,14 @@ def test_prepare_image_processing_binary():
     assert isinstance(image, dict)
     assert "image" in image
     assert isinstance(image["image"], tuple)
-    assert len(image["image"]) == 3
+    assert len(image["image"]) == 2
     assert image["image"][1] is not None
+    assert image["image"][0] == "image"
     assert image["image"][1].read() == data
 
 
 def test_prepare_image_processing_buffer_reader():
-    filename = "image.jpg"
+    filename = "test_image_name.jpg"
     data = b"test_image_data"
 
     with open(filename, "wb") as f:
@@ -37,7 +38,8 @@ def test_prepare_image_processing_buffer_reader():
         assert isinstance(image, dict)
         assert "image" in image
         assert isinstance(image["image"], tuple)
-        assert len(image["image"]) == 3
+        assert len(image["image"]) == 2
+        assert image["image"][0] == filename
         assert image["image"][1] is not None
 
         image_data = image["image"][1].read()
@@ -48,7 +50,7 @@ def test_prepare_image_processing_buffer_reader():
 
 
 def test_prepare_image_processing_tuple():
-    filename = "image.jpg"
+    filename = "test_image_name.jpg"
     data = b"test_image_data"
 
     with open(filename, "wb") as f:
@@ -60,7 +62,8 @@ def test_prepare_image_processing_tuple():
         assert isinstance(image, dict)
         assert "image" in image
         assert isinstance(image["image"], tuple)
-        assert len(image["image"]) == 3
+        assert len(image["image"]) == 2
+        assert image["image"][0] == filename
         assert image["image"][1] is not None
 
         image_data = image["image"][1].read()
