@@ -55,7 +55,7 @@ def prepare_image_processing(image: ImageType) -> dict:
     else:
         raise Exception("Wrong image datatype")
 
-    return {"image": ("image.jpg", image_data, "image/jpeg")}
+    return {"image": ("image", image_data, "image/jpeg")}
 
 
 def process_query_params(params: dict) -> dict:
