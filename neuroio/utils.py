@@ -16,7 +16,7 @@ import _io
 
 from neuroio.constants import sentinel
 
-ImageType = Union[BinaryIO, Tuple[str, BinaryIO], bytes]
+ImageType = Union[BinaryIO, Tuple[str, io.BytesIO], bytes]
 
 
 def get_package_version() -> str:
