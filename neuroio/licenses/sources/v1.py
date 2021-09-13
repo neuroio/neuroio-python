@@ -16,7 +16,7 @@ class LicensesBase(IAMBaseBase):
             return self.base_url + "/v1/licenses/sources/"
 
 
-class Licenses(IAMBase, LicensesBase):
+class Impl(IAMBase, LicensesBase):
     def create(self, name: str, entry_storage_days: int = 1) -> Response:
         data = request_dict_processing(locals(), ["self"])
 
@@ -53,7 +53,7 @@ class Licenses(IAMBase, LicensesBase):
             return client.patch(url=self.get_url(f"{id}"), json=data)
 
 
-class LicensesAsync(IAMBaseAsync, LicensesBase):
+class ImplAsync(IAMBaseAsync, LicensesBase):
     async def create(self, name: str, entry_storage_days: int = 1) -> Response:
         data = request_dict_processing(locals(), ["self"])
 

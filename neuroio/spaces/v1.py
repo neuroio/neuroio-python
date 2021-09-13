@@ -11,7 +11,7 @@ class SpacesBase(IAMBaseBase):
             return self.base_url + "/v1/spaces/"
 
 
-class Spaces(IAMBase, SpacesBase):
+class Impl(IAMBase, SpacesBase):
     def create(self, name: str) -> Response:
         data = {"name": name}
 
@@ -47,7 +47,7 @@ class Spaces(IAMBase, SpacesBase):
             return client.post(url=self.get_url(f"{id}/tokens"), json=data)
 
 
-class SpacesAsync(IAMBaseAsync, SpacesBase):
+class ImplAsync(IAMBaseAsync, SpacesBase):
     async def create(self, name: str) -> Response:
         data = {"name": name}
 

@@ -15,7 +15,7 @@ class GroupsBase(APIBaseBase):
             return self.base_url + "/v1/groups/persons/"
 
 
-class Groups(APIBase, GroupsBase):
+class Impl(APIBase, GroupsBase):
     def create(self, name: str) -> Response:
         data = {"name": name}
         with self.get_client() as client:
@@ -73,7 +73,7 @@ class Groups(APIBase, GroupsBase):
             )
 
 
-class GroupsAsync(APIBaseAsync, GroupsBase):
+class ImplAsync(APIBaseAsync, GroupsBase):
     async def create(self, name: str) -> Response:
         data = {"name": name}
         async with self.get_client() as client:

@@ -16,7 +16,7 @@ class EntriesBase(APIBaseBase):
             return self.base_url + "/v1/entries/"
 
 
-class Entries(APIBase, EntriesBase):
+class Impl(APIBase, EntriesBase):
     def list(
         self,
         pid: Union[List[str], object] = sentinel,
@@ -46,7 +46,7 @@ class Entries(APIBase, EntriesBase):
             return client.delete(url=self.get_url(f"{id}"))
 
 
-class EntriesAsync(APIBaseAsync, EntriesBase):
+class ImplAsync(APIBaseAsync, EntriesBase):
     async def list(
         self,
         pid: Union[List[str], object] = sentinel,

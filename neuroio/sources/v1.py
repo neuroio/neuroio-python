@@ -15,7 +15,7 @@ class SourcesBase(APIBaseBase):
             return self.base_url + "/v1/sources/"
 
 
-class Sources(APIBase, SourcesBase):
+class Impl(APIBase, SourcesBase):
     def create(
         self,
         name: str,
@@ -94,7 +94,7 @@ class Sources(APIBase, SourcesBase):
             return client.delete(url=self.get_url(f"{id}"))
 
 
-class SourcesAsync(APIBaseAsync, SourcesBase):
+class ImplAsync(APIBaseAsync, SourcesBase):
     async def create(
         self,
         name: str,

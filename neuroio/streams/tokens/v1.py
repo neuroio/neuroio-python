@@ -13,7 +13,7 @@ class StreamTokensBase(APIBaseBase):
             return self.base_url + "/v1/streams/tokens/"
 
 
-class StreamTokens(APIBase, StreamTokensBase):
+class Impl(APIBase, StreamTokensBase):
     def create(self, permanent: bool = False) -> Response:
         data = {"permanent": permanent}
 
@@ -52,7 +52,7 @@ class StreamTokens(APIBase, StreamTokensBase):
             return client.delete(url=self.get_url(f"{token_id_or_key}"))
 
 
-class StreamTokensAsync(APIBaseAsync, StreamTokensBase):
+class ImplAsync(APIBaseAsync, StreamTokensBase):
     async def create(self, permanent: bool = False) -> Response:
         data = {"permanent": permanent}
 

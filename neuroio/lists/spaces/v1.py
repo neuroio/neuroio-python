@@ -8,13 +8,13 @@ class ListsSpacesBase(IAMBaseBase):
         return self.base_url + "/v1/lists/spaces/"
 
 
-class ListsSpaces(IAMBase, ListsSpacesBase):
+class Impl(IAMBase, ListsSpacesBase):
     def all(self) -> Response:
         with self.get_client() as client:
             return client.get(url=self.get_url())
 
 
-class ListsSpacesAsync(IAMBaseAsync, ListsSpacesBase):
+class ImplAsync(IAMBaseAsync, ListsSpacesBase):
     async def all(self) -> Response:
         async with self.get_client() as client:
             return await client.get(url=self.get_url())

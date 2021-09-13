@@ -12,7 +12,7 @@ class BillingBase(IAMBaseBase):
         return self.base_url + f"/v1/billing/{key}/"
 
 
-class Billing(IAMBase, BillingBase):
+class Impl(IAMBase, BillingBase):
     def usage(
         self,
         limit: int = 20,
@@ -47,7 +47,7 @@ class Billing(IAMBase, BillingBase):
             return client.get(url=self.get_url("usage/total"), params=data)
 
 
-class BillingAsync(IAMBaseAsync, BillingBase):
+class ImplAsync(IAMBaseAsync, BillingBase):
     async def usage(
         self,
         limit: int = 20,

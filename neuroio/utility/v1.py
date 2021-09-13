@@ -11,7 +11,7 @@ class UtilityBase(APIBaseBase):
         return self.base_url + f"/v1/utility/{key}/"
 
 
-class Utility(APIBase, UtilityBase):
+class Impl(APIBase, UtilityBase):
     def compare(
         self, image1: BinaryIO, image2: BinaryIO, result: str = EntryResult.HA
     ) -> Response:
@@ -30,7 +30,7 @@ class Utility(APIBase, UtilityBase):
             return client.post(url=self.get_url("asm"), files=files)
 
 
-class UtilityAsync(APIBaseAsync, UtilityBase):
+class ImplAsync(APIBaseAsync, UtilityBase):
     async def compare(
         self, image1: BinaryIO, image2: BinaryIO, result: str = EntryResult.HA
     ) -> Response:

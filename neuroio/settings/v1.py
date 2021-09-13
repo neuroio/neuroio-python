@@ -17,7 +17,7 @@ class SettingsBase(APIBaseBase):
             return self.base_url + "/v1/settings/thresholds/"
 
 
-class Settings(APIBase, SettingsBase):
+class Impl(APIBase, SettingsBase):
     def get(self) -> Response:
         with self.get_client() as client:
             return client.get(url=self.get_url())
@@ -38,7 +38,7 @@ class Settings(APIBase, SettingsBase):
             return client.post(url=self.get_url("reset"))
 
 
-class SettingsAsync(APIBaseAsync, SettingsBase):
+class ImplAsync(APIBaseAsync, SettingsBase):
     async def get(self) -> Response:
         async with self.get_client() as client:
             return await client.get(url=self.get_url())

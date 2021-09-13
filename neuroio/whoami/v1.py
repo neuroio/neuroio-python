@@ -8,13 +8,13 @@ class WhoamiBase(IAMBaseBase):
         return self.base_url + "/v1/whoami/"
 
 
-class Whoami(IAMBase, WhoamiBase):
+class Impl(IAMBase, WhoamiBase):
     def me(self) -> Response:
         with self.get_client() as client:
             return client.get(url=self.get_url())
 
 
-class WhoamiAsync(IAMBaseAsync, WhoamiBase):
+class ImplAsync(IAMBaseAsync, WhoamiBase):
     async def me(self) -> Response:
         async with self.get_client() as client:
             return await client.get(url=self.get_url())

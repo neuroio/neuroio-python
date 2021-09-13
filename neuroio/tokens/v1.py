@@ -13,7 +13,7 @@ class TokensBase(IAMBaseBase):
             return self.base_url + "/v1/tokens/"
 
 
-class Tokens(IAMBase, TokensBase):
+class Impl(IAMBase, TokensBase):
     def create(self, permanent: bool = False) -> Response:
         data = {"permanent": permanent}
 
@@ -52,7 +52,7 @@ class Tokens(IAMBase, TokensBase):
             return client.delete(url=self.get_url(f"{token_id_or_key}"))
 
 
-class TokensAsync(IAMBaseAsync, TokensBase):
+class ImplAsync(IAMBaseAsync, TokensBase):
     async def create(self, permanent: bool = False) -> Response:
         data = {"permanent": permanent}
 

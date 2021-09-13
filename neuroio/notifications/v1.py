@@ -22,7 +22,7 @@ class NotificationsBase(APIBaseBase):
             return self.base_url + "/v1/notifications/"
 
 
-class Notifications(APIBase, NotificationsBase):
+class Impl(APIBase, NotificationsBase):
     def create(
         self,
         name: str,
@@ -85,7 +85,7 @@ class Notifications(APIBase, NotificationsBase):
             return client.delete(url=self.get_url(f"{id}"))
 
 
-class NotificationsAsync(APIBaseAsync, NotificationsBase):
+class ImplAsync(APIBaseAsync, NotificationsBase):
     async def create(
         self,
         name: str,

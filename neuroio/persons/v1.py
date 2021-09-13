@@ -15,7 +15,7 @@ class PersonsBase(APIBaseBase):
             return self.base_url + "/v1/persons/"
 
 
-class Persons(APIBase, PersonsBase):
+class Impl(APIBase, PersonsBase):
     def create(
         self,
         image: BinaryIO,
@@ -74,7 +74,7 @@ class Persons(APIBase, PersonsBase):
             return client.delete(url=self.get_url(f"{pid}"))
 
 
-class PersonsAsync(APIBaseAsync, PersonsBase):
+class ImplAsync(APIBaseAsync, PersonsBase):
     async def create(
         self,
         image: BinaryIO,

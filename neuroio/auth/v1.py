@@ -8,7 +8,7 @@ class AuthBase(IAMBaseBase):
         return self.base_url + f"/v1/auth/{key}/"
 
 
-class Auth(IAMBase, AuthBase):
+class Impl(IAMBase, AuthBase):
     def login(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
 
@@ -29,7 +29,7 @@ class Auth(IAMBase, AuthBase):
             return client.post(url=self.get_url("password/change"), json=data)
 
 
-class AuthAsync(IAMBaseAsync, AuthBase):
+class ImplAsync(IAMBaseAsync, AuthBase):
     async def login(self, username: str, password: str) -> Response:
         data = {"username": username, "password": password}
 
