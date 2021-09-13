@@ -1,3 +1,5 @@
+import pytest
+
 from neuroio.constants import sentinel
 from neuroio.utils import (
     process_query_params,
@@ -52,9 +54,10 @@ def test_request_form_processing_has_exclude():
 
 def test_validate_month_str():
     month_str = "2018*09"
-    in_assertion = False
-    try:
+    with pytest.raises(ValueError) as exc_info:
         validate_month_str(month_str)
-    except ValueError:
-        in_assertion = True
-    assert in_assertion
+    assert exc_info.type is ValueError
+    assert (
+        exc_info.value.args[0]
+        == f"Incorrect month format in {month_str}, should be YYYY-MM"
+    )
