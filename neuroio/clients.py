@@ -1,4 +1,3 @@
-import enum
 from importlib import import_module
 from typing import Any, Dict, Optional
 
@@ -7,39 +6,33 @@ from neuroio.auth_token import AuthorizationTokenAuth
 from neuroio.utils import cached_property, get_package_version
 
 
-class Service(str, enum.Enum):
-    API = "api"
-    IAM = "iam"
-
-
 class Catcher:
-    def __init__(self, prev: str, is_async: bool, settings: dict) -> None:
+    def __init__(
+        self, prev: str, is_async: bool, settings: dict, api_version: int
+    ) -> None:
         self.prev = prev
         self.settings = settings
         self.is_async = is_async
-        self.api_version = self.settings["api_version"]
+        self.api_version = api_version
 
     def __getattr__(self, item: str) -> Any:
         return Catcher(
             prev=f"{self.prev}.{item}",
             is_async=self.is_async,
             settings=self.settings,
+            api_version=self.api_version,
         )
 
     def __call__(self, *args: list, **kwargs: dict) -> Any:
         method = self.prev.split(".")[-1]
         path = ".".join(self.prev.split(".")[:-1])
-        try:
-            module_path = f"neuroio.{path}.v{self.api_version}"
-            v1_module = import_module(module_path)
-        except Exception as e:
-            print(str(e))
-
+        module_path = f"neuroio.{path}.v{self.api_version}"
+        v1_module = import_module(module_path)
         if v1_module:
             cls = getattr(
                 v1_module, ("ImplAsync" if self.is_async else "Impl")
             )
-            inst = cls(settings={})  # self.csettings)
+            inst = cls(settings=self.settings)
             if inst:
                 return getattr(inst, method)(*args, **kwargs)
 
@@ -55,12 +48,9 @@ class Client:
         Creates and manages singleton of HTTP client, that is used to make
         request to API.
         """
-        # self.api_token = api_token
         self.api_version = api_version
 
-        self.csettings = self.client_settings(
-            timeout=timeout, token=api_token, api_version=api_version
-        )
+        self.csettings = self.client_settings(timeout=timeout, token=api_token)
         self.init()
 
     def init(self) -> None:
@@ -96,12 +86,11 @@ class Client:
         return {"User-Agent": f"{root}/{get_package_version()}"}
 
     def client_settings(
-        self, timeout: float, api_version: int, token: str = None
+        self, timeout: float, token: str = None
     ) -> Dict[Any, Any]:
         settings = {
             "timeout": timeout,
             "headers": self.common_headers,
-            "api_version": api_version,
         }
         if token:
             settings["auth"] = AuthorizationTokenAuth(api_token=token)
@@ -111,7 +100,10 @@ class Client:
     def __getattr__(self, item: str) -> Any:
         if item in self.api_atrr_names + self.iam_atrr_names:
             return Catcher(
-                prev=item, is_async=self.is_async, settings=self.csettings
+                prev=item,
+                is_async=self.is_async,
+                settings=self.csettings,
+                api_version=self.api_version,
             )
         else:
             # Default behaviour
