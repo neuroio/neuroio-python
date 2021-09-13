@@ -129,9 +129,6 @@ class PersonsAsync(APIBaseAsync):
         image: ImageType,
         identify_asm: bool = False,
     ) -> Response:
-        if isinstance(image, tuple):
-            image = image[1]
-
         files = prepare_image_processing(image)
         data = {"identify_asm": str(identify_asm)}
 
