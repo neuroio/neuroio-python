@@ -1,10 +1,11 @@
-from typing import BinaryIO, Tuple, Union
+from typing import Union
 
 from httpx import Response
 
 from neuroio.api.base import APIBase, APIBaseAsync
 from neuroio.constants import EntryResult, sentinel
 from neuroio.utils import (
+    ImageType,
     prepare_image_processing,
     request_dict_processing,
     request_form_processing,
@@ -14,7 +15,7 @@ from neuroio.utils import (
 class Persons(APIBase):
     def create(
         self,
-        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         create_on_ha: Union[bool, object] = sentinel,
@@ -22,8 +23,7 @@ class Persons(APIBase):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
-        image = prepare_image_processing(image)
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         with self.get_client() as client:
             return client.post(url="/v1/persons/", data=data, files=files)
@@ -43,15 +43,14 @@ class Persons(APIBase):
     def reinit_by_photo(
         self,
         pid: str,
-        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         identify_asm: Union[bool, object] = sentinel,
         result: str = EntryResult.HA,
     ) -> Response:
         data = request_form_processing(locals())
-        image = prepare_image_processing(image)
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         with self.get_client() as client:
             return client.post(
@@ -60,12 +59,10 @@ class Persons(APIBase):
 
     def search(
         self,
-        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        image: ImageType,
         identify_asm: bool = False,
     ) -> Response:
-        if isinstance(image, tuple):
-            image = image[1]
-        files = {"image": ("image", image, "image/jpeg")}
+        files = prepare_image_processing(image)
         data = {"identify_asm": str(identify_asm)}
 
         with self.get_client() as client:
@@ -81,7 +78,7 @@ class Persons(APIBase):
 class PersonsAsync(APIBaseAsync):
     async def create(
         self,
-        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         create_on_ha: Union[bool, object] = sentinel,
@@ -89,8 +86,7 @@ class PersonsAsync(APIBaseAsync):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
-        image = prepare_image_processing(image)
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         async with self.get_client() as client:
             return await client.post(
@@ -114,15 +110,14 @@ class PersonsAsync(APIBaseAsync):
     async def reinit_by_photo(
         self,
         pid: str,
-        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         identify_asm: Union[bool, object] = sentinel,
         result: str = EntryResult.HA,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image", "pid"])
-        image = prepare_image_processing(image)
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         async with self.get_client() as client:
             return await client.post(
@@ -131,13 +126,13 @@ class PersonsAsync(APIBaseAsync):
 
     async def search(
         self,
-        image: Union[BinaryIO, Tuple[str, BinaryIO], bytes],
+        image: ImageType,
         identify_asm: bool = False,
     ) -> Response:
         if isinstance(image, tuple):
             image = image[1]
 
-        files = {"image": ("image", image, "image/jpeg")}
+        files = prepare_image_processing(image)
         data = {"identify_asm": str(identify_asm)}
 
         async with self.get_client() as client:

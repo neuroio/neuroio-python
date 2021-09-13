@@ -12,7 +12,11 @@ from typing import (
     Union,
 )
 
+import _io
+
 from neuroio.constants import sentinel
+
+ImageType = Union[BinaryIO, Tuple[str, BinaryIO], bytes]
 
 
 def get_package_version() -> str:
@@ -41,12 +45,17 @@ def cached_property(f: F) -> property:
     return property(functools.lru_cache()(f))
 
 
-def prepare_image_processing(
-    image: Union[BinaryIO, Tuple[str, BinaryIO], bytes]
-) -> Union[BinaryIO, Tuple[str, BinaryIO]]:
-    return (
-        ("image.jpg", io.BytesIO(image)) if isinstance(image, bytes) else image
-    )
+def prepare_image_processing(image: ImageType) -> dict:
+    if isinstance(image, (bytes, bytearray)):
+        image_data = io.BytesIO(image)
+    elif isinstance(image, _io.BufferedReader):
+        image_data = image
+    elif isinstance(image, tuple):
+        image_data = image[1]
+    else:
+        raise Exception("Wrong image datatype")
+
+    return {"image": ("image.jpg", image_data, "image/jpeg")}
 
 
 def process_query_params(params: dict) -> dict:

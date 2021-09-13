@@ -1,7 +1,5 @@
 import os
 
-import _io
-
 from neuroio.constants import sentinel
 from neuroio.utils import (
     prepare_image_processing,
@@ -13,11 +11,15 @@ from neuroio.utils import (
 
 
 def test_prepare_image_processing_binary():
-    data = b"testdata"
-    name, image_data = prepare_image_processing(data)
+    data = b"test_image_data"
+    image = prepare_image_processing(data)
 
-    assert isinstance(image_data, _io.BytesIO)
-    assert image_data.read() == data
+    assert isinstance(image, dict)
+    assert "image" in image
+    assert isinstance(image["image"], tuple)
+    assert len(image["image"]) == 3
+    assert image["image"][1] is not None
+    assert image["image"][1].read() == data
 
 
 def test_prepare_image_processing_buffer_reader():
@@ -28,11 +30,19 @@ def test_prepare_image_processing_buffer_reader():
         f.write(data)
 
     with open(filename, "rb") as f:
-        result = prepare_image_processing(f).read()
+        image = prepare_image_processing(f)
+
+        assert isinstance(image, dict)
+        assert "image" in image
+        assert isinstance(image["image"], tuple)
+        assert len(image["image"]) == 3
+        assert image["image"][1] is not None
+
+        image_data = image["image"][1].read()
 
     os.remove(filename)
 
-    assert result == data
+    assert image_data == data
 
 
 def test_prepare_image_processing_tuple():
@@ -43,11 +53,19 @@ def test_prepare_image_processing_tuple():
         f.write(data)
 
     with open(filename, "rb") as f:
-        result = prepare_image_processing((filename, f))[1].read()
+        image = prepare_image_processing((filename, f))
+
+        assert isinstance(image, dict)
+        assert "image" in image
+        assert isinstance(image["image"], tuple)
+        assert len(image["image"]) == 3
+        assert image["image"][1] is not None
+
+        image_data = image["image"][1].read()
 
     os.remove(filename)
 
-    assert result == data
+    assert image_data == data
 
 
 def test_process_query_params():
