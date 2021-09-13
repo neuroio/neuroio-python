@@ -1,5 +1,7 @@
 import os
 
+import pytest
+
 from neuroio.constants import sentinel
 from neuroio.utils import (
     prepare_image_processing,
@@ -66,6 +68,13 @@ def test_prepare_image_processing_tuple():
     os.remove(filename)
 
     assert image_data == data
+
+
+def test_prepare_image_incorrect():
+    with pytest.raises(Exception) as e:
+        prepare_image_processing("test_incorrect_data")
+
+    assert str(e.value) == "Wrong image datatype"
 
 
 def test_process_query_params():
