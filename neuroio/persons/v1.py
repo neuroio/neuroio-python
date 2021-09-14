@@ -1,10 +1,15 @@
-from typing import BinaryIO, Union
+from typing import Union
 
 from httpx import Response
 
 from neuroio.base import APIBase, APIBaseAsync, APIBaseBase
 from neuroio.constants import EntryResult, sentinel
-from neuroio.utils import request_dict_processing, request_form_processing
+from neuroio.utils import (
+    ImageType,
+    prepare_image_processing,
+    request_dict_processing,
+    request_form_processing,
+)
 
 
 class PersonsBase(APIBaseBase):
@@ -18,7 +23,7 @@ class PersonsBase(APIBaseBase):
 class Impl(APIBase, PersonsBase):
     def create(
         self,
-        image: BinaryIO,
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         create_on_ha: Union[bool, object] = sentinel,
@@ -26,7 +31,7 @@ class Impl(APIBase, PersonsBase):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         with self.get_client() as client:
             return client.post(url=self.get_url(), data=data, files=files)
@@ -46,22 +51,26 @@ class Impl(APIBase, PersonsBase):
     def reinit_by_photo(
         self,
         pid: str,
-        image: BinaryIO,
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         identify_asm: Union[bool, object] = sentinel,
         result: str = EntryResult.HA,
     ) -> Response:
         data = request_form_processing(locals())
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         with self.get_client() as client:
             return client.post(
                 url=self.get_url(f"reinit/{pid}"), data=data, files=files
             )
 
-    def search(self, image: BinaryIO, identify_asm: bool = False) -> Response:
-        files = {"image": ("image", image, "image/jpeg")}
+    def search(
+        self,
+        image: ImageType,
+        identify_asm: bool = False,
+    ) -> Response:
+        files = prepare_image_processing(image)
         data = {"identify_asm": str(identify_asm)}
 
         with self.get_client() as client:
@@ -77,7 +86,7 @@ class Impl(APIBase, PersonsBase):
 class ImplAsync(APIBaseAsync, PersonsBase):
     async def create(
         self,
-        image: BinaryIO,
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         create_on_ha: Union[bool, object] = sentinel,
@@ -85,7 +94,7 @@ class ImplAsync(APIBaseAsync, PersonsBase):
         identify_asm: Union[bool, object] = sentinel,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image"])
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         async with self.get_client() as client:
             return await client.post(
@@ -109,14 +118,14 @@ class ImplAsync(APIBaseAsync, PersonsBase):
     async def reinit_by_photo(
         self,
         pid: str,
-        image: BinaryIO,
+        image: ImageType,
         source: str,
         facesize: Union[int, object] = sentinel,
         identify_asm: Union[bool, object] = sentinel,
         result: str = EntryResult.HA,
     ) -> Response:
         data = request_form_processing(locals(), ["self", "image", "pid"])
-        files = {"image": image}
+        files = prepare_image_processing(image)
 
         async with self.get_client() as client:
             return await client.post(
@@ -124,9 +133,11 @@ class ImplAsync(APIBaseAsync, PersonsBase):
             )
 
     async def search(
-        self, image: BinaryIO, identify_asm: bool = False
+        self,
+        image: ImageType,
+        identify_asm: bool = False,
     ) -> Response:
-        files = {"image": ("image", image, "image/jpeg")}
+        files = prepare_image_processing(image)
         data = {"identify_asm": str(identify_asm)}
 
         async with self.get_client() as client:

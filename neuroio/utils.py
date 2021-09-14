@@ -1,9 +1,23 @@
 import datetime
 import functools
+import io
 from importlib import import_module
-from typing import Any, Callable, List, Optional, TypeVar, Union
+from typing import (
+    Any,
+    BinaryIO,
+    Callable,
+    List,
+    Optional,
+    Tuple,
+    TypeVar,
+    Union,
+)
+
+import _io
 
 from neuroio.constants import sentinel
+
+ImageType = Union[BinaryIO, Tuple[str, io.BytesIO], bytes]
 
 
 def validate_month_str(month_str: str) -> None:
@@ -26,6 +40,22 @@ F = TypeVar("F", bound=Callable[..., Any])
 
 def cached_property(f: F) -> property:
     return property(functools.lru_cache()(f))
+
+
+def prepare_image_processing(
+    image: ImageType, filename: str = "image"
+) -> dict:
+    if isinstance(image, (bytes, bytearray)):
+        image_data = io.BytesIO(image)
+    elif isinstance(image, _io.BufferedReader):
+        image_data = image
+        filename = image.name
+    elif isinstance(image, tuple):
+        filename, image_data = image
+    else:
+        raise Exception("Wrong image datatype")
+
+    return {"image": (filename, image_data)}
 
 
 def process_query_params(params: dict) -> dict:

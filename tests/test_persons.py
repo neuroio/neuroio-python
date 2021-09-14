@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import respx
 
@@ -12,6 +14,52 @@ def test_create_201(client):
         content={"result": "new", "confidence": 100},
     )
     response = client.persons.create(b"image", "test_source", 1000, True, True)
+
+    assert request.called
+    assert response.status_code == 201
+
+
+@respx.mock
+def test_create_201_buffer_reader(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/",
+        status_code=201,
+        content={"result": "new", "confidence": 100},
+    )
+    filename = "image.jpg"
+    image_data = b"test_image_data"
+
+    with open(filename, "wb") as f:
+        f.write(image_data)
+
+    with open(filename, "rb") as f:
+        response = client.persons.create(f, "test_source", 1000, True, True)
+
+    os.remove(filename)
+
+    assert request.called
+    assert response.status_code == 201
+
+
+@respx.mock
+def test_create_201_tuple(client):
+    request = respx.post(
+        f"{API_BASE_URL}/v1/persons/",
+        status_code=201,
+        content={"result": "new", "confidence": 100},
+    )
+    filename = "image.jpg"
+    image_data = b"test_image_data"
+
+    with open(filename, "wb") as f:
+        f.write(image_data)
+
+    with open(filename, "rb") as f:
+        response = client.persons.create(
+            (filename, f), "test_source", 1000, True, True
+        )
+
+    os.remove(filename)
 
     assert request.called
     assert response.status_code == 201
