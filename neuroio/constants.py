@@ -8,13 +8,6 @@ HTTP_CLIENT_TIMEOUT: float = 4.0
 sentinel = object()
 
 
-class SourceLicense(str, Enum):
-    BASIC = "basic"
-    STANDARD = "standard"
-    STANDARD_PLUS = "standard+"
-    ADVANCED = "advanced"
-
-
 class EntryResult(str, Enum):
     NEW = "new"
     REINIT = "reinit"

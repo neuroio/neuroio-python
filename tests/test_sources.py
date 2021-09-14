@@ -3,7 +3,7 @@ import json
 import pytest
 import respx
 
-from neuroio.constants import API_BASE_URL, EntryResult, SourceLicense
+from neuroio.constants import API_BASE_URL, EntryResult
 from tests.utils import mock_query_params_all_combos
 
 
@@ -14,7 +14,7 @@ def test_create_201(client):
         status_code=201,
         content={"id": 1, "name": "test_name"},
     )
-    response = client.sources.create(name="test_name")
+    response = client.sources.create(name="test_name", license=1)
 
     request_content = request.calls[0][0]
     request_content.read()
@@ -33,10 +33,10 @@ def test_create_store_images_results_201(client):
     request = respx.post(
         f"{API_BASE_URL}/v1/sources/",
         status_code=201,
-        content={"id": 1, "name": "test_name"},
+        content={"id": 1, "name": "test_name", "license": 1},
     )
     response = client.sources.create(
-        name="test_name", store_images_for_results=[EntryResult.DET]
+        name="test_name", store_images_for_results=[EntryResult.DET], license=1
     )
 
     request_content = request.calls[0][0]
@@ -57,9 +57,9 @@ async def test_async_create_201(async_client):
     request = respx.post(
         f"{API_BASE_URL}/v1/sources/",
         status_code=201,
-        content={"id": 1, "name": "test_name"},
+        content={"id": 1, "name": "test_name", "license": 1},
     )
-    response = await async_client.sources.create(name="test_name")
+    response = await async_client.sources.create(name="test_name", license=1)
 
     request_content = request.calls[0][0]
     request_content.read()
@@ -79,10 +79,10 @@ async def test_async_create_store_images_results_201(async_client):
     request = respx.post(
         f"{API_BASE_URL}/v1/sources/",
         status_code=201,
-        content={"id": 1, "name": "test_name"},
+        content={"id": 1, "name": "test_name", "license": 1},
     )
     response = await async_client.sources.create(
-        name="test_name", store_images_for_results=[EntryResult.DET]
+        name="test_name", store_images_for_results=[EntryResult.DET], license=1
     )
     request_content = request.calls[0][0]
     request_content.read()
@@ -214,16 +214,14 @@ def test_update_200(client):
         status_code=200,
         content={"id": 1, "name": "source_name"},
     )
-    response = client.sources.update(
-        id=1, name="source_name", license_type=SourceLicense.ADVANCED
-    )
+    response = client.sources.update(id=1, name="source_name", license=1)
 
     request_content = request.calls[0][0]
     request_content.read()
 
     assert request.called
     assert json.loads(request_content.content) == json.loads(
-        b'{"name": "source_name", "license_type": "advanced"}'
+        b'{"name": "source_name", "license": 1}'
     )
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"
@@ -235,10 +233,10 @@ async def test_async_update_200(async_client):
     request = respx.patch(
         f"{API_BASE_URL}/v1/sources/1/",
         status_code=200,
-        content={"id": 1, "name": "source_name"},
+        content={"id": 1, "name": "source_name", "license": 1},
     )
     response = await async_client.sources.update(
-        id=1, name="source_name", license_type=SourceLicense.ADVANCED
+        id=1, name="source_name", license=1
     )
 
     request_content = request.calls[0][0]
@@ -246,7 +244,7 @@ async def test_async_update_200(async_client):
 
     assert request.called
     assert json.loads(request_content.content) == json.loads(
-        b'{"name": "source_name", "license_type": "advanced"}'
+        b'{"name": "source_name", "license": 1}'
     )
     assert response.status_code == 200
     assert response.json()["name"] == "source_name"

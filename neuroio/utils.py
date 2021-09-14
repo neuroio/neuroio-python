@@ -1,3 +1,4 @@
+import datetime
 import functools
 import io
 from importlib import import_module
@@ -19,23 +20,19 @@ from neuroio.constants import sentinel
 ImageType = Union[BinaryIO, Tuple[str, io.BytesIO], bytes]
 
 
+def validate_month_str(month_str: str) -> None:
+    try:
+        datetime.datetime.strptime(month_str, "%Y-%m")
+    except ValueError:
+        raise ValueError(
+            f"Incorrect month format in {month_str}, should be YYYY-MM"
+        )
+
+
 def get_package_version() -> str:
     from neuroio import __version__
 
     return __version__
-
-
-def dynamic_import(abs_path: str, attribute: str) -> Any:
-    """
-    Imports any attribute from the module specified as string dotted path.
-    Takes into account current supplied version to the Client instance.
-
-    :param abs_path: dotted path of the module from which to import from
-    :param attribute: function, class or any other attr to be imported
-    :return: imported attribute
-    """
-    module_object = import_module(abs_path)
-    return getattr(module_object, attribute)
 
 
 F = TypeVar("F", bound=Callable[..., Any])

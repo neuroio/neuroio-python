@@ -9,6 +9,7 @@ from neuroio.utils import (
     request_dict_processing,
     request_form_processing,
     request_query_processing,
+    validate_month_str,
 )
 
 
@@ -120,3 +121,14 @@ def test_request_form_processing_has_exclude():
 
     result = request_form_processing(data, ["three"])
     assert result == {"one": "1"}
+
+
+def test_validate_month_str():
+    month_str = "2018*09"
+    with pytest.raises(ValueError) as exc_info:
+        validate_month_str(month_str)
+    assert exc_info.type is ValueError
+    assert (
+        exc_info.value.args[0]
+        == f"Incorrect month format in {month_str}, should be YYYY-MM"
+    )

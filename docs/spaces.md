@@ -100,3 +100,18 @@ response = c.spaces.token(id=1, permanent=True)
 json_response = response.json()
 print(json_response)
 ```
+
+### Spaces Full List
+
+__Authorized Client() required.__
+
+This method returns full list of spaces.
+
+```python
+from neuroio import Client
+
+c = Client(api_token="abcd")
+response = c.lists.spaces.all()
+json_response = response.json()
+print(json_response)
+```
