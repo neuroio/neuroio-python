@@ -1,10 +1,83 @@
+import os
+
+import pytest
+
 from neuroio.constants import sentinel
 from neuroio.utils import (
+    prepare_image_processing,
     process_query_params,
     request_dict_processing,
     request_form_processing,
     request_query_processing,
 )
+
+
+def test_prepare_image_processing_binary():
+    data = b"test_image_data"
+    image = prepare_image_processing(data)
+
+    assert isinstance(image, dict)
+    assert "image" in image
+    assert isinstance(image["image"], tuple)
+    assert len(image["image"]) == 2
+    assert image["image"][1] is not None
+    assert image["image"][0] == "image"
+    assert image["image"][1].read() == data
+
+
+def test_prepare_image_processing_buffer_reader():
+    filename = "test_image_name.jpg"
+    data = b"test_image_data"
+
+    with open(filename, "wb") as f:
+        f.write(data)
+
+    with open(filename, "rb") as f:
+        image = prepare_image_processing(f)
+
+        assert isinstance(image, dict)
+        assert "image" in image
+        assert isinstance(image["image"], tuple)
+        assert len(image["image"]) == 2
+        assert image["image"][0] == filename
+        assert image["image"][1] is not None
+
+        image_data = image["image"][1].read()
+
+    os.remove(filename)
+
+    assert image_data == data
+
+
+def test_prepare_image_processing_tuple():
+    filename = "test_image_name.jpg"
+    data = b"test_image_data"
+
+    with open(filename, "wb") as f:
+        f.write(data)
+
+    with open(filename, "rb") as f:
+        image = prepare_image_processing((filename, f))
+
+        assert isinstance(image, dict)
+        assert "image" in image
+        assert isinstance(image["image"], tuple)
+        assert len(image["image"]) == 2
+        assert image["image"][0] == filename
+        assert image["image"][1] is not None
+
+        image_data = image["image"][1].read()
+
+    os.remove(filename)
+
+    assert image_data == data
+
+
+def test_prepare_image_incorrect():
+    with pytest.raises(Exception) as e:
+        prepare_image_processing("test_incorrect_data")
+
+    assert str(e.value) == "Wrong image datatype"
 
 
 def test_process_query_params():
