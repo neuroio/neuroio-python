@@ -7,9 +7,9 @@ from neuroio.constants import IAM_BASE_URL
 @respx.mock
 def test_me_username_200(client):
     request = respx.get(
-        f"{IAM_BASE_URL}/v1/whoami/",
+        f"{IAM_BASE_URL}/v1/whoami/").respond(
         status_code=200,
-        content={"username": "name"},
+        json={"username": "name"},
     )
     response = client.whoami.me()
     assert request.called
@@ -21,9 +21,9 @@ def test_me_username_200(client):
 @pytest.mark.asyncio
 async def test_async_me_username_200(async_client):
     request = respx.get(
-        f"{IAM_BASE_URL}/v1/whoami/",
+        f"{IAM_BASE_URL}/v1/whoami/").respond(
         status_code=200,
-        content={"username": "name"},
+        json={"username": "name"},
     )
     response = await async_client.whoami.me()
     assert request.called

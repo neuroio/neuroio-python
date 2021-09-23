@@ -7,9 +7,9 @@ from neuroio.constants import API_BASE_URL
 @respx.mock
 def test_get_200(client):
     request = respx.get(
-        f"{API_BASE_URL}/v1/settings/thresholds/",
+        f"{API_BASE_URL}/v1/settings/thresholds/").respond(
         status_code=200,
-        content={"exact": 1, "ha": 1, "junk": 1},
+        json={"exact": 1, "ha": 1, "junk": 1},
     )
     response = client.settings.get()
 
@@ -22,9 +22,9 @@ def test_get_200(client):
 @pytest.mark.asyncio
 async def test_async_get_200(async_client):
     request = respx.get(
-        f"{API_BASE_URL}/v1/settings/thresholds/",
+        f"{API_BASE_URL}/v1/settings/thresholds/").respond(
         status_code=200,
-        content={"exact": 1, "ha": 1, "junk": 1},
+        json={"exact": 1, "ha": 1, "junk": 1},
     )
     response = await async_client.settings.get()
 
@@ -36,9 +36,9 @@ async def test_async_get_200(async_client):
 @respx.mock
 def test_update_200(client):
     request = respx.patch(
-        f"{API_BASE_URL}/v1/settings/thresholds/",
+        f"{API_BASE_URL}/v1/settings/thresholds/").respond(
         status_code=200,
-        content={"exact": 2, "ha": 2, "junk": 2},
+        json={"exact": 2, "ha": 2, "junk": 2},
     )
     response = client.settings.update(2, 2, 2)
 
@@ -51,9 +51,9 @@ def test_update_200(client):
 @pytest.mark.asyncio
 async def test_async_update_200(async_client):
     request = respx.patch(
-        f"{API_BASE_URL}/v1/settings/thresholds/",
+        f"{API_BASE_URL}/v1/settings/thresholds/").respond(
         status_code=200,
-        content={"exact": 2, "ha": 2, "junk": 2},
+        json={"exact": 2, "ha": 2, "junk": 2},
     )
     response = await async_client.settings.update(2, 2, 2)
 
@@ -65,7 +65,7 @@ async def test_async_update_200(async_client):
 @respx.mock
 def test_reset_200(client):
     request = respx.post(
-        f"{API_BASE_URL}/v1/settings/thresholds/reset/", status_code=200
+        f"{API_BASE_URL}/v1/settings/thresholds/reset/").respond(status_code=200
     )
     response = client.settings.reset()
 
@@ -77,7 +77,7 @@ def test_reset_200(client):
 @pytest.mark.asyncio
 async def test_async_reset_200(async_client):
     request = respx.post(
-        f"{API_BASE_URL}/v1/settings/thresholds/reset/", status_code=200
+        f"{API_BASE_URL}/v1/settings/thresholds/reset/").respond(status_code=200
     )
     response = await async_client.settings.reset()
 

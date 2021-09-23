@@ -10,9 +10,9 @@ from tests.utils import mock_query_params_all_combos
 @respx.mock
 def test_create_ok(client):
     request = respx.post(
-        f"{IAM_BASE_URL}/v1/licenses/sources/",
+        f"{IAM_BASE_URL}/v1/licenses/sources/").respond(
         status_code=201,
-        content={"name": "name", "entry_storage_days": 1, "is_active": True},
+        json={"name": "name", "entry_storage_days": 1, "is_active": True},
     )
     response = client.licenses.sources.create(
         name="name", entry_storage_days=1
@@ -27,9 +27,9 @@ def test_create_ok(client):
 @pytest.mark.asyncio
 async def test_async_create_ok(async_client):
     request = respx.post(
-        f"{IAM_BASE_URL}/v1/licenses/sources/",
+        f"{IAM_BASE_URL}/v1/licenses/sources/").respond(
         status_code=201,
-        content={"name": "name", "entry_storage_days": 1, "is_active": True},
+        json={"name": "name", "entry_storage_days": 1, "is_active": True},
     )
     response = await async_client.licenses.sources.create(
         name="name", entry_storage_days=1
@@ -43,9 +43,9 @@ async def test_async_create_ok(async_client):
 @respx.mock
 def test_get_by_id_200(client):
     request = respx.get(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/",
+        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
-        content={"id": 1, "name": "name"},
+        json={"id": 1, "name": "name"},
     )
     response = client.licenses.sources.get(id=1)
     assert request.called
@@ -57,9 +57,9 @@ def test_get_by_id_200(client):
 @pytest.mark.asyncio
 async def test_async_get_by_id_200(async_client):
     request = respx.get(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/",
+        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
-        content={"id": 1, "name": "name"},
+        json={"id": 1, "name": "name"},
     )
     response = await async_client.licenses.sources.get(id=1)
     assert request.called
@@ -74,7 +74,7 @@ def test_list_without_params200(client):
         "limit=20",
         "offset=0",
         "q=",
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
 
     response = client.licenses.sources.list()
@@ -95,7 +95,7 @@ def test_list_with_params200(client):
         f"date_to={date_str}",
         "limit=20",
         "offset=0",
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
 
     response = client.licenses.sources.list(
@@ -115,7 +115,7 @@ async def test_async_list_without_params_200(async_client):
         "limit=20",
         "offset=0",
         "q=",
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
     response = await async_client.licenses.sources.list()
     assert any([request.called for request in requests])
@@ -136,7 +136,7 @@ async def test_async_list_with_params_200(async_client):
         f"date_to={date_str}",
         "limit=20",
         "offset=0",
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
     response = await async_client.licenses.sources.list(
         q="test", date_from=date_obj.date(), date_to=date_obj.date()
@@ -149,9 +149,9 @@ async def test_async_list_with_params_200(async_client):
 @respx.mock
 def test_update_by_id_deactivate_200(client):
     request = respx.patch(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/",
+        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
-        content={"id": 1, "name": "name", "is_active": False},
+        json={"id": 1, "name": "name", "is_active": False},
     )
     response = client.licenses.sources.update(
         id=1, name="name", is_active=False
@@ -166,9 +166,9 @@ def test_update_by_id_deactivate_200(client):
 @pytest.mark.asyncio
 async def test_async_update_by_id_deactivate_200(async_client):
     request = respx.patch(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/",
+        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
-        content={"id": 1, "name": "name", "is_active": False},
+        json={"id": 1, "name": "name", "is_active": False},
     )
     response = await async_client.licenses.sources.update(
         id=1, name="name", is_active=False

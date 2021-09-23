@@ -17,7 +17,7 @@ def test_usage(client):
         f"month_to={month_to}",
         "spaces_ids=4,5,6".replace(",", "%2C"),
         "event_types=1,2,3".replace(",", "%2C"),
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
     response = client.billing.usage(
         limit=20,
@@ -42,7 +42,7 @@ def test_usage_total(client):
         f"month_from={month_from}",
         f"month_to={month_to}",
         "event_types=1,2,3".replace(",", "%2C"),
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
     response = client.billing.usage_total(
         month_from=month_from,
@@ -68,7 +68,7 @@ async def test_async_usage(async_client):
         f"month_to={month_to}",
         "spaces_ids=4,5,6".replace(",", "%2C"),
         "event_types=1,2,3".replace(",", "%2C"),
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
     response = await async_client.billing.usage(
         limit=20,
@@ -94,7 +94,7 @@ async def test_async_usage_total(async_client):
         f"month_from={month_from}",
         f"month_to={month_to}",
         "event_types=1,2,3".replace(",", "%2C"),
-        content={"results": [{"id": 1, "name": "name"}]},
+        json={"results": [{"id": 1, "name": "name"}]},
     )
     response = await async_client.billing.usage_total(
         month_from=month_from,

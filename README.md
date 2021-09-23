@@ -109,7 +109,7 @@ To install all the development requirements:
 ```sh
 pip install --upgrade pip
 pip install poetry
-poetry install
+poetry install --no-root
 ```
 
 To run linters & test suite:
@@ -120,6 +120,10 @@ To run linters & test suite:
 
 ## Release History
 
+* 0.0.7
+    * Updated library to latest API version (at the time of this release - 1.3.0)
+    * Updated requirements
+    * Updated README & docs
 * 0.0.6
     * Updated library to latest API version (at the time of this release - 1.2.1)
     * Updated README & docs

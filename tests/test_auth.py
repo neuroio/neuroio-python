@@ -7,9 +7,9 @@ from neuroio.constants import IAM_BASE_URL
 @respx.mock
 def test_login_200(client_no_auth):
     request = respx.post(
-        f"{IAM_BASE_URL}/v1/auth/token/",
+        f"{IAM_BASE_URL}/v1/auth/token/").respond(
         status_code=200,
-        content={"token": "key"},
+        json={"token": "key"},
     )
     login_response = client_no_auth.auth.login(
         username="helloworld", password="superpwd"
@@ -23,9 +23,9 @@ def test_login_200(client_no_auth):
 @pytest.mark.asyncio
 async def test_async_login_200(async_client_no_auth):
     request = respx.post(
-        f"{IAM_BASE_URL}/v1/auth/token/",
+        f"{IAM_BASE_URL}/v1/auth/token/").respond(
         status_code=200,
-        content={"token": "key"},
+        json={"token": "key"},
     )
     login_response = await async_client_no_auth.auth.login(
         username="helloworld", password="superpwd"
@@ -38,7 +38,7 @@ async def test_async_login_200(async_client_no_auth):
 @respx.mock
 def test_password_change_200(client):
     request = respx.post(
-        f"{IAM_BASE_URL}/v1/auth/password/change/", status_code=204
+        f"{IAM_BASE_URL}/v1/auth/password/change/").respond(status_code=204
     )
     response = client.auth.password_change(
         old_password="old_password", new_password="new_password"
@@ -51,7 +51,7 @@ def test_password_change_200(client):
 @pytest.mark.asyncio
 async def test_async_password_change_200(async_client):
     request = respx.post(
-        f"{IAM_BASE_URL}/v1/auth/password/change/", status_code=204
+        f"{IAM_BASE_URL}/v1/auth/password/change/").respond(status_code=204
     )
     response = await async_client.auth.password_change(
         old_password="old_password", new_password="new_password"
