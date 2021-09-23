@@ -7,8 +7,7 @@ from tests.utils import mock_query_params_all_combos
 
 @respx.mock
 def test_create(client):
-    request = respx.post(
-        f"{API_BASE_URL}/v1/groups/persons/").respond(
+    request = respx.post(f"{API_BASE_URL}/v1/groups/persons/").respond(
         status_code=201,
         json={"id": 1, "name": "test_name"},
     )
@@ -22,8 +21,7 @@ def test_create(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_create(async_client):
-    request = respx.post(
-        f"{API_BASE_URL}/v1/groups/persons/").respond(
+    request = respx.post(f"{API_BASE_URL}/v1/groups/persons/").respond(
         status_code=201,
         json={"id": 1, "name": "test_name"},
     )
@@ -92,8 +90,7 @@ async def test_async_list_with_params_200(async_client):
 
 @respx.mock
 def test_get_200(client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/groups/persons/1/").respond(
+    request = respx.get(f"{API_BASE_URL}/v1/groups/persons/1/").respond(
         status_code=200,
         json={"id": 1, "name": "test"},
     )
@@ -107,8 +104,7 @@ def test_get_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_get_200(async_client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/groups/persons/1/").respond(
+    request = respx.get(f"{API_BASE_URL}/v1/groups/persons/1/").respond(
         status_code=200,
         json={"id": 1, "name": "test"},
     )
@@ -121,8 +117,7 @@ async def test_async_get_200(async_client):
 
 @respx.mock
 def test_update_200(client):
-    request = respx.patch(
-        f"{API_BASE_URL}/v1/groups/persons/1/").respond(
+    request = respx.patch(f"{API_BASE_URL}/v1/groups/persons/1/").respond(
         status_code=200,
         json={"id": 1, "name": "new_name"},
     )
@@ -136,8 +131,7 @@ def test_update_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_update_200(async_client):
-    request = respx.patch(
-        f"{API_BASE_URL}/v1/groups/persons/1/").respond(
+    request = respx.patch(f"{API_BASE_URL}/v1/groups/persons/1/").respond(
         status_code=200,
         json={"id": 1, "name": "new_name"},
     )
@@ -150,8 +144,8 @@ async def test_async_update_200(async_client):
 
 @respx.mock
 def test_delete_204(client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/groups/persons/1/").respond( status_code=204
+    request = respx.delete(f"{API_BASE_URL}/v1/groups/persons/1/").respond(
+        status_code=204
     )
     response = client.groups.delete(1)
 
@@ -162,8 +156,8 @@ def test_delete_204(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_delete_204(async_client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/groups/persons/1/").respond( status_code=204
+    request = respx.delete(f"{API_BASE_URL}/v1/groups/persons/1/").respond(
+        status_code=204
     )
     response = await async_client.groups.delete(1)
 
@@ -249,8 +243,8 @@ async def test_async_persons_list_with_params_200(async_client):
 
 @respx.mock
 def test_add_persons_200(client):
-    request = respx.post(
-        f"{API_BASE_URL}/v1/groups/persons/pids/").respond(status_code=200
+    request = respx.post(f"{API_BASE_URL}/v1/groups/persons/pids/").respond(
+        status_code=200
     )
     response = client.groups.add(pids=["pid"], groups_ids=[1, 2])
 
@@ -261,8 +255,8 @@ def test_add_persons_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_add_persons_200(async_client):
-    request = respx.post(
-        f"{API_BASE_URL}/v1/groups/persons/pids/").respond(status_code=200
+    request = respx.post(f"{API_BASE_URL}/v1/groups/persons/pids/").respond(
+        status_code=200
     )
     response = await async_client.groups.add(pids=["pid"], groups_ids=[1, 2])
 
@@ -272,8 +266,8 @@ async def test_async_add_persons_200(async_client):
 
 @respx.mock
 def test_remove_persons_200(client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/groups/persons/pids/").respond(status_code=200
+    request = respx.delete(f"{API_BASE_URL}/v1/groups/persons/pids/").respond(
+        status_code=200
     )
     response = client.groups.remove(pids=["pid"], groups_ids=[1, 2])
 
@@ -284,8 +278,8 @@ def test_remove_persons_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_remove_persons_200(async_client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/groups/persons/pids/").respond(status_code=200
+    request = respx.delete(f"{API_BASE_URL}/v1/groups/persons/pids/").respond(
+        status_code=200
     )
     response = await async_client.groups.remove(
         pids=["pid"], groups_ids=[1, 2]

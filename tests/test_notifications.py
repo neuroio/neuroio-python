@@ -7,8 +7,7 @@ from tests.utils import mock_query_params_all_combos
 
 @respx.mock
 def test_create_ok(client):
-    request = respx.post(
-        f"{API_BASE_URL}/v1/notifications/").respond(
+    request = respx.post(f"{API_BASE_URL}/v1/notifications/").respond(
         status_code=201,
         json={"id": 1, "name": "name"},
     )
@@ -23,7 +22,9 @@ def test_create_ok(client):
 
 @respx.mock
 def test_create_failed(client):
-    request = respx.post(f"{API_BASE_URL}/v1/notifications/").respond(status_code=400)
+    request = respx.post(f"{API_BASE_URL}/v1/notifications/").respond(
+        status_code=400
+    )
     response = client.notifications.create(
         name="name", http_method=HttpMethod.GET, destination_url="url"
     )
@@ -35,8 +36,7 @@ def test_create_failed(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_create_ok(async_client):
-    request = respx.post(
-        f"{API_BASE_URL}/v1/notifications/").respond(
+    request = respx.post(f"{API_BASE_URL}/v1/notifications/").respond(
         status_code=201,
         json={"id": 1, "name": "name"},
     )
@@ -52,7 +52,9 @@ async def test_async_create_ok(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_create_failed(async_client):
-    request = respx.post(f"{API_BASE_URL}/v1/notifications/").respond(status_code=400)
+    request = respx.post(f"{API_BASE_URL}/v1/notifications/").respond(
+        status_code=400
+    )
     response = await async_client.notifications.create(
         name="name", http_method=HttpMethod.GET, destination_url="url"
     )
@@ -127,8 +129,7 @@ async def test_async_with_params(async_client):
 
 @respx.mock
 def test_get_ok(client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(
+    request = respx.get(f"{API_BASE_URL}/v1/notifications/1/").respond(
         status_code=200,
         json={"name": "name", "id": 1},
     )
@@ -141,7 +142,9 @@ def test_get_ok(client):
 
 @respx.mock
 def test_get_failed(client):
-    request = respx.get(f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=404)
+    request = respx.get(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=404
+    )
     response = client.notifications.get(id=1)
 
     assert request.called
@@ -151,8 +154,7 @@ def test_get_failed(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_get_ok(async_client):
-    request = respx.get(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(
+    request = respx.get(f"{API_BASE_URL}/v1/notifications/1/").respond(
         status_code=200,
         json={"name": "name", "id": 1},
     )
@@ -166,7 +168,9 @@ async def test_async_get_ok(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_get_failed(async_client):
-    request = respx.get(f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=404)
+    request = respx.get(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=404
+    )
     response = await async_client.notifications.get(id=1)
 
     assert request.called
@@ -175,8 +179,7 @@ async def test_async_get_failed(async_client):
 
 @respx.mock
 def test_update_ok(client):
-    request = respx.patch(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(
+    request = respx.patch(f"{API_BASE_URL}/v1/notifications/1/").respond(
         status_code=200,
         json={"name": "new_name", "id": 1},
     )
@@ -194,8 +197,8 @@ def test_update_ok(client):
 
 @respx.mock
 def test_update_failed(client):
-    request = respx.patch(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=404
+    request = respx.patch(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=404
     )
     response = client.notifications.update(
         id=1,
@@ -211,8 +214,7 @@ def test_update_failed(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_update_ok(async_client):
-    request = respx.patch(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(
+    request = respx.patch(f"{API_BASE_URL}/v1/notifications/1/").respond(
         status_code=200,
         json={"name": "new_name", "id": 1},
     )
@@ -231,8 +233,8 @@ async def test_async_update_ok(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_update_failed(async_client):
-    request = respx.patch(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=404
+    request = respx.patch(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=404
     )
     response = await async_client.notifications.update(
         id=1,
@@ -247,8 +249,8 @@ async def test_async_update_failed(async_client):
 
 @respx.mock
 def test_delete_ok(client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=204
+    request = respx.delete(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=204
     )
     response = client.notifications.delete(id=1)
 
@@ -258,8 +260,8 @@ def test_delete_ok(client):
 
 @respx.mock
 def test_delete_failed(client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=404
+    request = respx.delete(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=404
     )
     response = client.notifications.delete(id=1)
 
@@ -270,8 +272,8 @@ def test_delete_failed(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_delete_ok(async_client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=204
+    request = respx.delete(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=204
     )
     response = await async_client.notifications.delete(id=1)
 
@@ -282,8 +284,8 @@ async def test_async_delete_ok(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_delete_failed(async_client):
-    request = respx.delete(
-        f"{API_BASE_URL}/v1/notifications/1/").respond(status_code=404
+    request = respx.delete(f"{API_BASE_URL}/v1/notifications/1/").respond(
+        status_code=404
     )
     response = await async_client.notifications.delete(id=1)
 

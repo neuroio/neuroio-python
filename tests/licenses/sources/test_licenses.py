@@ -9,8 +9,7 @@ from tests.utils import mock_query_params_all_combos
 
 @respx.mock
 def test_create_ok(client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/licenses/sources/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/licenses/sources/").respond(
         status_code=201,
         json={"name": "name", "entry_storage_days": 1, "is_active": True},
     )
@@ -26,8 +25,7 @@ def test_create_ok(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_create_ok(async_client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/licenses/sources/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/licenses/sources/").respond(
         status_code=201,
         json={"name": "name", "entry_storage_days": 1, "is_active": True},
     )
@@ -42,8 +40,7 @@ async def test_async_create_ok(async_client):
 
 @respx.mock
 def test_get_by_id_200(client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
         json={"id": 1, "name": "name"},
     )
@@ -56,8 +53,7 @@ def test_get_by_id_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_get_by_id_200(async_client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
         json={"id": 1, "name": "name"},
     )
@@ -148,8 +144,7 @@ async def test_async_list_with_params_200(async_client):
 
 @respx.mock
 def test_update_by_id_deactivate_200(client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
         json={"id": 1, "name": "name", "is_active": False},
     )
@@ -165,8 +160,7 @@ def test_update_by_id_deactivate_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_update_by_id_deactivate_200(async_client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/licenses/sources/1/").respond(
         status_code=200,
         json={"id": 1, "name": "name", "is_active": False},
     )

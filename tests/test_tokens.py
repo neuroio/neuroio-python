@@ -7,8 +7,7 @@ from tests.utils import mock_query_params_all_combos
 
 @respx.mock
 def test_create_ok(client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/tokens/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/tokens/").respond(
         status_code=201,
         json={"is_active": True},
     )
@@ -31,8 +30,7 @@ def test_create_failed(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_create_ok(async_client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/tokens/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/tokens/").respond(
         status_code=201,
         json={"is_active": True},
     )
@@ -154,8 +152,7 @@ async def test_async_not_permanent_list_200(async_client):
 
 @respx.mock
 def test_token_info_by_id_200(client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/1/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/tokens/1/").respond(
         status_code=200,
         json={"key": "token", "is_active": True},
     )
@@ -167,8 +164,7 @@ def test_token_info_by_id_200(client):
 
 @respx.mock
 def test_token_info_by_key_200(client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/token/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/tokens/token/").respond(
         status_code=200,
         json={"key": "token", "is_active": True},
     )
@@ -181,8 +177,7 @@ def test_token_info_by_key_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_info_by_id_200(async_client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/1/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/tokens/1/").respond(
         status_code=200,
         json={"key": "token", "is_active": True},
     )
@@ -195,8 +190,7 @@ async def test_async_info_by_id_200(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_info_by_key_200(async_client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/tokens/token/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/tokens/token/").respond(
         status_code=200,
         json={"key": "token", "is_active": True},
     )
@@ -208,8 +202,7 @@ async def test_async_info_by_key_200(async_client):
 
 @respx.mock
 def test_token_update_by_key_200(client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/tokens/token/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/tokens/token/").respond(
         status_code=200,
         json={"key": "token", "is_active": True},
     )
@@ -222,8 +215,7 @@ def test_token_update_by_key_200(client):
 
 @respx.mock
 def test_token_update_by_id_deactivate_200(client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/tokens/1/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/tokens/1/").respond(
         status_code=200,
         json={"key": "token", "is_active": False},
     )
@@ -237,8 +229,7 @@ def test_token_update_by_id_deactivate_200(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_update_by_key_200(async_client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/tokens/token/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/tokens/token/").respond(
         status_code=200,
         json={"key": "token", "is_active": True},
     )
@@ -254,8 +245,7 @@ async def test_async_update_by_key_200(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_update_by_id_deactivate_200(async_client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/tokens/1/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/tokens/1/").respond(
         status_code=200,
         json={"key": "token", "is_active": False},
     )
@@ -270,7 +260,9 @@ async def test_async_update_by_id_deactivate_200(async_client):
 
 @respx.mock
 def test_delete(client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/").respond(status_code=204)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/").respond(
+        status_code=204
+    )
     response = client.tokens.delete_list()
     assert request.called
     assert response.status_code == 204
@@ -279,8 +271,8 @@ def test_delete(client):
 @respx.mock
 def test_delete_permanent(client):
     request = respx.delete(
-        f"{IAM_BASE_URL}/v1/tokens/?permanent=true").respond(status_code=204
-    )
+        f"{IAM_BASE_URL}/v1/tokens/?permanent=true"
+    ).respond(status_code=204)
     response = client.tokens.delete_list(permanent=True)
     assert request.called
     assert response.status_code == 204
@@ -289,7 +281,9 @@ def test_delete_permanent(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_asyncs_delete(async_client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/").respond(status_code=204)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/").respond(
+        status_code=204
+    )
     response = await async_client.tokens.delete_list()
     assert request.called
     assert response.status_code == 204
@@ -299,8 +293,8 @@ async def test_asyncs_delete(async_client):
 @pytest.mark.asyncio
 async def test_asyncs_delete_permanent(async_client):
     request = respx.delete(
-        f"{IAM_BASE_URL}/v1/tokens/?permanent=true").respond(status_code=204
-    )
+        f"{IAM_BASE_URL}/v1/tokens/?permanent=true"
+    ).respond(status_code=204)
     response = await async_client.tokens.delete_list(permanent=True)
     assert request.called
     assert response.status_code == 204
@@ -308,7 +302,9 @@ async def test_asyncs_delete_permanent(async_client):
 
 @respx.mock
 def test_token_delete_by_key_204(client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/token/").respond(status_code=204)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/token/").respond(
+        status_code=204
+    )
     response = client.tokens.delete(token_id_or_key="token")
     assert request.called
     assert response.status_code == 204
@@ -316,7 +312,9 @@ def test_token_delete_by_key_204(client):
 
 @respx.mock
 def test_token_delete_by_id_204(client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/1/").respond(status_code=204)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/1/").respond(
+        status_code=204
+    )
     response = client.tokens.delete(token_id_or_key=1)
     assert request.called
     assert response.status_code == 204
@@ -325,7 +323,9 @@ def test_token_delete_by_id_204(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_delete_by_key(async_client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/token/").respond(status_code=204)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/token/").respond(
+        status_code=204
+    )
     response = await async_client.tokens.delete(token_id_or_key="token")
     assert request.called
     assert response.status_code == 204
@@ -334,7 +334,9 @@ async def test_async_delete_by_key(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_delete_by_id(async_client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/1/").respond(status_code=204)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/tokens/1/").respond(
+        status_code=204
+    )
     response = await async_client.tokens.delete(token_id_or_key=1)
     assert request.called
     assert response.status_code == 204

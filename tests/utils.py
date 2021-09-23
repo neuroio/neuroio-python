@@ -13,8 +13,7 @@ def mock_query_params_all_combos(
     combos = list(itertools.permutations(args))
 
     return [
-        getattr(respx, query_type)(
-            f"{base_url}/?{'&'.join(combo)}").respond(
+        getattr(respx, query_type)(f"{base_url}/?{'&'.join(combo)}").respond(
             status_code=status_code,
             json=json,
         )

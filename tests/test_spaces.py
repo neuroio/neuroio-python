@@ -7,8 +7,7 @@ from tests.utils import mock_query_params_all_combos
 
 @respx.mock
 def test_create_ok(client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/spaces/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/spaces/").respond(
         status_code=201,
         json={"id": 1, "name": "name"},
     )
@@ -31,8 +30,7 @@ def test_create_failed(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_create_ok(async_client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/spaces/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/spaces/").respond(
         status_code=201,
         json={"id": 1, "name": "name"},
     )
@@ -121,8 +119,7 @@ async def test_async_list_with_params(async_client):
 
 @respx.mock
 def test_get_ok(client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
         status_code=200,
         json={"id": 1, "name": "name"},
     )
@@ -135,7 +132,9 @@ def test_get_ok(client):
 
 @respx.mock
 def test_get_not_found(client):
-    request = respx.get(f"{IAM_BASE_URL}/v1/spaces/1/").respond(status_code=404)
+    request = respx.get(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+        status_code=404
+    )
     response = client.spaces.get(id=1)
 
     assert request.called
@@ -145,8 +144,7 @@ def test_get_not_found(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_get_ok(async_client):
-    request = respx.get(
-        f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+    request = respx.get(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
         status_code=200,
         json={"id": 1, "name": "name"},
     )
@@ -160,7 +158,9 @@ async def test_async_get_ok(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_get_not_found(async_client):
-    request = respx.get(f"{IAM_BASE_URL}/v1/spaces/1/").respond(status_code=404)
+    request = respx.get(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+        status_code=404
+    )
     response = await async_client.spaces.get(id=1)
 
     assert request.called
@@ -169,8 +169,7 @@ async def test_async_get_not_found(async_client):
 
 @respx.mock
 def test_update_ok(client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
         status_code=200,
         json={"id": 1, "name": "new_name"},
     )
@@ -184,8 +183,7 @@ def test_update_ok(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_update_ok(async_client):
-    request = respx.patch(
-        f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+    request = respx.patch(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
         status_code=200,
         json={"id": 1, "name": "new_name"},
     )
@@ -198,7 +196,9 @@ async def test_async_update_ok(async_client):
 
 @respx.mock
 def test_delete_ok(client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/spaces/1/").respond(status_code=202)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+        status_code=202
+    )
     response = client.spaces.delete(id=1)
 
     assert request.called
@@ -208,7 +208,9 @@ def test_delete_ok(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_delete_ok(async_client):
-    request = respx.delete(f"{IAM_BASE_URL}/v1/spaces/1/").respond(status_code=202)
+    request = respx.delete(f"{IAM_BASE_URL}/v1/spaces/1/").respond(
+        status_code=202
+    )
     response = await async_client.spaces.delete(id=1)
 
     assert request.called
@@ -217,8 +219,7 @@ async def test_async_delete_ok(async_client):
 
 @respx.mock
 def test_token_create_ok(client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(
         status_code=201,
         json={"is_active": True, "key": "key"},
     )
@@ -231,8 +232,8 @@ def test_token_create_ok(client):
 
 @respx.mock
 def test_token_create_failed(client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(status_code=400
+    request = respx.post(f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(
+        status_code=400
     )
     response = client.spaces.token(id=1)
 
@@ -243,8 +244,7 @@ def test_token_create_failed(client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_token_create(async_client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(
+    request = respx.post(f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(
         status_code=201,
         json={"is_active": True, "key": "key"},
     )
@@ -258,8 +258,8 @@ async def test_async_token_create(async_client):
 @respx.mock
 @pytest.mark.asyncio
 async def test_async_token_create_failed(async_client):
-    request = respx.post(
-        f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(status_code=400
+    request = respx.post(f"{IAM_BASE_URL}/v1/spaces/1/tokens/").respond(
+        status_code=400
     )
     response = await async_client.spaces.token(id=1)
 
