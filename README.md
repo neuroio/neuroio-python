@@ -120,6 +120,9 @@ To run linters & test suite:
 
 ## Release History
 
+* 0.0.8
+    * Updated library to latest API version (at the time of this release - 1.3.1)
+    * Updated README & docs
 * 0.0.7
     * Updated library to latest API version (at the time of this release - 1.3.0)
     * Updated requirements

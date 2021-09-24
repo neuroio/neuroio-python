@@ -4,7 +4,9 @@
 
 Entries are containers which store the results of the processing of a photo that was uploaded to the platform. The source of the photo can be either the user (when they create or re-initialize a persona) or a surveillance camera that is connected to the platform via the preprocessing server.
 
-When a user uploads a photo, two types of entries may appear in the platform: new and reinit. When video streams from network cameras are processed, all types of entries can appear in the platform: new, reinit, exact, ha, junk, nm and det.
+When a user uploads a photo, two types of entries may appear in the platform: new and reinit. 
+
+When video streams from network cameras are processed, all types of entries can appear in the platform: new, reinit, exact, ha, junk, nm and det.
 
 ### List Entries
 

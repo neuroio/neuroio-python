@@ -33,6 +33,7 @@ class Impl(IAMBase, BillingBase):
 
     def usage_total(
         self,
+        spaces_ids: Union[List[int], object] = sentinel,
         event_types: Union[List[int], object] = sentinel,
         month_from: Union[str, object] = sentinel,
         month_to: Union[str, object] = sentinel,
@@ -68,6 +69,7 @@ class ImplAsync(IAMBaseAsync, BillingBase):
 
     async def usage_total(
         self,
+        spaces_ids: Union[List[int], object] = sentinel,
         event_types: Union[List[int], object] = sentinel,
         month_from: Union[str, object] = sentinel,
         month_to: Union[str, object] = sentinel,

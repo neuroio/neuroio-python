@@ -25,8 +25,11 @@ print(json_response)
 
 __Authorized Client() required.__
 
-This method returns paginated list of licenses. 
+This method returns paginated list of licenses.
+
 Can be filtered by name using `q` & by list of space ids.
+
+Filter `is_bound` can be used to retrieve only those licenses that are bound (or not bound) to a source.
 
 ```python
 import datetime
@@ -37,6 +40,7 @@ response = c.licenses.sources.list(
     q="te",
     date_from=datetime.datetime(year=2020, month=1, day=31),
     date_to=datetime.datetime.utcnow(),
+    is_bound=True,
     limit=10,
     offset=5,
 )
