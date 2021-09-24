@@ -28,6 +28,7 @@ class Impl(IAMBase, LicensesBase):
         q: str = "",
         date_from: Union[datetime, object] = sentinel,
         date_to: Union[datetime, object] = sentinel,
+        is_bound: Union[bool, object] = sentinel,
         limit: int = 20,
         offset: int = 0,
     ) -> Response:
@@ -65,6 +66,7 @@ class ImplAsync(IAMBaseAsync, LicensesBase):
         q: str = "",
         date_from: Union[datetime, object] = sentinel,
         date_to: Union[datetime, object] = sentinel,
+        is_bound: Union[bool, object] = sentinel,
         limit: int = 20,
         offset: int = 0,
     ) -> Response:

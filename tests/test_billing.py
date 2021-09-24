@@ -41,6 +41,7 @@ def test_usage_total(client):
         f"{IAM_BASE_URL}/v1/billing/usage/total",
         f"month_from={month_from}",
         f"month_to={month_to}",
+        "spaces_ids=4,5,6".replace(",", "%2C"),
         "event_types=1,2,3".replace(",", "%2C"),
         json={"results": [{"id": 1, "name": "name"}]},
     )
@@ -48,6 +49,7 @@ def test_usage_total(client):
         month_from=month_from,
         month_to=month_to,
         event_types=[1, 2, 3],
+        spaces_ids=[4, 5, 6],
     )
 
     assert any([request.called for request in requests])
@@ -93,6 +95,7 @@ async def test_async_usage_total(async_client):
         f"{IAM_BASE_URL}/v1/billing/usage/total",
         f"month_from={month_from}",
         f"month_to={month_to}",
+        "spaces_ids=4,5,6".replace(",", "%2C"),
         "event_types=1,2,3".replace(",", "%2C"),
         json={"results": [{"id": 1, "name": "name"}]},
     )
@@ -100,6 +103,7 @@ async def test_async_usage_total(async_client):
         month_from=month_from,
         month_to=month_to,
         event_types=[1, 2, 3],
+        spaces_ids=[4, 5, 6],
     )
 
     assert any([request.called for request in requests])

@@ -87,6 +87,7 @@ def test_list_with_params200(client):
     requests = mock_query_params_all_combos(
         f"{IAM_BASE_URL}/v1/licenses/sources",
         "q=test",
+        "is_bound=true",
         f"date_from={date_str}",
         f"date_to={date_str}",
         "limit=20",
@@ -95,7 +96,10 @@ def test_list_with_params200(client):
     )
 
     response = client.licenses.sources.list(
-        q="test", date_from=date_obj.date(), date_to=date_obj.date()
+        q="test",
+        date_from=date_obj.date(),
+        date_to=date_obj.date(),
+        is_bound=True,
     )
 
     assert any([request.called for request in requests])
@@ -128,6 +132,7 @@ async def test_async_list_with_params_200(async_client):
     requests = mock_query_params_all_combos(
         f"{IAM_BASE_URL}/v1/licenses/sources",
         "q=test",
+        "is_bound=true",
         f"date_from={date_str}",
         f"date_to={date_str}",
         "limit=20",
@@ -135,7 +140,10 @@ async def test_async_list_with_params_200(async_client):
         json={"results": [{"id": 1, "name": "name"}]},
     )
     response = await async_client.licenses.sources.list(
-        q="test", date_from=date_obj.date(), date_to=date_obj.date()
+        q="test",
+        date_from=date_obj.date(),
+        date_to=date_obj.date(),
+        is_bound=True,
     )
     assert any([request.called for request in requests])
     assert response.status_code == 200
