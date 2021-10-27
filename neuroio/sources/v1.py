@@ -19,7 +19,7 @@ class Impl(APIBase, SourcesBase):
     def create(
         self,
         name: str,
-        license_id: str,
+        license_id: Optional[Union[str, object]] = sentinel,
         identify_facesize_threshold: int = 7000,
         use_pps_time: bool = False,
         manual_create_facesize_threshold: int = 25000,
@@ -64,8 +64,8 @@ class Impl(APIBase, SourcesBase):
     def update(
         self,
         id: int,
-        name: str,
-        license_id: str,
+        name: Optional[Union[str, object]] = sentinel,
+        license_id: Optional[Union[str, object]] = sentinel,
         identify_facesize_threshold: Union[int, object] = sentinel,
         use_pps_time: Union[bool, object] = sentinel,
         manual_create_facesize_threshold: Union[int, object] = sentinel,
@@ -98,7 +98,7 @@ class ImplAsync(APIBaseAsync, SourcesBase):
     async def create(
         self,
         name: str,
-        license_id: str,
+        license_id: Optional[Union[str, object]] = sentinel,
         identify_facesize_threshold: int = 7000,
         use_pps_time: bool = False,
         manual_create_facesize_threshold: int = 25000,
@@ -143,8 +143,8 @@ class ImplAsync(APIBaseAsync, SourcesBase):
     async def update(
         self,
         id: int,
-        name: str,
-        license_id: str,
+        name: Optional[Union[str, object]] = sentinel,
+        license_id: Optional[Union[str, object]] = sentinel,
         identify_facesize_threshold: Union[int, object] = sentinel,
         use_pps_time: Union[bool, object] = sentinel,
         manual_create_facesize_threshold: Union[int, object] = sentinel,
