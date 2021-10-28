@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "neuroio"
-version = "0.0.8"
+version = "0.0.9"
 description = "A Python package for interacting with NeuroIO API"
 authors = ["Lev Rubel <l@datacorp.ee>", "Roman Lyalin <rly@datacorp.ee>"]
 license = "MIT"

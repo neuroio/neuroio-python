@@ -119,7 +119,8 @@ To run linters & test suite:
 ```
 
 ## Release History
-
+* 0.0.9
+    * Fixes to the sources API in terms of required fields
 * 0.0.8
     * Updated library to latest API version (at the time of this release - 1.3.1)
     * Updated README & docs
