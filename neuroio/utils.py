@@ -1,7 +1,7 @@
+import asyncio
 import datetime
 import functools
 import io
-from importlib import import_module
 from typing import (
     Any,
     BinaryIO,
@@ -98,3 +98,23 @@ def request_form_processing(
         key: str(value)
         for key, value in request_dict_processing(local_items, exclude).items()
     }
+
+
+async def repeat(
+    interval: float,
+    func: Callable,
+    *args: Any,
+    **kwargs: Any,
+) -> None:
+    """Run func every interval seconds.
+
+    If func has not finished before *interval*, will run again
+    immediately when the previous iteration finished.
+
+    *args and **kwargs are passed as the arguments to func.
+    """
+    while True:
+        await asyncio.gather(
+            func(*args, **kwargs),
+            asyncio.sleep(interval),
+        )
