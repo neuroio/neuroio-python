@@ -1,7 +1,6 @@
 import asyncio
 import functools
 import json
-from unittest.mock import patch
 
 import pytest
 
@@ -9,7 +8,6 @@ from neuroio import EventListener
 
 
 @pytest.mark.asyncio
-@patch("neuroio.constants.EVENTS_BASE_URL", "ws://localhost:63636/")
 async def test_listener_has_entry_events_and_auth_and_ping():
     received_msgs = []
 
@@ -33,7 +31,6 @@ async def test_listener_has_entry_events_and_auth_and_ping():
 
 
 @pytest.mark.asyncio
-@patch("neuroio.constants.EVENTS_BASE_URL", "ws://localhost:63636/")
 async def test_listener_bytes_received():
     received_msgs = []
 
@@ -55,7 +52,6 @@ async def test_listener_bytes_received():
 
 
 @pytest.mark.asyncio
-@patch("neuroio.constants.EVENTS_BASE_URL", "ws://localhost:63636/")
 async def test_listener_server_closed_connection():
     received_msgs = []
 
@@ -79,7 +75,6 @@ async def test_listener_server_closed_connection():
 
 
 @pytest.mark.asyncio
-@patch("neuroio.constants.EVENTS_BASE_URL", "ws://localhost:63636/")
 async def test_listener_server_closed_unexpectedly_connection():
     received_msgs = []
 

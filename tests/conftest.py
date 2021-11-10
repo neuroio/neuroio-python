@@ -5,7 +5,7 @@ import logging
 import pytest
 import websockets
 
-from neuroio import AsyncClient, Client
+from neuroio import AsyncClient, Client, constants
 
 
 @pytest.fixture(scope="session")
@@ -55,6 +55,14 @@ def client():
 @pytest.fixture
 async def async_client():
     return AsyncClient(api_token="token")
+
+
+@pytest.fixture(scope="session", autouse=True)
+def patch_events_base_url():
+    base_value = constants.EVENTS_BASE_URL
+    constants.EVENTS_BASE_URL = "ws://localhost:63636/"
+    yield
+    constants.EVENTS_BASE_URL = base_value
 
 
 @pytest.fixture(scope="session", autouse=True)
