@@ -16,6 +16,9 @@ OR
 
 Changelog
 =========
+* 0.1.0
+    * Support for WebSocket Events
+    * Drop Python 3.6 support
 * 0.0.9
     * Fixes to the sources API in terms of required fields
 * 0.0.8

@@ -1,14 +1,15 @@
 [tool.poetry]
 name = "neuroio"
-version = "0.0.9"
+version = "0.1.0"
 description = "A Python package for interacting with NeuroIO API"
 authors = ["Lev Rubel <l@datacorp.ee>", "Roman Lyalin <rly@datacorp.ee>"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.7.0"
 httpx = "^0.19.0"
+websockets = "^10.0"
 
 [tool.poetry.dev-dependencies]
 bandit = "^1.7.0"
