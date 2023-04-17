@@ -23,7 +23,9 @@ class Impl(APIBase, StreamTokensBase):
     def list(
         self, permanent: bool = None, limit: int = 20, offset: int = 0
     ) -> Response:
-        data = {"permanent": permanent, "limit": limit, "offset": offset}
+        data = {"limit": limit, "offset": offset}
+        if permanent is not None:
+            data["permanent"] = permanent
 
         with self.get_client() as client:
             return client.get(url=self.get_url(), params=data)
@@ -62,7 +64,9 @@ class ImplAsync(APIBaseAsync, StreamTokensBase):
     async def list(
         self, permanent: bool = None, limit: int = 20, offset: int = 0
     ) -> Response:
-        data = {"permanent": permanent, "limit": limit, "offset": offset}
+        data = {"limit": limit, "offset": offset}
+        if permanent is not None:
+            data["permanent"] = permanent
 
         async with self.get_client() as client:
             return await client.get(url=self.get_url(), params=data)
